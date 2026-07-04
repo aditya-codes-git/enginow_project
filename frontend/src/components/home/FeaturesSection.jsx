@@ -75,9 +75,9 @@ export default function FeaturesSection() {
           <h2 className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">
             Platform Features
           </h2>
-          <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-[42px] tracking-tight text-slate-900 leading-tight">
+          <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl md:text-[42px] tracking-tight text-slate-900">
             Everything you need to{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-gradient-clear">
               discover opportunities
             </span>
           </h3>

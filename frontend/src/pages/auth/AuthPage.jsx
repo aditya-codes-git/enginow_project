@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowRight, Mail, Lock, User, Sparkles } from 'lucide-react';
 import { InteractiveRobotSpline } from '../../components/ui/interactive-3d-robot';
 import { useAuth } from '../../hooks/useAuth';
@@ -45,13 +45,21 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('Participant');
   const [showPassword, setShowPassword] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+
+    if (mode === 'signup' && (!termsAccepted || !privacyAccepted)) {
+      setError('Please accept the Terms of Service and Privacy Policy to create an account.');
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const fromPath = location.state?.from;
@@ -86,6 +94,8 @@ export default function AuthPage() {
   const handleModeToggle = (target) => {
     if (target === mode) return;
     setError('');
+    setTermsAccepted(false);
+    setPrivacyAccepted(false);
     navigate(target === 'signup' ? '/signup' : '/login');
   };
 
@@ -261,14 +271,48 @@ export default function AuthPage() {
               )}
 
               {mode === 'signup' && (
-                <div className="flex items-start">
-                  <label className="flex items-start gap-2.5 cursor-pointer font-semibold text-slate-500 text-xs leading-tight">
+                <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+                  <label className="flex items-start gap-2.5 cursor-pointer font-semibold text-slate-600 text-xs leading-5">
                     <input
                       type="checkbox"
                       required
+                      checked={termsAccepted}
+                      onChange={(e) => setTermsAccepted(e.target.checked)}
                       className="w-4 h-4 mt-0.5 rounded border-slate-200 text-blue-600 focus:ring-blue-600 focus:ring-offset-0 cursor-pointer"
                     />
-                    <span>I agree to the Terms of Service and Privacy Policy.</span>
+                    <span>
+                      I have read and agree to the{' '}
+                      <Link
+                        to="/terms"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-blue-600 hover:text-blue-700"
+                      >
+                        Terms of Service
+                      </Link>
+                      .
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-2.5 cursor-pointer font-semibold text-slate-600 text-xs leading-5">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={privacyAccepted}
+                      onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                      className="w-4 h-4 mt-0.5 rounded border-slate-200 text-blue-600 focus:ring-blue-600 focus:ring-offset-0 cursor-pointer"
+                    />
+                    <span>
+                      I consent to the collection and use of my information as described in the{' '}
+                      <Link
+                        to="/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-blue-600 hover:text-blue-700"
+                      >
+                        Privacy Policy
+                      </Link>
+                      .
+                    </span>
                   </label>
                 </div>
               )}
@@ -284,6 +328,19 @@ export default function AuthPage() {
             </form>
 
             <div className="text-center text-xs font-medium text-slate-500 pt-3 border-t border-slate-100">
+              {mode === 'login' && (
+                <p className="mb-3 leading-5">
+                  By signing in, you continue under Enginow's{' '}
+                  <Link to="/terms" target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700">
+                    Terms
+                  </Link>{' '}
+                  and{' '}
+                  <Link to="/privacy" target="_blank" rel="noopener noreferrer" className="font-bold text-blue-600 hover:text-blue-700">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
+              )}
               {config.switchText}{' '}
               <button
                 type="button"

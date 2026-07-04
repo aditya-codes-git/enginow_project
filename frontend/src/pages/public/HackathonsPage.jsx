@@ -10,7 +10,7 @@ function hackathonMatches(hackathon, filters) {
   const searchableText = [hackathon.title, hackathon.tagline, hackathon.description, hackathon.city, hackathon.location, hackathon.track].join(' ').toLowerCase()
   const matchesSearch = !search || searchableText.includes(search)
   const matchesMode = filters.mode === 'All' || !filters.mode || hackathon.mode === filters.mode
-  const matchesTeam = filters.teamSize === 'All' || !filters.teamSize || hackathon.teamSize === filters.teamSize
+  const matchesTeam = filters.teamSize === 'All' || !filters.teamSize || hackathon.teamSizeLabel === filters.teamSize
 
   return matchesSearch && matchesMode && matchesTeam
 }
@@ -52,7 +52,7 @@ function HackathonsPage() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-outfit text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[52px] lg:leading-[1.1] max-w-3xl">
+          <h1 className="heading-clear font-outfit text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[52px] max-w-3xl">
             Build under pressure, ship with focus.
           </h1>
           <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-500">

@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .text-gradient-clear {
+    @apply inline-block;
+    background-image: none;
+    color: var(--text-accent, var(--color-primary));
+    line-height: 1.22;
+    padding-bottom: 0.08em;
+    -webkit-text-fill-color: currentColor;
+    text-shadow: 0 1px 0 rgb(var(--surface-rgb) / 0.55);
+    text-rendering: geometricPrecision;
+  }
+
+  .heading-clear {
+    line-height: 1.18;
+    overflow: visible;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

@@ -1,7 +1,38 @@
 import api from './api';
 
+const normalizeTeamSize = (teamSize) => {
+  if (teamSize && typeof teamSize === 'object') {
+    const min = Math.max(1, Math.floor(Number(teamSize.min ?? 1)) || 1);
+    const max = Math.max(min, Math.floor(Number(teamSize.max ?? min)) || min);
+    return { min, max };
+  }
+
+  if (typeof teamSize === 'string') {
+    const parts = teamSize.split('-').map((part) => parseInt(part.trim(), 10));
+    if (parts.length === 2 && !Number.isNaN(parts[0]) && !Number.isNaN(parts[1])) {
+      const min = Math.max(1, parts[0]);
+      const max = Math.max(min, parts[1]);
+      return { min, max };
+    }
+
+    if (parts.length === 1 && !Number.isNaN(parts[0])) {
+      const size = Math.max(1, parts[0]);
+      return { min: size, max: size };
+    }
+  }
+
+  return { min: 1, max: 1 };
+};
+
+export const formatTeamSizeLabel = (teamSize) => {
+  const { min, max } = normalizeTeamSize(teamSize);
+  return min === max ? `${min}` : `${min}-${max}`;
+};
+
 export const mapEventToFrontend = (event) => {
   if (!event) return null;
+  const teamSize = normalizeTeamSize(event.teamSize);
+
   return {
     ...event,
     id: event._id || event.id,
@@ -9,9 +40,8 @@ export const mapEventToFrontend = (event) => {
     submissions: event.submissionCount ?? 0,
     judges: event.judgeCount ?? 0,
     track: Array.isArray(event.track) ? event.track.join(', ') : (event.track || ''),
-    teamSize: (event.teamSize && event.teamSize.min !== undefined)
-      ? `${event.teamSize.min}-${event.teamSize.max}`
-      : (event.teamSize || '1-4'),
+    teamSize,
+    teamSizeLabel: formatTeamSizeLabel(teamSize),
     startDate: event.startDate ? new Date(event.startDate).toISOString().split('T')[0] : '',
     endDate: event.endDate ? new Date(event.endDate).toISOString().split('T')[0] : '',
     registrationDeadline: event.registrationDeadline ? new Date(event.registrationDeadline).toISOString().split('T')[0] : '',

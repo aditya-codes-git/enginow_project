@@ -10,7 +10,7 @@ export const getEvents = asyncHandler(async (req, res) => {
 });
 
 export const getMyEvents = asyncHandler(async (req, res) => {
-  const result = await eventService.queryOrgEvents(req.user._id, req.query);
+  const result = await eventService.queryOrgEvents(req.user, req.query);
   res.status(200).json({
     success: true,
     data: result,
@@ -36,7 +36,7 @@ export const createEvent = asyncHandler(async (req, res) => {
 });
 
 export const updateEvent = asyncHandler(async (req, res) => {
-  const event = await eventService.updateEventDetails(req.params.id, req.body, req.user._id);
+  const event = await eventService.updateEventDetails(req.params.id, req.body, req.user);
   res.status(200).json({
     success: true,
     message: 'Event updated successfully',
@@ -45,7 +45,7 @@ export const updateEvent = asyncHandler(async (req, res) => {
 });
 
 export const submitEvent = asyncHandler(async (req, res) => {
-  const event = await eventService.submitEvent(req.params.id, req.user._id);
+  const event = await eventService.submitEvent(req.params.id, req.user);
   res.status(200).json({
     success: true,
     message: 'Event submitted for approval successfully',
@@ -63,7 +63,7 @@ export const archiveEvent = asyncHandler(async (req, res) => {
 });
 
 export const deleteEvent = asyncHandler(async (req, res) => {
-  const result = await eventService.deleteEvent(req.params.id, req.user._id);
+  const result = await eventService.deleteEvent(req.params.id, req.user);
   res.status(200).json({
     success: true,
     message: result.message,

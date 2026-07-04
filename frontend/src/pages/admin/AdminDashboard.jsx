@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Building2, ClipboardCheck, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
+import { Users, Building2, ClipboardCheck, ArrowRight, ShieldCheck, Activity, CalendarPlus } from 'lucide-react';
 import adminService from '../../services/adminService';
 import { SkeletonBox } from '../../components/common/Skeleton';
 
@@ -65,6 +65,14 @@ export default function AdminDashboard() {
       icon: ClipboardCheck,
       color: 'amber',
       badge: `${stats.pendingEventsCount} Awaiting Review`,
+    },
+    {
+      title: 'Manage All Events',
+      description: 'Open the event operations workspace to create, edit, archive, delete, and inspect registrations for any event.',
+      href: '/organiser',
+      icon: CalendarPlus,
+      color: 'cyan',
+      badge: 'Full Access',
     },
   ];
 
@@ -150,7 +158,7 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold text-slate-950 font-outfit">Management Consoles</h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {adminActions.map((action) => {
               const Icon = action.icon;
               return (

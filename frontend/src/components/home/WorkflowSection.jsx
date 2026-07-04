@@ -52,7 +52,7 @@ export default function WorkflowSection() {
           </h2>
           <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-slate-900">
             Platform{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span className="text-gradient-clear">
               Workflow
             </span>
           </h3>

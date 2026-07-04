@@ -84,9 +84,9 @@ export default function CategoriesSection() {
             <h2 className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">
               Categories
             </h2>
-            <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl tracking-tight text-slate-900">
+            <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl tracking-tight text-slate-900">
               Browse Events By{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              <span className="text-gradient-clear">
                 Category
               </span>
             </h3>

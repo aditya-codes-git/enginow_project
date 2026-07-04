@@ -62,10 +62,10 @@ export default function HeroSection() {
             {/* Main Headline */}
             <motion.h1
               variants={itemVariants}
-              className="font-outfit text-4xl sm:text-5xl lg:text-[56px] lg:leading-[1.1] font-extrabold tracking-tight text-slate-900"
+              className="heading-clear font-outfit text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-slate-900"
             >
               Discover, register &{' '}
-              <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+              <span className="text-gradient-clear from-blue-600 via-blue-500 to-cyan-500">
                 compete
               </span>{' '}
               in engineering events.

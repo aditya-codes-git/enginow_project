@@ -113,6 +113,17 @@ export default function UserMenu({ user, logout }) {
               <span>My Events / Dashboard</span>
             </Link>
 
+            {user?.role === 'admin' && (
+              <Link
+                to="/organiser"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+              >
+                <CalendarDays className="w-4 h-4 text-slate-400" />
+                <span>Manage All Events</span>
+              </Link>
+            )}
+
             <Link
               to="/settings/account"
               onClick={() => setIsOpen(false)}

@@ -25,7 +25,7 @@ export default function CTASection() {
           
           <div className="relative max-w-2xl mx-auto space-y-6 md:space-y-8 z-10">
             {/* Headline */}
-            <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white leading-[1.15]">
+            <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-white">
               Ready to discover your next opportunity?
             </h3>
             

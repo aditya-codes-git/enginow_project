@@ -85,7 +85,7 @@ export default function PartnersStrip() {
     <section className="bg-white pt-16 pb-0 overflow-hidden relative select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent font-outfit font-black tracking-tight text-2xl sm:text-3xl">
+          <span className="text-gradient-clear font-outfit font-black tracking-tight text-2xl sm:text-3xl">
             Trusted by Student Communities
           </span>
           <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-2">
@@ -110,14 +110,14 @@ export default function PartnersStrip() {
           ))}
         </InfiniteSlider>
         <ProgressiveBlur
-          className='pointer-events-none absolute top-0 left-0 h-full w-[160px] md:w-[240px] z-10'
+          className='pointer-events-none absolute top-0 left-0 h-full w-[80px] md:w-[140px] z-10'
           direction='left'
-          blurIntensity={1.5}
+          blurIntensity={0.45}
         />
         <ProgressiveBlur
-          className='pointer-events-none absolute top-0 right-0 h-full w-[160px] md:w-[240px] z-10'
+          className='pointer-events-none absolute top-0 right-0 h-full w-[80px] md:w-[140px] z-10'
           direction='right'
-          blurIntensity={1.5}
+          blurIntensity={0.45}
         />
       </div>
 

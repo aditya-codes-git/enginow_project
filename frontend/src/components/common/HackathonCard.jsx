@@ -69,7 +69,7 @@ function HackathonCard({ hackathon }) {
           <span className="w-px h-3.5 bg-slate-200" />
           <span className="flex items-center gap-1.5 font-medium">
             <Users className="h-3.5 w-3.5 text-slate-400" />
-            <span>{safeHackathon.teamSize || '1-4'}</span>
+            <span>{safeHackathon.teamSizeLabel || '1-6'}</span>
           </span>
         </div>
 

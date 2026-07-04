@@ -168,7 +168,7 @@ export default function PlatformShowcase() {
             <span className="text-blue-600 text-xs font-bold uppercase tracking-widest mb-3 relative z-10">
               ENGINEERING EVENT ECOSYSTEM
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-[40px] leading-tight font-extrabold font-outfit tracking-tight text-slate-900 max-w-2xl relative z-10">
+            <h2 className="heading-clear text-3xl sm:text-4xl lg:text-[40px] font-extrabold font-outfit tracking-tight text-slate-900 max-w-2xl relative z-10">
               One Platform.<br className="sm:hidden" /> Endless Opportunities.
             </h2>
             <p className="mt-4 text-sm text-slate-500 max-w-md relative z-10 font-normal">

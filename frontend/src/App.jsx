@@ -31,6 +31,11 @@ import EventDetailPage from './pages/public/EventDetailPage'
 import EventsPage from './pages/public/EventsPage'
 import HackathonsPage from './pages/public/HackathonsPage'
 import ResourcesPage from './pages/public/ResourcesPage'
+import AboutCompanyPage from './pages/public/AboutCompanyPage'
+import BlogDetailPage from './pages/public/BlogDetailPage'
+import BlogsPage from './pages/public/BlogsPage'
+import InfoPage from './pages/public/InfoPage'
+import SuccessStoriesPage from './pages/public/SuccessStoriesPage'
 
 import AuthPage from './pages/auth/AuthPage'
 
@@ -129,6 +134,51 @@ function MainLayout() {
           <Route
             path="/resources"
             element={<ResourcesPage />}
+          />
+
+          <Route
+            path="/blogs"
+            element={<BlogsPage />}
+          />
+
+          <Route
+            path="/blogs/:slug"
+            element={<BlogDetailPage />}
+          />
+
+          <Route
+            path="/about"
+            element={<AboutCompanyPage />}
+          />
+
+          <Route
+            path="/success-stories"
+            element={<SuccessStoriesPage />}
+          />
+
+          <Route
+            path="/terms"
+            element={<InfoPage pageKey="terms" />}
+          />
+
+          <Route
+            path="/privacy"
+            element={<InfoPage pageKey="privacy" />}
+          />
+
+          <Route
+            path="/refund"
+            element={<InfoPage pageKey="refund" />}
+          />
+
+          <Route
+            path="/faqs"
+            element={<InfoPage pageKey="faqs" />}
+          />
+
+          <Route
+            path="/help"
+            element={<InfoPage pageKey="help" />}
           />
 
           <Route

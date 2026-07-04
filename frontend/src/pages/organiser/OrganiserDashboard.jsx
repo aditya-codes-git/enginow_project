@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ClipboardList, Clock, Headphones, Mail, BookOpen, Zap } from 'lucide-react'
 import EventStatusList from '../../components/organiser/EventStatusList'
 import useEvents from '../../hooks/useEvents'
+import { useAuth } from '../../hooks/useAuth'
+import { showError, showSuccess } from '../../utils/toast'
 
 function formatDate(value) {
   if (!value) return 'Not set'
@@ -16,7 +18,30 @@ function formatDate(value) {
 
 function OrganiserDashboard() {
   const navigate = useNavigate()
-  const { events, metrics, loading, archiveEvent } = useEvents()
+  const { events, metrics, loading, archiveEvent, deleteEvent } = useEvents()
+  const { user } = useAuth()
+  const isAdmin = user?.role === 'admin'
+
+  const handleArchive = async (event) => {
+    try {
+      await archiveEvent(event.id)
+      showSuccess('Event archived successfully.')
+    } catch (err) {
+      showError(err.response?.data?.message || 'Failed to archive event.')
+    }
+  }
+
+  const handleDelete = async (event) => {
+    const confirmed = window.confirm(`Delete "${event.title || 'this event'}"? This action cannot be undone.`)
+    if (!confirmed) return
+
+    try {
+      await deleteEvent(event.id)
+      showSuccess('Event deleted successfully.')
+    } catch (err) {
+      showError(err.response?.data?.message || 'Failed to delete event.')
+    }
+  }
 
   const metricCards = [
     { label: 'Live events', value: metrics.live, detail: `${events.length} total managed`, accent: 'border-l-blue-600' },
@@ -53,13 +78,15 @@ function OrganiserDashboard() {
             <div className="space-y-4 max-w-3xl">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
                 <Zap className="w-3.5 h-3.5 text-blue-300" />
-                Organiser Workspace
+                {isAdmin ? 'Admin Event Workspace' : 'Organiser Workspace'}
               </span>
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-outfit">
-                Master Your Events
+                {isAdmin ? 'Manage Every Event' : 'Master Your Events'}
               </h1>
               <p className="text-slate-300 text-base md:text-lg leading-relaxed">
-                Manage registrations, submissions, and judging all from one powerful dashboard. Track every detail, from setup to reporting.
+                {isAdmin
+                  ? 'Create, edit, archive, delete, and inspect registrations for events across the platform.'
+                  : 'Manage registrations, submissions, and judging all from one powerful dashboard. Track every detail, from setup to reporting.'}
               </p>
             </div>
             
@@ -108,8 +135,8 @@ function OrganiserDashboard() {
           <div className="lg:col-span-2 space-y-6" id="managed-events">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-slate-950 font-outfit">Your Events</h2>
-                <p className="text-slate-600 text-sm mt-1">Manage, edit, and track event progress</p>
+                <h2 className="text-2xl font-bold text-slate-950 font-outfit">{isAdmin ? 'All Events' : 'Your Events'}</h2>
+                <p className="text-slate-600 text-sm mt-1">{isAdmin ? 'Manage every event across the platform' : 'Manage, edit, and track event progress'}</p>
               </div>
               <Link
                 to="/organiser/events/new"
@@ -123,7 +150,8 @@ function OrganiserDashboard() {
               <EventStatusList
                 events={events}
                 onEdit={(event) => navigate(`/organiser/events/${event.id}/edit`)}
-                onArchive={(event) => archiveEvent(event.id)}
+                onArchive={handleArchive}
+                onDelete={handleDelete}
               />
             </div>
           </div>

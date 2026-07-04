@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Pencil, Archive, Calendar, Users } from 'lucide-react'
+import { Pencil, Archive, Calendar, Users, Trash2 } from 'lucide-react'
 import StatusBadge from '../common/StatusBadge'
 import EmptyState from '../common/EmptyState'
 import { getEventCompletion, getEventHealth } from '../../hooks/useEvents'
 
-function EventStatusList({ events, onEdit, onArchive }) {
+function EventStatusList({ events, onEdit, onArchive, onDelete }) {
   const safeEvents = events || []
   if (!safeEvents.length) {
     return (
@@ -106,6 +106,14 @@ function EventStatusList({ events, onEdit, onArchive }) {
                 >
                   <Archive className="w-3.5 h-3.5" />
                   Archive
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onDelete?.(event)}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-red-200 text-red-600 font-medium text-sm hover:bg-red-50 transition-colors cursor-pointer"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  Delete
                 </button>
               </div>
             </div>

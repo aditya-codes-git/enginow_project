@@ -4,6 +4,29 @@ import eventService from '../../services/eventService'
 import { useAuth } from '../../hooks/useAuth'
 import { showSuccess, showError } from '../../utils/toast'
 
+function getTeamSizeLimits(teamSize) {
+  if (teamSize && typeof teamSize === 'object') {
+    const min = Math.max(1, Number(teamSize.min) || 1)
+    const max = Math.max(min, Number(teamSize.max) || min)
+    return { min, max }
+  }
+
+  if (typeof teamSize === 'string') {
+    const parts = teamSize.split('-').map((part) => parseInt(part.trim(), 10))
+    if (parts.length === 2 && !Number.isNaN(parts[0]) && !Number.isNaN(parts[1])) {
+      const min = Math.max(1, parts[0])
+      return { min, max: Math.max(min, parts[1]) }
+    }
+
+    if (parts.length === 1 && !Number.isNaN(parts[0])) {
+      const size = Math.max(1, parts[0])
+      return { min: size, max: size }
+    }
+  }
+
+  return { min: 1, max: 1 }
+}
+
 export default function RegistrationModal({ event, onClose, onSuccess }) {
   const { user } = useAuth()
   const [submitting, setSubmitting] = useState(false)
@@ -11,8 +34,7 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
   const [success, setSuccess] = useState(false)
 
   // Configure constraints
-  const minTeamSize = event.teamSize?.min ?? 1
-  const maxTeamSize = event.teamSize?.max ?? 1
+  const { min: minTeamSize, max: maxTeamSize } = getTeamSizeLimits(event.teamSize)
   const hasTeamSupport = maxTeamSize > 1
   const mustBeTeam = minTeamSize > 1
 

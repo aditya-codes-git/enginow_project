@@ -29,7 +29,8 @@ export default function Footer() {
       { name: 'About', path: '/about' },
       { name: 'Events', path: '/events' },
       { name: 'Hackathons', path: '/hackathons' },
-      { name: 'Resources', path: '/resources' },
+      { name: 'Blogs', path: '/blogs' },
+      { name: 'Success Stories', path: '/success-stories' },
     ],
     support: [
       { name: 'Contact', path: '/contact' },
@@ -39,6 +40,7 @@ export default function Footer() {
     legal: [
       { name: 'Privacy Policy', path: '/privacy' },
       { name: 'Terms & Conditions', path: '/terms' },
+      { name: 'Refund Policy', path: '/refund' },
     ]
   };
 
@@ -127,7 +129,7 @@ export default function Footer() {
 
         {/* Bottom copyright notice */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-slate-500 text-xs gap-4">
-          <p>© 2025 EngiNow. All rights reserved.</p>
+          <p>&copy; 2026 EngiNow. All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             Designed for engineering students with <Heart className="w-3.5 h-3.5 text-blue-500 fill-blue-500" /> in India.
           </p>

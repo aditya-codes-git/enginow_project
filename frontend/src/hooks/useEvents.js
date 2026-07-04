@@ -88,7 +88,8 @@ export default function useEvents(options = {}) {
   const { user, isAuthenticated } = useAuth();
 
   const isOrganiserRoute = window.location.pathname.startsWith('/organiser');
-  const isOrganiser = isAuthenticated && user?.role === 'organiser' && (options.organiserOnly || isOrganiserRoute);
+  const canManageEvents = isAuthenticated && ['organiser', 'admin'].includes(user?.role);
+  const isOrganiser = canManageEvents && (options.organiserOnly || isOrganiserRoute);
 
   const fetchEvents = useCallback(async () => {
     setLoading(true);
@@ -164,6 +165,22 @@ export default function useEvents(options = {}) {
     []
   );
 
+  const deleteEvent = useCallback(
+    async (eventId) => {
+      setLoading(true);
+      try {
+        await eventService.deleteEvent(eventId);
+        setEvents((prev) => prev.filter((e) => e.id !== eventId));
+      } catch (err) {
+        console.error('Failed to delete event:', err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
   const getEventById = useCallback(
     (eventId) => events.find((event) => event.id === eventId),
     [events]
@@ -193,6 +210,7 @@ export default function useEvents(options = {}) {
     createEvent,
     updateEvent,
     archiveEvent,
+    deleteEvent,
     getEventById,
     setEvents,
     refresh: fetchEvents,

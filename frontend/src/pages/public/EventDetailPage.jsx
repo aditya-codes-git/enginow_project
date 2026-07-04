@@ -22,7 +22,7 @@ function formatDate(value) {
 /** Format teamSize object → readable string */
 function formatTeamSize(teamSize) {
   if (!teamSize) return null
-  if (typeof teamSize === 'string') return teamSize
+  if (typeof teamSize === 'string') return teamSize.includes('-') ? `${teamSize} members` : `${teamSize} member${teamSize !== '1' ? 's' : ''}`
   if (typeof teamSize === 'object') {
     const min = teamSize.min ?? 1
     const max = teamSize.max ?? 1
@@ -30,6 +30,16 @@ function formatTeamSize(teamSize) {
     return `${min} – ${max} members`
   }
   return String(teamSize)
+}
+
+function getMaxTeamSize(teamSize) {
+  if (teamSize && typeof teamSize === 'object') return Number(teamSize.max) || 1
+  if (typeof teamSize === 'string') {
+    const parts = teamSize.split('-').map((part) => parseInt(part.trim(), 10))
+    if (parts.length === 2 && !Number.isNaN(parts[1])) return parts[1]
+    if (parts.length === 1 && !Number.isNaN(parts[0])) return parts[0]
+  }
+  return 1
 }
 
 /** Format track array → bullet-separated string */
@@ -126,7 +136,7 @@ function EventDetailPage() {
       return
     }
     
-    const maxTeam = event.teamSize?.max ?? 1
+    const maxTeam = getMaxTeamSize(event.teamSize)
     const questionsCount = event.registrationQuestions?.length || 0
     if (maxTeam > 1 || questionsCount > 0) {
       setShowRegistrationModal(true)

@@ -76,9 +76,9 @@ export const queryEvents = async (queryParams) => {
   };
 };
 
-export const queryOrgEvents = async (organiserId, queryParams = {}) => {
+export const queryOrgEvents = async (user, queryParams = {}) => {
   const { page = 1, limit = 100, status } = queryParams;
-  const filter = { organiser: organiserId };
+  const filter = user.role === ROLES.ADMIN ? {} : { organiser: user._id };
 
   // Optional status filter — but NO default, so all statuses are returned
   if (status) {
@@ -139,13 +139,16 @@ export const createEventDraft = async (eventData, organiserId) => {
   return event;
 };
 
-export const updateEventDetails = async (eventId, eventData, organiserId) => {
+export const updateEventDetails = async (eventId, eventData, user) => {
   const event = await Event.findById(eventId);
   if (!event) {
     throw new ApiError(404, 'Event not found');
   }
 
-  if (event.organiser.toString() !== organiserId.toString()) {
+  const isOwner = event.organiser.toString() === user._id.toString();
+  const isAdmin = user.role === ROLES.ADMIN;
+
+  if (!isOwner && !isAdmin) {
     throw new ApiError(403, 'You are not authorized to edit this event');
   }
 
@@ -161,13 +164,16 @@ export const updateEventDetails = async (eventId, eventData, organiserId) => {
   return updatedEvent;
 };
 
-export const submitEvent = async (eventId, organiserId) => {
+export const submitEvent = async (eventId, user) => {
   const event = await Event.findById(eventId);
   if (!event) {
     throw new ApiError(404, 'Event not found');
   }
 
-  if (event.organiser.toString() !== organiserId.toString()) {
+  const isOwner = event.organiser.toString() === user._id.toString();
+  const isAdmin = user.role === ROLES.ADMIN;
+
+  if (!isOwner && !isAdmin) {
     throw new ApiError(403, 'You are not authorized to submit this event');
   }
 
@@ -200,17 +206,20 @@ export const archiveEvent = async (eventId, user) => {
   return event;
 };
 
-export const deleteEvent = async (eventId, organiserId) => {
+export const deleteEvent = async (eventId, user) => {
   const event = await Event.findById(eventId);
   if (!event) {
     throw new ApiError(404, 'Event not found');
   }
 
-  if (event.organiser.toString() !== organiserId.toString()) {
+  const isOwner = event.organiser.toString() === user._id.toString();
+  const isAdmin = user.role === ROLES.ADMIN;
+
+  if (!isOwner && !isAdmin) {
     throw new ApiError(403, 'You are not authorized to delete this event');
   }
 
-  if (event.status !== EVENT_STATUS.DRAFT) {
+  if (!isAdmin && event.status !== EVENT_STATUS.DRAFT) {
     throw new ApiError(400, 'Only draft events can be deleted');
   }
 

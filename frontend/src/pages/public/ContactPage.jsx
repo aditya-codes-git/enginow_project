@@ -18,7 +18,7 @@ function ContactPage() {
               <MessageSquare className="h-4 w-4" />
               Contact Enginow
             </div>
-            <h1 className="mt-6 font-outfit text-4xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-5xl lg:text-[56px] lg:leading-[1.12]">
+            <h1 className="heading-clear mt-6 font-outfit text-4xl font-extrabold tracking-tight text-slate-950 sm:text-5xl lg:text-[56px]">
               Talk to the events team with the right context from day one.
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">

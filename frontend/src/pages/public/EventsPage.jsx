@@ -53,7 +53,7 @@ function EventsPage() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-outfit text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[52px] lg:leading-[1.1] max-w-3xl">
+          <h1 className="heading-clear font-outfit text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[52px] max-w-3xl">
             Discover events for builders and curious teams.
           </h1>
           <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-500">

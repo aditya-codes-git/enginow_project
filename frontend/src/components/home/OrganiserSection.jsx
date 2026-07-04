@@ -43,9 +43,9 @@ export default function OrganiserSection() {
               <h2 className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">
                 For Organisers
               </h2>
-              <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-slate-900 leading-tight">
+              <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-slate-900">
                 Host Events{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                <span className="text-gradient-clear">
                   Without The Hassle
                 </span>
               </h3>

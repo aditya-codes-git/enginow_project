@@ -58,7 +58,7 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'Events', path: '/events' },
     { name: 'Hackathons', path: '/hackathons' },
-    { name: 'Resources', path: '/resources' },
+    { name: 'Blogs', path: '/blogs' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -176,6 +176,26 @@ export default function Navbar() {
                               }
                             >
                               Manage Teams
+                            </NavLink>
+                            <NavLink
+                              to="/organiser"
+                              className={({ isActive }) =>
+                                `block px-4 py-2 text-sm transition-colors ${
+                                  isActive ? 'text-blue-600 font-semibold bg-blue-50/50' : 'text-slate-700 hover:bg-slate-50 hover:text-blue-600'
+                                }`
+                              }
+                            >
+                              Manage All Events
+                            </NavLink>
+                            <NavLink
+                              to="/organiser/events/new"
+                              className={({ isActive }) =>
+                                `block px-4 py-2 text-sm transition-colors ${
+                                  isActive ? 'text-blue-600 font-semibold bg-blue-50/50' : 'text-slate-700 hover:bg-slate-50 hover:text-blue-600'
+                                }`
+                              }
+                            >
+                              Create Event
                             </NavLink>
                           </>
                         )}
@@ -366,6 +386,28 @@ export default function Navbar() {
                                 }
                               >
                                 Manage Teams
+                              </NavLink>
+                              <NavLink
+                                to="/organiser"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={({ isActive }) =>
+                                  `text-sm px-3 py-2 rounded-lg transition-colors ${
+                                    isActive ? 'text-blue-600 font-semibold' : 'text-slate-600 hover:text-blue-600'
+                                  }`
+                                }
+                              >
+                                Manage All Events
+                              </NavLink>
+                              <NavLink
+                                to="/organiser/events/new"
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={({ isActive }) =>
+                                  `text-sm px-3 py-2 rounded-lg transition-colors ${
+                                    isActive ? 'text-blue-600 font-semibold' : 'text-slate-600 hover:text-blue-600'
+                                  }`
+                                }
+                              >
+                                Create Event
                               </NavLink>
                             </>
                           )}
