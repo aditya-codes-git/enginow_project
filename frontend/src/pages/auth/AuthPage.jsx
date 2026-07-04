@@ -29,10 +29,7 @@ const authConfig = {
   },
 };
 
-const roles = [
-  { value: 'Participant', label: 'Participant (Discover & Register)' },
-  { value: 'Organiser', label: 'Organiser (Host & Manage)' },
-];
+
 
 export default function AuthPage() {
   const location = useLocation();
@@ -43,7 +40,7 @@ export default function AuthPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Participant');
+
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
@@ -64,8 +61,7 @@ export default function AuthPage() {
     try {
       const fromPath = location.state?.from;
       if (mode === 'signup') {
-        const normalizedRole = role.toLowerCase();
-        const user = await register({ name, email, password, role: normalizedRole });
+        const user = await register({ name, email, password });
         if (user.role === 'admin') {
           navigate('/admin/users');
         } else if (user.role === 'organiser') {
@@ -251,24 +247,7 @@ export default function AuthPage() {
                 </div>
               </div>
 
-              {mode === 'signup' && (
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    I want to join as a
-                  </label>
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm font-medium outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-slate-50 cursor-pointer"
-                  >
-                    {roles.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+
 
               {mode === 'signup' && (
                 <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4">

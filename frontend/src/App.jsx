@@ -38,6 +38,7 @@ import InfoPage from './pages/public/InfoPage'
 import SuccessStoriesPage from './pages/public/SuccessStoriesPage'
 
 import AuthPage from './pages/auth/AuthPage'
+import BecomeOrganizerPage from './pages/public/BecomeOrganizerPage'
 
 import AccountSettings from './pages/settings/AccountSettings'
 import ProfilePage from './pages/profile/ProfilePage'
@@ -108,6 +109,16 @@ function MainLayout() {
           <Route
             path="/signup"
             element={<AuthPage />}
+          />
+
+          <Route
+            path="/become-organizer"
+            element={<BecomeOrganizerPage />}
+          />
+
+          <Route
+            path="/become-organiser"
+            element={<Navigate to="/become-organizer" replace />}
           />
 
           {/* Public Pages */}

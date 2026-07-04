@@ -92,7 +92,7 @@ export default function HeroSection() {
                 <ArrowRight className="w-4.5 h-4.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
-                to="/become-organiser"
+                to="/become-organizer"
                 className="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-slate-700 font-semibold px-7 py-3.5 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-200 hover:-translate-y-0.5"
               >
                 Host an Event

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import User from '../models/User.js';
 import ApiError from '../utils/ApiError.js';
-import { USER_STATUS } from '../constants/roles.js';
+import { USER_STATUS, ROLES } from '../constants/roles.js';
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -41,7 +41,7 @@ const addRefreshTokenSession = async (user, refreshToken) => {
   await user.save();
 };
 
-export const registerUser = async ({ name, email, password, role }) => {
+export const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new ApiError(400, 'User with this email already exists');
@@ -54,7 +54,7 @@ export const registerUser = async ({ name, email, password, role }) => {
     name,
     email,
     passwordHash: password, // Pre-save hooks will handle password hashing
-    role,
+    role: ROLES.PARTICIPANT,
     emailVerified: false,
     emailVerificationToken: verificationToken,
   });

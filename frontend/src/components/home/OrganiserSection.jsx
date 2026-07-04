@@ -70,7 +70,7 @@ export default function OrganiserSection() {
             {/* CTA */}
             <div className="pt-2">
               <Link
-                to="/become-organiser"
+                to="/become-organizer"
                 className="group inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-100/30"
               >
                 <span>Start Organising</span>

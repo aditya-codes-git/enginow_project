@@ -44,7 +44,7 @@ export default function CTASection() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                to="/become-organiser"
+                to="/become-organizer"
                 className="inline-flex items-center justify-center gap-2 bg-white/[0.08] hover:bg-white/[0.12] text-white font-semibold px-7 py-3.5 rounded-xl border border-white/[0.1] hover:border-white/[0.2] transition-all duration-200 hover:-translate-y-0.5"
               >
                 <CalendarPlus className="w-4.5 h-4.5" />
