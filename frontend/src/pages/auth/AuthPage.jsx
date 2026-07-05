@@ -10,6 +10,7 @@ import AnimatedInput from '../../components/auth/AnimatedInput';
 import PasswordStrengthBar from '../../components/auth/PasswordStrengthBar';
 import AnimatedCheckbox from '../../components/auth/AnimatedCheckbox';
 import PrimaryButton from '../../components/auth/PrimaryButton';
+import ThemeSwitcher from '../../components/ThemeSwitcher';
 
 const authConfig = {
   login: {
@@ -97,7 +98,12 @@ export default function AuthPage() {
   };
 
   return (
-    <main className="h-screen w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] overflow-hidden bg-theme-surface text-theme-text font-sans">
+    <main className="h-screen w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] overflow-hidden bg-theme-surface text-theme-text font-sans relative">
+      {/* ─── Theme switcher: top-left corner ─── */}
+      <div className="absolute top-4 left-4 z-50">
+        <ThemeSwitcher />
+      </div>
+
       {/* ─── Left: Immersive Hero Panel ─── */}
       <HeroPanel />
 
