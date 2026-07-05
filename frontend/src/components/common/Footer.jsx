@@ -51,20 +51,20 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800/50 footer-dark">
+    <footer className="bg-theme-footer-bg border-t border-theme-footer-border transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12 pb-12 border-b border-slate-800/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12 pb-12 border-b border-theme-footer-border">
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-500 flex items-center justify-center">
                 <Code2 className="text-white w-5 h-5" />
               </div>
-              <span className="font-outfit font-bold text-xl tracking-tight text-white">
+              <span className="font-outfit font-bold text-xl tracking-tight text-theme-footer-heading">
                 Engi<span className="text-blue-400">Now</span>
               </span>
             </Link>
-            <p className="text-slate-400 text-sm max-w-sm leading-relaxed">
+            <p className="text-theme-footer-muted text-sm max-w-sm leading-relaxed">
               The premier college event discovery platform designed for engineering and technology students. Join competitions, build skills, and launch your career.
             </p>
             <div className="flex items-center space-x-3 pt-2">
@@ -76,7 +76,7 @@ export default function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-800 hover:border-slate-600 transition-all duration-200"
+                    className="p-2.5 rounded-lg bg-theme-footer-bg border border-theme-footer-border text-theme-footer-muted hover:text-theme-footer-hover hover:bg-theme-footer-bg hover:border-theme-footer-hover/40 transition-all duration-200"
                     aria-label={`Follow EngiNow on ${social.name}`}
                   >
                     <Icon className="w-4 h-4" />
@@ -88,11 +88,11 @@ export default function Footer() {
 
           {/* Links Columns */}
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Platform</h3>
+            <h3 className="font-semibold text-theme-footer-heading text-xs tracking-wider uppercase mb-4">Platform</h3>
             <ul className="space-y-2.5">
               {footerLinks.platform.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link to={link.path} className="text-theme-footer-muted hover:text-theme-footer-hover text-sm transition-colors duration-200">
                     {link.name}
                   </Link>
                 </li>
@@ -100,12 +100,13 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Support Columns */}
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Support</h3>
+            <h3 className="font-semibold text-theme-footer-heading text-xs tracking-wider uppercase mb-4">Support</h3>
             <ul className="space-y-2.5">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link to={link.path} className="text-theme-footer-muted hover:text-theme-footer-hover text-sm transition-colors duration-200">
                     {link.name}
                   </Link>
                 </li>
@@ -113,12 +114,13 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Legal Columns */}
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Legal</h3>
+            <h3 className="font-semibold text-theme-footer-heading text-xs tracking-wider uppercase mb-4">Legal</h3>
             <ul className="space-y-2.5">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link to={link.path} className="text-theme-footer-muted hover:text-theme-footer-hover text-sm transition-colors duration-200">
                     {link.name}
                   </Link>
                 </li>
@@ -128,7 +130,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright notice */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-slate-500 text-xs gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-theme-footer-text text-xs gap-4">
           <p>&copy; 2026 EngiNow. All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             Designed for engineering students with <Heart className="w-3.5 h-3.5 text-blue-500 fill-blue-500" /> in India.

@@ -3,7 +3,7 @@ import React from 'react'
 function Field({ label, children }) {
   return (
     <label>
-      <span className="text-sm font-semibold text-slate-700">{label}</span>
+      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
       {children}
     </label>
   )
@@ -88,13 +88,13 @@ function Step4Schedule({ formData = {}, updateField = () => {} }) {
         </Field>
       </section>
 
-      <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-bold text-slate-950">Timeline preview</h2>
+      <aside className="rounded-lg border border-theme-border bg-theme-surface p-5 shadow-sm">
+        <h2 className="text-base font-bold text-theme-text">Timeline preview</h2>
         <div className="mt-4 space-y-4">
           {milestones.map(([label, value]) => (
             <div key={label} className="border-l-2 border-blue-500 pl-3">
-              <p className="text-sm font-semibold text-slate-900">{label}</p>
-              <p className="text-xs text-slate-500">{value || 'Not scheduled'}</p>
+              <p className="text-sm font-semibold text-theme-text">{label}</p>
+              <p className="text-xs text-theme-text-secondary">{value || 'Not scheduled'}</p>
             </div>
           ))}
         </div>

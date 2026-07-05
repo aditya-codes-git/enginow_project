@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, FileText, Sparkles, Users, Zap } from 'lucide-react';
 
+import { useTheme } from '../../context/ThemeContext';
+
 export default function HeroSection() {
+  const { theme } = useTheme();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,7 +58,7 @@ export default function HeroSection() {
             {/* Main Headline */}
             <motion.h1
               variants={itemVariants}
-              className="heading-clear font-outfit text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-slate-900"
+              className="heading-clear font-outfit text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-theme-text"
             >
               Discover, register &{' '}
               <span className="text-gradient-clear from-blue-600 via-blue-500 to-cyan-500">
@@ -67,7 +70,7 @@ export default function HeroSection() {
             {/* Subtext */}
             <motion.p
               variants={itemVariants}
-              className="text-slate-500 text-base sm:text-lg leading-relaxed max-w-lg font-normal"
+              className="text-theme-text-secondary text-base sm:text-lg leading-relaxed max-w-lg font-normal"
             >
               Find hackathons, coding contests, workshops, and career events from trusted colleges and communities — all in one place.
             </motion.p>
@@ -79,14 +82,18 @@ export default function HeroSection() {
             >
               <Link
                 to="/events"
-                className="group relative inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-7 py-3.5 rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                style={{
+                  backgroundColor: theme.colors.primaryAccent || theme.colors.primary || '#2563eb',
+                  color: theme.colors.textOnPrimary || '#ffffff',
+                }}
+                className="group relative inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:opacity-95"
               >
                 <span>Explore Events</span>
                 <ArrowRight className="w-4.5 h-4.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link
                 to="/become-organizer"
-                className="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-slate-700 font-semibold px-7 py-3.5 rounded-xl border border-slate-200 hover:border-slate-300 transition-all duration-200 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center bg-theme-surface hover:bg-theme-bg text-theme-text-secondary font-semibold px-7 py-3.5 rounded-xl border border-theme-border hover:border-slate-300 transition-all duration-200 hover:-translate-y-0.5"
               >
                 Host an Event
               </Link>
@@ -106,17 +113,17 @@ export default function HeroSection() {
               <div className="absolute -inset-4 bg-gradient-to-b from-blue-500/[0.03] to-transparent rounded-3xl blur-2xl pointer-events-none" />
 
               {/* Main Window */}
-              <div className="relative bg-white border border-slate-200/80 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.12)] overflow-hidden">
+              <div className="relative bg-theme-surface border border-theme-border/80 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.12)] overflow-hidden">
 
                 {/* Browser Chrome */}
-                <div className="flex items-center gap-2 px-4 py-3 bg-slate-50 border-b border-slate-100">
+                <div className="flex items-center gap-2 px-4 py-3 bg-theme-bg border-b border-theme-divider">
                   <div className="flex gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-slate-200 block" />
                     <span className="w-3 h-3 rounded-full bg-slate-200 block" />
                     <span className="w-3 h-3 rounded-full bg-slate-200 block" />
                   </div>
                   <div className="flex-1 mx-3">
-                    <div className="bg-white border border-slate-200 rounded-lg px-3 py-1 text-[11px] text-slate-400 font-medium text-center">
+                    <div className="bg-theme-surface border border-theme-border rounded-lg px-3 py-1 text-[11px] text-theme-text-muted font-medium text-center">
                       enginow.com/organiser
                     </div>
                   </div>
@@ -131,21 +138,21 @@ export default function HeroSection() {
                       { label: 'Page Views', value: '—', sub: 'This month' },
                       { label: 'Events', value: '—', sub: 'Published' },
                     ].map((stat) => (
-                      <div key={stat.label} className="bg-slate-50/80 border border-slate-100 rounded-xl p-3 space-y-1">
-                        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">{stat.label}</span>
+                      <div key={stat.label} className="bg-theme-bg/80 border border-theme-divider rounded-xl p-3 space-y-1">
+                        <span className="text-[10px] font-semibold text-theme-text-muted uppercase tracking-wide">{stat.label}</span>
                         <div className="flex items-baseline gap-1.5">
-                          <span className="text-lg font-bold text-slate-800 font-outfit">{stat.value}</span>
-                          <span className="text-[10px] text-slate-400">{stat.sub}</span>
+                          <span className="text-lg font-bold text-theme-text font-outfit">{stat.value}</span>
+                          <span className="text-[10px] text-theme-text-muted">{stat.sub}</span>
                         </div>
                       </div>
                     ))}
                   </div>
 
                   {/* Chart Placeholder */}
-                  <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-4 h-32 relative overflow-hidden">
+                  <div className="bg-theme-bg/50 border border-theme-divider rounded-xl p-4 h-32 relative overflow-hidden">
                     <div className="flex justify-between items-center mb-3">
-                      <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Registrations</span>
-                      <span className="text-[10px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Live</span>
+                      <span className="text-[11px] font-bold text-theme-text-secondary uppercase tracking-wide">Registrations</span>
+                      <span className="text-[10px] font-medium text-theme-primary bg-blue-50 px-2 py-0.5 rounded-full">Live</span>
                     </div>
                     {/* SVG area chart */}
                     <svg viewBox="0 0 300 60" className="w-full h-14" preserveAspectRatio="none">
@@ -170,29 +177,29 @@ export default function HeroSection() {
                   </div>
 
                   {/* Event Row */}
-                  <div className="bg-white border border-slate-100 rounded-xl p-3.5 flex items-center justify-between">
+                  <div className="bg-theme-surface border border-theme-divider rounded-xl p-3.5 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center">
-                        <Calendar className="w-4 h-4 text-blue-600" />
+                        <Calendar className="w-4 h-4 text-theme-primary" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-slate-700">Event Setup Wizard</p>
-                        <p className="text-[10px] text-slate-400">Step 3 of 6 — Configure tracks</p>
+                        <p className="text-xs font-bold text-theme-text-secondary">Event Setup Wizard</p>
+                        <p className="text-[10px] text-theme-text-muted">Step 3 of 6 — Configure tracks</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">In Progress</span>
+                    <span className="text-[10px] font-semibold text-theme-primary bg-blue-50 px-2.5 py-1 rounded-full">In Progress</span>
                   </div>
 
                   {/* Participant Preview */}
                   <div className="flex items-center gap-2">
                     <div className="flex -space-x-2">
-                      {['bg-blue-500', 'bg-cyan-500', 'bg-slate-400', 'bg-blue-600'].map((c, i) => (
+                      {['bg-blue-500', 'bg-cyan-500', 'bg-slate-400', 'bg-theme-primary'].map((c, i) => (
                         <div key={i} className={`w-7 h-7 rounded-full ${c} border-2 border-white flex items-center justify-center`}>
                           <Users className="w-3 h-3 text-white" />
                         </div>
                       ))}
                     </div>
-                    <span className="text-[10px] text-slate-400 font-medium">Participants joining…</span>
+                    <span className="text-[10px] text-theme-text-muted font-medium">Participants joining…</span>
                   </div>
                 </div>
               </div>
@@ -206,7 +213,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-16 pt-8 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto lg:mx-0 lg:max-w-none"
+          className="mt-16 pt-8 border-t border-theme-divider grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto lg:mx-0 lg:max-w-none"
         >
           {[
             { value: '1000+', label: 'Events Hosted' },
@@ -215,8 +222,8 @@ export default function HeroSection() {
             { value: '50+', label: 'Colleges' },
           ].map((stat, i) => (
             <div key={i} className="text-center lg:text-left space-y-1">
-              <p className="font-outfit text-2xl sm:text-3xl font-bold text-slate-900">{stat.value}</p>
-              <p className="text-xs font-semibold text-slate-400 tracking-wide">{stat.label}</p>
+              <p className="font-outfit text-2xl sm:text-3xl font-bold text-theme-text">{stat.value}</p>
+              <p className="text-xs font-semibold text-theme-text-muted tracking-wide">{stat.label}</p>
             </div>
           ))}
         </motion.div>
@@ -224,7 +231,7 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom fade mask */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-theme-bg to-transparent pointer-events-none z-10" />
     </section>
   );
 }

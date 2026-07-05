@@ -48,7 +48,7 @@ This comprehensive theme system implementation includes complete documentation a
 
 ### 1. Users: Switch Your Theme
 1. Look for theme buttons in the **Navbar**
-2. Click any theme button: Light, Dark, Ocean, Forest, Sunset, Lavender, Monochrome
+2. Click any theme button: Light, Dark, Ocean, Forest, Monochrome
 3. Your choice is saved automatically
 
 ### 2. Developers: Use Theme in Components
@@ -71,7 +71,7 @@ export function MyComponent() {
 ```
 
 ### 3. Designers: Explore Color System
-See **[THEME_COLORS.md](THEME_COLORS.md)** for all 7 color palettes with hex values and guidelines.
+See **[THEME_COLORS.md](THEME_COLORS.md)** for all 5 color palettes with hex values and guidelines.
 
 ---
 
@@ -81,7 +81,7 @@ See **[THEME_COLORS.md](THEME_COLORS.md)** for all 7 color palettes with hex val
 ```
 src/
 ├── themes/
-│   └── themes.js              ← 7 complete theme definitions
+│   └── themes.js              ← 5 complete theme definitions
 ├── context/
 │   └── ThemeContext.jsx       ← Provider & useTheme hook
 └── components/
@@ -109,17 +109,15 @@ IMPLEMENTATION_SUMMARY.md      ← What was built
 
 ---
 
-## 🎨 The 7 Themes
+## 🎨 The 5 Themes
 
 | # | Theme | Background | Text | Best For |
 |---|-------|-----------|------|----------|
 | 1 | 🟡 Light | White | Black | Default, daylight |
 | 2 | 🌙 Dark | Navy | White | Evening, low-light |
-| 3 | 🌊 Ocean | Cyan | Navy | Professional, calm |
-| 4 | 🌲 Forest | Green | Dark Green | Creative, eco |
-| 5 | 🌅 Sunset | Yellow | Brown | Energetic, warm |
-| 6 | 💜 Lavender | Purple | Deep Purple | Elegant, artistic |
-| 7 | ⚫ Monochrome | Gray | Dark Gray | Accessibility |
+| 3 | 🌊 Ocean | Navy | White | Professional, technology |
+| 4 | 🌲 Forest | Light Sage| Green | Natural, calm |
+| 5 | ⚫ Monochrome | Zinc/Gray | Dark Zinc | Distraction-free |
 
 ---
 
@@ -137,7 +135,7 @@ See **[THEME_DOCUMENTATION.md](THEME_DOCUMENTATION.md)** for typography guidelin
 ## 💾 Key Features
 
 ### User Features ✅
-- ✅ 7 unique themes
+- ✅ 5 unique themes
 - ✅ One-click theme switching
 - ✅ Automatic persistence (saves selection)
 - ✅ Smooth color transitions
@@ -294,7 +292,7 @@ See **[THEME_SETUP_GUIDE.md](THEME_SETUP_GUIDE.md)** → "Testing Themes"
 
 | Metric | Value |
 |--------|-------|
-| Total Themes | 7 |
+| Total Themes | 5 |
 | Colors per Theme | 8 |
 | CSS Variables | 5 |
 | Core Files Created | 3 |
@@ -342,7 +340,7 @@ Frontend Root
 ## 🎉 What You Get
 
 ### For End Users
-- 🎨 7 beautiful themes to choose from
+- 🎨 5 beautiful themes to choose from
 - ✨ Smooth theme transitions
 - 💾 Theme choice remembered
 - 📱 Works on all devices
@@ -365,7 +363,7 @@ Frontend Root
 
 All components are production-ready:
 - ✅ Theme system fully integrated
-- ✅ All 7 themes working
+- ✅ All 5 themes working
 - ✅ Avenir font global
 - ✅ localStorage persistence
 - ✅ No breaking changes
@@ -438,7 +436,7 @@ Troubleshoot: THEME_SETUP_GUIDE.md (Common Issues section)
 
 ## 🌟 Highlights
 
-✨ **7 Unique Themes** - Light, Dark, Ocean, Forest, Sunset, Lavender, Monochrome
+✨ **5 Unique Themes** - Light, Dark, Ocean, Forest, Monochrome
 
 🎨 **Global Avenir Font** - Consistent typography throughout
 

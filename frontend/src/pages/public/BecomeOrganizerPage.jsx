@@ -388,23 +388,23 @@ export default function BecomeOrganizerPage() {
   };
 
   const getValidationClass = (fieldName) => {
-    if (!touchedFields[fieldName]) return 'border-slate-200 focus:border-blue-600 focus:ring-blue-500/20';
-    if (errors[fieldName]) return 'border-red-300 bg-red-50/20 focus:border-red-500 focus:ring-red-500/20';
-    return 'border-emerald-300 bg-emerald-50/10 focus:border-emerald-500 focus:ring-emerald-500/20';
+    if (!touchedFields[fieldName]) return 'border-theme-border focus:border-blue-600 focus:ring-blue-500/20';
+    if (errors[fieldName]) return 'border-red-300 bg-theme-error-bg/20 focus:border-red-500 focus:ring-red-500/20';
+    return 'border-emerald-300 bg-theme-success-bg/10 focus:border-emerald-500 focus:ring-emerald-500/20';
   };
 
   // 1. Render Success Onboarding Portal Screen
   if (submittedApp) {
     return (
-      <div className="bg-slate-50 min-h-screen py-16 px-4 font-sans text-slate-800 flex items-center justify-center">
+      <div className="bg-theme-bg min-h-screen py-16 px-4 font-sans text-theme-text flex items-center justify-center">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4 }}
-          className="max-w-2xl w-full bg-white border border-slate-200 shadow-2xl rounded-[32px] p-8 md:p-12 text-center space-y-8"
+          className="max-w-2xl w-full bg-theme-surface border border-theme-border shadow-2xl rounded-[32px] p-8 md:p-12 text-center space-y-8"
         >
           {/* Animated Success Badge */}
-          <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 shadow-inner">
+          <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-theme-success-bg text-theme-success shadow-inner">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -419,43 +419,43 @@ export default function BecomeOrganizerPage() {
           </div>
 
           <div className="space-y-3">
-            <h1 className="font-outfit text-3xl font-extrabold text-slate-900 tracking-tight">Application Successfully Received</h1>
-            <p className="text-slate-500 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
+            <h1 className="font-outfit text-3xl font-extrabold text-theme-text tracking-tight">Application Successfully Received</h1>
+            <p className="text-theme-text-secondary max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
               We have received your onboarding registration request. Our administration team manually reviews each organizer account to ensure platform integrity.
             </p>
           </div>
 
           {/* Premium Ticket Info Card */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-3xl p-6 text-left space-y-4 max-w-md mx-auto relative overflow-hidden">
+          <div className="bg-theme-bg border border-theme-border/80 rounded-3xl p-6 text-left space-y-4 max-w-md mx-auto relative overflow-hidden">
             <div className="absolute top-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 w-full" />
             
-            <div className="flex justify-between items-center text-xs border-b border-slate-200/60 pb-3">
-              <span className="font-bold text-slate-450 uppercase tracking-widest">Application ID</span>
+            <div className="flex justify-between items-center text-xs border-b border-theme-border/60 pb-3">
+              <span className="font-bold text-theme-text-muted uppercase tracking-widest">Application ID</span>
               <button 
                 onClick={() => handleCopyId(submittedApp.applicationId || submittedApp.id)}
-                className="flex items-center gap-1.5 font-mono font-bold text-slate-800 bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg transition-colors cursor-pointer text-xs"
+                className="flex items-center gap-1.5 font-mono font-bold text-theme-text bg-theme-surface hover:bg-theme-bg-secondary border border-theme-border px-3 py-1 rounded-lg transition-colors cursor-pointer text-xs"
               >
                 {submittedApp.applicationId || submittedApp.id}
-                <ExternalLink className="w-3 h-3 text-slate-400" />
+                <ExternalLink className="w-3 h-3 text-theme-text-muted" />
               </button>
             </div>
             
-            <div className="flex justify-between items-center text-xs border-b border-slate-200/60 pb-3">
-              <span className="font-bold text-slate-450 uppercase tracking-widest">Organization Name</span>
-              <span className="font-extrabold text-slate-800">{submittedApp.organizationName}</span>
+            <div className="flex justify-between items-center text-xs border-b border-theme-border/60 pb-3">
+              <span className="font-bold text-theme-text-muted uppercase tracking-widest">Organization Name</span>
+              <span className="font-extrabold text-theme-text">{submittedApp.organizationName}</span>
             </div>
             
-            <div className="flex justify-between items-center text-xs border-b border-slate-200/60 pb-3">
-              <span className="font-bold text-slate-450 uppercase tracking-widest">Review Status</span>
-              <span className="inline-flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">
+            <div className="flex justify-between items-center text-xs border-b border-theme-border/60 pb-3">
+              <span className="font-bold text-theme-text-muted uppercase tracking-widest">Review Status</span>
+              <span className="inline-flex items-center gap-1.5 font-bold text-theme-primary bg-blue-50 border border-blue-100 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">
                 <Clock className="w-3.5 h-3.5" />
                 {submittedApp.status}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-xs">
-              <span className="font-bold text-slate-450 uppercase tracking-widest">Review Timeline</span>
-              <span className="font-extrabold text-slate-800 flex items-center gap-1">
+              <span className="font-bold text-theme-text-muted uppercase tracking-widest">Review Timeline</span>
+              <span className="font-extrabold text-theme-text flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5 text-blue-500" />
                 2-3 Business Days
               </span>
@@ -463,30 +463,30 @@ export default function BecomeOrganizerPage() {
           </div>
 
           {/* Action Chain Details */}
-          <div className="space-y-4 max-w-md mx-auto text-sm text-slate-650 leading-relaxed">
+          <div className="space-y-4 max-w-md mx-auto text-sm text-theme-text-secondary leading-relaxed">
             <div className="text-left bg-blue-50/30 border border-blue-100/50 rounded-2xl p-5 space-y-3">
-              <h2 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <Info className="w-4.5 h-4.5 text-blue-600" />
+              <h2 className="font-bold text-theme-text text-sm flex items-center gap-2">
+                <Info className="w-4.5 h-4.5 text-theme-primary" />
                 What happens next?
               </h2>
-              <ol className="list-decimal list-inside space-y-2.5 text-xs text-slate-650 font-medium">
-                <li>We will conduct a profile check on <span className="font-bold text-slate-800">{submittedApp.organizationName}</span>.</li>
-                <li>A validation link will be dispatched to your registered address (<span className="font-bold text-slate-800">{submittedApp.email}</span>) to verify credentials.</li>
+              <ol className="list-decimal list-inside space-y-2.5 text-xs text-theme-text-secondary font-medium">
+                <li>We will conduct a profile check on <span className="font-bold text-theme-text">{submittedApp.organizationName}</span>.</li>
+                <li>A validation link will be dispatched to your registered address (<span className="font-bold text-theme-text">{submittedApp.email}</span>) to verify credentials.</li>
                 <li>Upon successful verification, you will receive an invitation to set up your password and access the live dashboard.</li>
               </ol>
             </div>
-            <p className="text-xs text-slate-400">
-              For security modifications, please reach out to us at <Link to="/contact" className="font-bold text-blue-600 hover:text-blue-700 underline">Support Channels</Link>.
+            <p className="text-xs text-theme-text-muted">
+              For security modifications, please reach out to us at <Link to="/contact" className="font-bold text-theme-primary hover:text-blue-700 underline">Support Channels</Link>.
             </p>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row gap-3.5 justify-center">
-            <Link to="/" className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-md">
+            <Link to="/" className="inline-flex items-center justify-center gap-2 bg-theme-primary hover:bg-theme-accent-hover text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-md">
               Return to Homepage
             </Link>
             <button 
               disabled 
-              className="inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-400 font-semibold px-8 py-3.5 rounded-xl border border-slate-200 cursor-not-allowed opacity-80"
+              className="inline-flex items-center justify-center gap-2 bg-theme-bg-secondary text-theme-text-muted font-semibold px-8 py-3.5 rounded-xl border border-theme-border cursor-not-allowed opacity-80"
             >
               <Search className="w-4.5 h-4.5" />
               Track Application (Coming Soon)
@@ -498,23 +498,23 @@ export default function BecomeOrganizerPage() {
   }
 
   return (
-    <div className="bg-slate-50 text-slate-900 font-sans min-h-screen relative selection:bg-blue-150">
+    <div className="bg-theme-bg text-theme-text font-sans min-h-screen relative selection:bg-blue-150">
       
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden pt-28 pb-24 border-b border-slate-200/80 bg-slate-50">
+      <section className="relative overflow-hidden pt-28 pb-24 border-b border-theme-border/80 bg-theme-bg">
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-50 to-transparent pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-7">
           
           <div className="inline-flex items-center gap-2.5 rounded-full border border-blue-100 bg-blue-50/50 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
-            <Sparkles className="h-4.5 w-4.5 text-blue-600" />
+            <Sparkles className="h-4.5 w-4.5 text-theme-primary" />
             Verified Host Program
           </div>
           
-          <h1 className="heading-clear font-outfit text-4xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-5xl lg:text-[60px] max-w-4xl mx-auto">
+          <h1 className="heading-clear font-outfit text-4xl font-extrabold leading-tight tracking-tight text-theme-text sm:text-5xl lg:text-[60px] max-w-4xl mx-auto">
             Become a Verified Organizer
           </h1>
           
-          <p className="max-w-2xl mx-auto text-lg text-slate-500 leading-relaxed font-medium">
+          <p className="max-w-2xl mx-auto text-lg text-theme-text-secondary leading-relaxed font-medium">
             Join Enginow as an authorized organizer to list, promote, and manage hackathons, technical contests, and coding challenges for engineering candidates.
           </p>
 
@@ -528,8 +528,8 @@ export default function BecomeOrganizerPage() {
             ].map((badge) => {
               const IconComp = badge.icon;
               return (
-                <div key={badge.label} className="flex items-center gap-2 bg-slate-50 border border-slate-200/60 rounded-full px-4 py-1.5 text-xs font-bold text-slate-600 shadow-sm">
-                  <IconComp className="w-3.5 h-3.5 text-blue-600" />
+                <div key={badge.label} className="flex items-center gap-2 bg-theme-bg border border-theme-border/60 rounded-full px-4 py-1.5 text-xs font-bold text-theme-text-secondary shadow-sm">
+                  <IconComp className="w-3.5 h-3.5 text-theme-primary" />
                   {badge.label}
                 </div>
               );
@@ -539,14 +539,14 @@ export default function BecomeOrganizerPage() {
           <div className="pt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all cursor-pointer text-sm w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all cursor-pointer text-sm w-full sm:w-auto"
             >
               Apply for Verification
               <ArrowRight className="w-4.5 h-4.5" />
             </button>
             <button
               onClick={scrollToTimeline}
-              className="inline-flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold px-8 py-4 rounded-xl border border-slate-200 transition hover:-translate-y-0.5 cursor-pointer text-sm w-full sm:w-auto shadow-sm"
+              className="inline-flex items-center justify-center bg-theme-bg hover:bg-theme-bg-secondary text-theme-text-secondary font-semibold px-8 py-4 rounded-xl border border-theme-border transition hover:-translate-y-0.5 cursor-pointer text-sm w-full sm:w-auto shadow-sm"
             >
               Learn More
             </button>
@@ -555,24 +555,24 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 2. BENEFITS SECTION */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-theme-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center space-y-4">
-            <span className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">Why Host Events?</span>
-            <h2 className="font-outfit font-extrabold text-3xl text-slate-950 tracking-tight sm:text-4xl">Platform Hosting Benefits</h2>
-            <p className="text-slate-500 max-w-lg mx-auto text-sm sm:text-base">Powerful dashboards, targeted reaches, and verification audits at your disposal.</p>
+            <span className="font-outfit font-bold text-xs text-theme-primary uppercase tracking-widest">Why Host Events?</span>
+            <h2 className="font-outfit font-extrabold text-3xl text-theme-text tracking-tight sm:text-4xl">Platform Hosting Benefits</h2>
+            <p className="text-theme-text-secondary max-w-lg mx-auto text-sm sm:text-base">Powerful dashboards, targeted reaches, and verification audits at your disposal.</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((feat) => {
               const IconComp = feat.icon;
               return (
-                <div key={feat.title} className="rounded-3xl border border-slate-200/80 bg-white p-7 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                <div key={feat.title} className="rounded-3xl border border-theme-border/80 bg-theme-surface p-7 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
                   <div className="space-y-4">
-                    <div className="h-12 w-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-inner">
+                    <div className="h-12 w-12 rounded-2xl bg-blue-50 text-theme-primary flex items-center justify-center group-hover:bg-theme-primary group-hover:text-white transition-colors duration-300 shadow-inner">
                       <IconComp className="w-5.5 h-5.5" />
                     </div>
-                    <h3 className="font-outfit font-bold text-lg text-slate-900">{feat.title}</h3>
-                    <p className="text-slate-500 text-sm leading-relaxed font-medium">{feat.description}</p>
+                    <h3 className="font-outfit font-bold text-lg text-theme-text">{feat.title}</h3>
+                    <p className="text-theme-text-secondary text-sm leading-relaxed font-medium">{feat.description}</p>
                   </div>
                 </div>
               );
@@ -582,23 +582,23 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 3. ELIGIBILITY REQUIREMENTS */}
-      <section className="py-24 bg-slate-50 border-y border-slate-200/80">
+      <section className="py-24 bg-theme-bg border-y border-theme-border/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center space-y-4">
-            <span className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest font-semibold">Eligibility Check</span>
-            <h2 className="font-outfit font-extrabold text-3xl text-slate-950 tracking-tight sm:text-4xl">Who Can Register?</h2>
-            <p className="text-slate-500 max-w-lg mx-auto text-xs sm:text-sm leading-relaxed">
+            <span className="font-outfit font-bold text-xs text-theme-primary uppercase tracking-widest font-semibold">Eligibility Check</span>
+            <h2 className="font-outfit font-extrabold text-3xl text-theme-text tracking-tight sm:text-4xl">Who Can Register?</h2>
+            <p className="text-theme-text-secondary max-w-lg mx-auto text-xs sm:text-sm leading-relaxed">
               We approve organizational coordinator accounts representing verified educational, technological, corporate, or nonprofit bodies.
             </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {eligibility.map((item) => (
-              <div key={item.category} className="rounded-2xl border border-slate-200 bg-slate-50 p-6 flex flex-col justify-between space-y-4 hover:border-blue-400 transition-colors">
+              <div key={item.category} className="rounded-2xl border border-theme-border bg-theme-bg p-6 flex flex-col justify-between space-y-4 hover:border-blue-400 transition-colors">
                 <div className="space-y-2">
-                  <span className="inline-flex text-[9px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-100 rounded px-2.5 py-0.5">{item.badge}</span>
-                  <h4 className="font-outfit font-extrabold text-base text-slate-900 pt-1">{item.category}</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed font-semibold">{item.desc}</p>
+                  <span className="inline-flex text-[9px] font-bold uppercase tracking-wider text-theme-primary bg-blue-50 border border-blue-100 rounded px-2.5 py-0.5">{item.badge}</span>
+                  <h4 className="font-outfit font-extrabold text-base text-theme-text pt-1">{item.category}</h4>
+                  <p className="text-theme-text-secondary text-xs leading-relaxed font-semibold">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -613,23 +613,23 @@ export default function BecomeOrganizerPage() {
           <div className="text-center space-y-4">
             <span className="font-outfit font-bold text-xs text-blue-400 uppercase tracking-widest">Auditing Pipeline</span>
             <h2 className="font-outfit font-extrabold text-3xl tracking-tight sm:text-4xl text-white">How Verification Works</h2>
-            <p className="text-slate-400 max-w-md mx-auto text-xs sm:text-sm leading-relaxed">
+            <p className="text-theme-text-muted max-w-md mx-auto text-xs sm:text-sm leading-relaxed">
               Our structured pipeline keeps onboarding simple, safe, and manual.
             </p>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 relative">
             {timelineStages.map((stage, idx) => (
-              <div key={stage.title} className="bg-white/5 border border-white/10 rounded-3xl p-7 space-y-4 relative group">
+              <div key={stage.title} className="bg-theme-surface/5 border border-white/10 rounded-3xl p-7 space-y-4 relative group">
                 <div className="flex justify-between items-start">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600/30 border border-blue-500/20 text-blue-400 font-extrabold text-sm">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-theme-primary/30 border border-blue-500/20 text-blue-400 font-extrabold text-sm">
                     {idx + 1}
                   </span>
-                  <span className="text-[10px] font-bold text-slate-400 bg-white/10 border border-white/5 px-2.5 py-0.5 rounded-full">{stage.duration}</span>
+                  <span className="text-[10px] font-bold text-theme-text-muted bg-theme-surface/10 border border-white/5 px-2.5 py-0.5 rounded-full">{stage.duration}</span>
                 </div>
                 <div className="space-y-1">
                   <h4 className="font-outfit font-bold text-base text-slate-100">{stage.title}</h4>
-                  <p className="text-slate-450 text-xs leading-relaxed font-semibold">{stage.desc}</p>
+                  <p className="text-theme-text-muted text-xs leading-relaxed font-semibold">{stage.desc}</p>
                 </div>
                 {idx < 3 && (
                   <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 -right-4 w-8 border-t border-dashed border-white/15 z-20 pointer-events-none" />
@@ -641,26 +641,26 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 5. FAQ ACCORDION SECTION */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-theme-surface">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-16">
           <div className="text-center space-y-4">
-            <span className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest font-semibold">Help Center</span>
-            <h2 className="font-outfit font-extrabold text-3xl text-slate-950 tracking-tight sm:text-4xl">Frequently Asked Questions</h2>
-            <p className="text-slate-500 text-xs sm:text-sm font-semibold">Got questions? We have mapped common queries below.</p>
+            <span className="font-outfit font-bold text-xs text-theme-primary uppercase tracking-widest font-semibold">Help Center</span>
+            <h2 className="font-outfit font-extrabold text-3xl text-theme-text tracking-tight sm:text-4xl">Frequently Asked Questions</h2>
+            <p className="text-theme-text-secondary text-xs sm:text-sm font-semibold">Got questions? We have mapped common queries below.</p>
           </div>
 
           <div className="space-y-3">
             {faqs.map((faq, idx) => {
               const isOpen = faqOpenIndex === idx;
               return (
-                <div key={faq.q} className="border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200">
+                <div key={faq.q} className="border border-theme-border rounded-2xl overflow-hidden transition-all duration-200">
                   <button
                     type="button"
                     onClick={() => setFaqOpenIndex(isOpen ? null : idx)}
-                    className="w-full flex items-center justify-between text-left p-5 font-bold text-slate-900 text-sm sm:text-base hover:bg-slate-50 cursor-pointer transition-colors"
+                    className="w-full flex items-center justify-between text-left p-5 font-bold text-theme-text text-sm sm:text-base hover:bg-theme-bg cursor-pointer transition-colors"
                   >
                     <span>{faq.q}</span>
-                    <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-200 shrink-0 ml-4 ${isOpen ? 'rotate-180 text-blue-600' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-theme-text-muted transition-transform duration-200 shrink-0 ml-4 ${isOpen ? 'rotate-180 text-theme-primary' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -671,7 +671,7 @@ export default function BecomeOrganizerPage() {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden"
                       >
-                        <div className="p-5 pt-0 text-slate-500 text-xs sm:text-sm leading-relaxed border-t border-slate-100 font-semibold bg-slate-50/50">
+                        <div className="p-5 pt-0 text-theme-text-secondary text-xs sm:text-sm leading-relaxed border-t border-theme-divider font-semibold bg-theme-bg/50">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -685,16 +685,16 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 6. FORM WIZARD CONTAINER */}
-      <section ref={formRef} className="py-24 bg-slate-50 border-t border-slate-200 scroll-mt-6">
+      <section ref={formRef} className="py-24 bg-theme-bg border-t border-theme-border scroll-mt-6">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="bg-white rounded-[32px] border border-slate-250 shadow-xl overflow-hidden">
+          <div className="bg-theme-surface rounded-[32px] border border-slate-250 shadow-xl overflow-hidden">
             
             {/* Form Title & Top Progress Tracker */}
             <div className="bg-slate-950 text-white p-6 sm:p-8 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="space-y-1">
                   <h3 className="font-outfit font-extrabold text-xl sm:text-2xl">Verification Application</h3>
-                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-theme-text-muted text-xs sm:text-sm leading-relaxed">
                     Provide accurate coordinates. All fields marked with * are required.
                   </p>
                 </div>
@@ -702,7 +702,7 @@ export default function BecomeOrganizerPage() {
                   <div className="text-[10px] font-extrabold tracking-widest text-blue-400 uppercase">
                     Step {currentStep} of {totalSteps}
                   </div>
-                  <div className="text-[11px] font-semibold text-slate-350">
+                  <div className="text-[11px] font-semibold text-theme-text-muted">
                     {getStepRemainingTime()}
                   </div>
                 </div>
@@ -710,7 +710,7 @@ export default function BecomeOrganizerPage() {
 
               {/* Progress Indicator Bar */}
               <div className="space-y-2">
-                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-theme-surface/10 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-blue-500"
                     animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -718,7 +718,7 @@ export default function BecomeOrganizerPage() {
                   />
                 </div>
                 {/* Horizontal Step labels */}
-                <div className="hidden sm:flex justify-between text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                <div className="hidden sm:flex justify-between text-[9px] font-bold text-theme-text-secondary uppercase tracking-wider">
                   {stepTitles.map((title, index) => {
                     const stepNum = index + 1;
                     const isActive = currentStep === stepNum;
@@ -753,13 +753,13 @@ export default function BecomeOrganizerPage() {
                     transition={{ duration: 0.2 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <Building2 className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900">Organization Information</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Enter profile coordinates for your campus group or firm.</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text">Organization Information</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Enter profile coordinates for your campus group or firm.</p>
                       </div>
                     </div>
 
@@ -768,7 +768,7 @@ export default function BecomeOrganizerPage() {
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-550 uppercase tracking-wider flex items-center justify-between">
                           <span>Organization Name *</span>
-                          <span className="text-[10px] text-slate-400 font-medium lowercase">Required</span>
+                          <span className="text-[10px] text-theme-text-muted font-medium lowercase">Required</span>
                         </label>
                         <div className="relative">
                           <input
@@ -776,7 +776,7 @@ export default function BecomeOrganizerPage() {
                             value={formData.organizationName}
                             onChange={handleInputChange}
                             onBlur={handleFieldBlur}
-                            className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('organizationName')}`}
+                            className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('organizationName')}`}
                             placeholder="e.g. SVNIT Developers Chapter"
                           />
                           {touchedFields.organizationName && (
@@ -790,7 +790,7 @@ export default function BecomeOrganizerPage() {
                           )}
                         </div>
                         {touchedFields.organizationName && errors.organizationName && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.organizationName}
                           </p>
@@ -801,14 +801,14 @@ export default function BecomeOrganizerPage() {
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-550 uppercase tracking-wider flex items-center justify-between">
                           <span>Organization Type *</span>
-                          <span className="text-[10px] text-slate-400 font-medium lowercase">Required</span>
+                          <span className="text-[10px] text-theme-text-muted font-medium lowercase">Required</span>
                         </label>
                         <select
                           name="organizationType"
                           value={formData.organizationType}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold bg-slate-50/50 cursor-pointer outline-none transition duration-200 ${getValidationClass('organizationType')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold bg-theme-bg/50 cursor-pointer outline-none transition duration-200 ${getValidationClass('organizationType')}`}
                         >
                           <option value="">-- Choose Type --</option>
                           {organizationTypes.map(t => (
@@ -816,7 +816,7 @@ export default function BecomeOrganizerPage() {
                           ))}
                         </select>
                         {touchedFields.organizationType && errors.organizationType && (
-                          <p className="text-[11px] text-red-655 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.organizationType}
                           </p>
@@ -829,18 +829,18 @@ export default function BecomeOrganizerPage() {
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-550 uppercase tracking-wider flex items-center justify-between">
                           <span>Official Website</span>
-                          <span className="text-[10px] text-slate-450 font-semibold normal-case">Optional</span>
+                          <span className="text-[10px] text-theme-text-muted font-semibold normal-case">Optional</span>
                         </label>
                         <input
                           name="website"
                           value={formData.website}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('website')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('website')}`}
                           placeholder="https://example.com"
                         />
                         {touchedFields.website && errors.website && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.website}
                           </p>
@@ -858,11 +858,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.linkedin}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('linkedin')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('linkedin')}`}
                           placeholder="https://linkedin.com/company/example"
                         />
                         {touchedFields.linkedin && errors.linkedin && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.linkedin}
                           </p>
@@ -882,13 +882,13 @@ export default function BecomeOrganizerPage() {
                     transition={{ duration: 0.2 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <Users className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900">Primary Contact Details</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Who should we contact for onboarding review steps?</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text">Primary Contact Details</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Who should we contact for onboarding review steps?</p>
                       </div>
                     </div>
 
@@ -901,11 +901,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.applicantName}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('applicantName')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('applicantName')}`}
                           placeholder="e.g. Alex Carter"
                         />
                         {touchedFields.applicantName && errors.applicantName && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.applicantName}
                           </p>
@@ -916,7 +916,7 @@ export default function BecomeOrganizerPage() {
                       <div className="space-y-1">
                         <label className="text-xs font-bold text-slate-550 uppercase tracking-wider flex items-center justify-between">
                           <span>Official Email Address *</span>
-                          <span className="text-[10px] text-slate-400 font-semibold normal-case">verification key</span>
+                          <span className="text-[10px] text-theme-text-muted font-semibold normal-case">verification key</span>
                         </label>
                         <input
                           type="email"
@@ -924,11 +924,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.email}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('email')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('email')}`}
                           placeholder="you@example.com"
                         />
                         {touchedFields.email && errors.email && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.email}
                           </p>
@@ -945,11 +945,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('phone')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('phone')}`}
                           placeholder="+91 XXXXX XXXXX"
                         />
                         {touchedFields.phone && errors.phone && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.phone}
                           </p>
@@ -964,11 +964,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.city}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('city')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('city')}`}
                           placeholder="Surat"
                         />
                         {touchedFields.city && errors.city && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.city}
                           </p>
@@ -983,11 +983,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.country}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('country')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('country')}`}
                           placeholder="India"
                         />
                         {touchedFields.country && errors.country && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.country}
                           </p>
@@ -1007,13 +1007,13 @@ export default function BecomeOrganizerPage() {
                     transition={{ duration: 0.2 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900">Experience & Intent</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Share your institutional hosting strategy.</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text">Experience & Intent</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Share your institutional hosting strategy.</p>
                       </div>
                     </div>
 
@@ -1021,7 +1021,7 @@ export default function BecomeOrganizerPage() {
                     <div className="space-y-1">
                       <div className="flex justify-between items-center text-xs font-bold text-slate-550 uppercase tracking-wider">
                         <span>Describe your organization *</span>
-                        <span className="text-[10px] text-slate-400 font-medium normal-case">
+                        <span className="text-[10px] text-theme-text-muted font-medium normal-case">
                           {formData.description.length}/1000 chars
                         </span>
                       </div>
@@ -1032,11 +1032,11 @@ export default function BecomeOrganizerPage() {
                         onChange={handleInputChange}
                         onBlur={handleFieldBlur}
                         maxLength="1000"
-                        className={`w-full resize-none rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('description')}`}
+                        className={`w-full resize-none rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('description')}`}
                         placeholder="Provide details about your institution history, core team size, technical achievements..."
                       />
                       {touchedFields.description && errors.description && (
-                        <p className="text-[11px] text-red-655 font-bold flex items-center gap-1">
+                        <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                           <AlertTriangle className="w-3 h-3 shrink-0" />
                           {errors.description}
                         </p>
@@ -1047,7 +1047,7 @@ export default function BecomeOrganizerPage() {
                     <div className="space-y-1">
                       <div className="flex justify-between items-center text-xs font-bold text-slate-550 uppercase tracking-wider">
                         <span>Why do you want to host events on Enginow? *</span>
-                        <span className="text-[10px] text-slate-400 font-medium normal-case">
+                        <span className="text-[10px] text-theme-text-muted font-medium normal-case">
                           {formData.purpose.length}/1000 chars
                         </span>
                       </div>
@@ -1058,11 +1058,11 @@ export default function BecomeOrganizerPage() {
                         onChange={handleInputChange}
                         onBlur={handleFieldBlur}
                         maxLength="1000"
-                        className={`w-full resize-none rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('purpose')}`}
+                        className={`w-full resize-none rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('purpose')}`}
                         placeholder="Explain the type of contests, target student groups, and rewards you plan to establish..."
                       />
                       {touchedFields.purpose && errors.purpose && (
-                        <p className="text-[11px] text-red-655 font-bold flex items-center gap-1">
+                        <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                           <AlertTriangle className="w-3 h-3 shrink-0" />
                           {errors.purpose}
                         </p>
@@ -1081,13 +1081,13 @@ export default function BecomeOrganizerPage() {
                     transition={{ duration: 0.2 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <Calendar className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900">Scale & Planning Metrics</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Help us size your event hosting resources.</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text">Scale & Planning Metrics</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Help us size your event hosting resources.</p>
                       </div>
                     </div>
 
@@ -1101,11 +1101,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.expectedEvents}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('expectedEvents')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('expectedEvents')}`}
                           placeholder="e.g. 5"
                         />
                         {touchedFields.expectedEvents && errors.expectedEvents && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.expectedEvents}
                           </p>
@@ -1121,11 +1121,11 @@ export default function BecomeOrganizerPage() {
                           value={formData.expectedParticipants}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className={`w-full rounded-xl border px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition duration-200 ${getValidationClass('expectedParticipants')}`}
+                          className={`w-full rounded-xl border px-4 py-3 text-theme-text text-sm font-semibold outline-none transition duration-200 ${getValidationClass('expectedParticipants')}`}
                           placeholder="e.g. 150"
                         />
                         {touchedFields.expectedParticipants && errors.expectedParticipants && (
-                          <p className="text-[11px] text-red-650 font-bold flex items-center gap-1">
+                          <p className="text-[11px] text-theme-error font-bold flex items-center gap-1">
                             <AlertTriangle className="w-3 h-3 shrink-0" />
                             {errors.expectedParticipants}
                           </p>
@@ -1143,88 +1143,88 @@ export default function BecomeOrganizerPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.2 }}
-                    className="space-y-6 text-xs sm:text-sm text-slate-700"
+                    className="space-y-6 text-xs sm:text-sm text-theme-text-secondary"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <CheckCircle2 className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900 font-sans">Review Application Summary</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Verify all entered values before declaration submission.</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text font-sans">Review Application Summary</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Verify all entered values before declaration submission.</p>
                       </div>
                     </div>
 
                     {/* Section 1 */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
-                      <div className="flex justify-between items-center border-b border-slate-200 pb-2">
-                        <h5 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
-                          <Building2 className="w-4 h-4 text-blue-600" />
+                    <div className="bg-theme-bg border border-theme-border rounded-2xl p-5 space-y-3">
+                      <div className="flex justify-between items-center border-b border-theme-border pb-2">
+                        <h5 className="font-bold text-theme-text text-xs uppercase tracking-wider flex items-center gap-2">
+                          <Building2 className="w-4 h-4 text-theme-primary" />
                           Organization Profile
                         </h5>
                         <button
                           type="button"
                           onClick={() => handleEditSection(1)}
-                          className="flex items-center gap-1 text-[11px] font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+                          className="flex items-center gap-1 text-[11px] font-bold text-theme-primary hover:text-blue-700 cursor-pointer"
                         >
                           <Edit2 className="w-3 h-3" />
                           Edit
                         </button>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-2 text-xs font-semibold">
-                        <div><span className="text-slate-400">Name:</span> {formData.organizationName}</div>
-                        <div><span className="text-slate-400">Type:</span> {formData.organizationType}</div>
-                        <div><span className="text-slate-400">Website:</span> {formData.website || <span className="text-slate-350 italic">None</span>}</div>
-                        <div><span className="text-slate-400">LinkedIn:</span> {formData.linkedin || <span className="text-slate-350 italic">None</span>}</div>
+                        <div><span className="text-theme-text-muted">Name:</span> {formData.organizationName}</div>
+                        <div><span className="text-theme-text-muted">Type:</span> {formData.organizationType}</div>
+                        <div><span className="text-theme-text-muted">Website:</span> {formData.website || <span className="text-theme-text-muted italic">None</span>}</div>
+                        <div><span className="text-theme-text-muted">LinkedIn:</span> {formData.linkedin || <span className="text-theme-text-muted italic">None</span>}</div>
                       </div>
                     </div>
 
                     {/* Section 2 */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
-                      <div className="flex justify-between items-center border-b border-slate-200 pb-2">
-                        <h5 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
-                          <Users className="w-4 h-4 text-blue-600" />
+                    <div className="bg-theme-bg border border-theme-border rounded-2xl p-5 space-y-3">
+                      <div className="flex justify-between items-center border-b border-theme-border pb-2">
+                        <h5 className="font-bold text-theme-text text-xs uppercase tracking-wider flex items-center gap-2">
+                          <Users className="w-4 h-4 text-theme-primary" />
                           Primary Coordinator
                         </h5>
                         <button
                           type="button"
                           onClick={() => handleEditSection(2)}
-                          className="flex items-center gap-1 text-[11px] font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+                          className="flex items-center gap-1 text-[11px] font-bold text-theme-primary hover:text-blue-700 cursor-pointer"
                         >
                           <Edit2 className="w-3 h-3" />
                           Edit
                         </button>
                       </div>
                       <div className="grid gap-3 sm:grid-cols-2 text-xs font-semibold">
-                        <div><span className="text-slate-400">Full Name:</span> {formData.applicantName}</div>
-                        <div><span className="text-slate-400">Official Email:</span> {formData.email}</div>
-                        <div><span className="text-slate-400">Phone:</span> {formData.phone}</div>
-                        <div><span className="text-slate-400">Location:</span> {formData.city}, {formData.country}</div>
+                        <div><span className="text-theme-text-muted">Full Name:</span> {formData.applicantName}</div>
+                        <div><span className="text-theme-text-muted">Official Email:</span> {formData.email}</div>
+                        <div><span className="text-theme-text-muted">Phone:</span> {formData.phone}</div>
+                        <div><span className="text-theme-text-muted">Location:</span> {formData.city}, {formData.country}</div>
                       </div>
                     </div>
 
                     {/* Section 3 & 4 */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
-                      <div className="flex justify-between items-center border-b border-slate-200 pb-2">
-                        <h5 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-blue-600" />
+                    <div className="bg-theme-bg border border-theme-border rounded-2xl p-5 space-y-3">
+                      <div className="flex justify-between items-center border-b border-theme-border pb-2">
+                        <h5 className="font-bold text-theme-text text-xs uppercase tracking-wider flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-theme-primary" />
                           Event Planning & Scope
                         </h5>
                         <button
                           type="button"
                           onClick={() => handleEditSection(3)}
-                          className="flex items-center gap-1 text-[11px] font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+                          className="flex items-center gap-1 text-[11px] font-bold text-theme-primary hover:text-blue-700 cursor-pointer"
                         >
                           <Edit2 className="w-3 h-3" />
                           Edit
                         </button>
                       </div>
                       <div className="space-y-2 text-xs font-semibold">
-                        <div><span className="text-slate-400">Description:</span> <p className="mt-1 text-slate-700 whitespace-pre-wrap leading-relaxed">{formData.description}</p></div>
-                        <div className="border-t border-slate-200/50 pt-2"><span className="text-slate-400">Purpose / Intent:</span> <p className="mt-1 text-slate-700 whitespace-pre-wrap leading-relaxed">{formData.purpose}</p></div>
-                        <div className="grid gap-3 sm:grid-cols-2 border-t border-slate-200/50 pt-2">
-                          <div><span className="text-slate-400">Expected Events/Year:</span> {formData.expectedEvents}</div>
-                          <div><span className="text-slate-400">Expected Participants/Event:</span> {formData.expectedParticipants}</div>
+                        <div><span className="text-theme-text-muted">Description:</span> <p className="mt-1 text-theme-text-secondary whitespace-pre-wrap leading-relaxed">{formData.description}</p></div>
+                        <div className="border-t border-theme-border/50 pt-2"><span className="text-theme-text-muted">Purpose / Intent:</span> <p className="mt-1 text-theme-text-secondary whitespace-pre-wrap leading-relaxed">{formData.purpose}</p></div>
+                        <div className="grid gap-3 sm:grid-cols-2 border-t border-theme-border/50 pt-2">
+                          <div><span className="text-theme-text-muted">Expected Events/Year:</span> {formData.expectedEvents}</div>
+                          <div><span className="text-theme-text-muted">Expected Participants/Event:</span> {formData.expectedParticipants}</div>
                         </div>
                       </div>
                     </div>
@@ -1242,13 +1242,13 @@ export default function BecomeOrganizerPage() {
                     transition={{ duration: 0.2 }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <div className="flex items-center gap-3 border-b border-theme-divider pb-3">
+                      <div className="h-10 w-10 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
                         <ShieldCheck className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-outfit font-extrabold text-base text-slate-900">Declaration & Verification</h4>
-                        <p className="text-slate-400 text-xs font-semibold">Agree to hosting terms and finalize submission.</p>
+                        <h4 className="font-outfit font-extrabold text-base text-theme-text">Declaration & Verification</h4>
+                        <p className="text-theme-text-muted text-xs font-semibold">Agree to hosting terms and finalize submission.</p>
                       </div>
                     </div>
 
@@ -1256,7 +1256,7 @@ export default function BecomeOrganizerPage() {
                     <div className="space-y-1">
                       <div className="flex justify-between items-center text-xs font-bold text-slate-555 uppercase tracking-wider">
                         <span>Additional Remarks (optional)</span>
-                        <span className="text-[10px] text-slate-400 font-medium normal-case">
+                        <span className="text-[10px] text-theme-text-muted font-medium normal-case">
                           {formData.additionalInformation.length}/1000 chars
                         </span>
                       </div>
@@ -1266,26 +1266,26 @@ export default function BecomeOrganizerPage() {
                         value={formData.additionalInformation}
                         onChange={handleInputChange}
                         maxLength="1000"
-                        className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 text-sm font-semibold outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full resize-none rounded-xl border border-theme-border bg-theme-bg px-4 py-3 text-theme-text text-sm font-semibold outline-none transition focus:border-blue-600 focus:bg-theme-surface focus:ring-2 focus:ring-blue-500/20"
                         placeholder="Any extra comments or specific onboarding needs you wish to communicate to admins..."
                       />
                     </div>
 
                     {/* Declaration check */}
                     <div className="pt-2">
-                      <label className="flex items-start gap-3 cursor-pointer font-bold text-slate-650 text-xs leading-5">
+                      <label className="flex items-start gap-3 cursor-pointer font-bold text-theme-text-secondary text-xs leading-5">
                         <input
                           type="checkbox"
                           name="termsAccepted"
                           checked={formData.termsAccepted}
                           onChange={handleInputChange}
                           onBlur={handleFieldBlur}
-                          className="w-5 h-5 mt-0.5 rounded border-slate-200 text-blue-600 focus:ring-blue-500 focus:ring-offset-0 cursor-pointer shrink-0"
+                          className="w-5 h-5 mt-0.5 rounded border-theme-border text-theme-primary focus:ring-blue-500 focus:ring-offset-0 cursor-pointer shrink-0"
                         />
                         <span>I confirm that the details provided here represent a certified coordinator of the organization. I understand that submitting fake information will lead to immediate denial and email bans. *</span>
                       </label>
                       {touchedFields.termsAccepted && errors.termsAccepted && (
-                        <p className="text-[11px] text-red-650 font-bold flex items-center gap-1 mt-1">
+                        <p className="text-[11px] text-theme-error font-bold flex items-center gap-1 mt-1">
                           <AlertTriangle className="w-3 h-3 shrink-0" />
                           {errors.termsAccepted}
                         </p>
@@ -1297,13 +1297,13 @@ export default function BecomeOrganizerPage() {
               </AnimatePresence>
 
               {/* Wizard Control Buttons */}
-              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
+              <div className="pt-4 border-t border-theme-divider flex justify-between items-center">
                 {currentStep > 1 ? (
                   <button
                     type="button"
                     onClick={handlePrevStep}
                     disabled={loading}
-                    className="inline-flex items-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-6 py-3 rounded-xl transition duration-200 text-xs sm:text-sm cursor-pointer disabled:opacity-50"
+                    className="inline-flex items-center gap-2 border border-theme-border hover:bg-theme-bg text-theme-text-secondary font-bold px-6 py-3 rounded-xl transition duration-200 text-xs sm:text-sm cursor-pointer disabled:opacity-50"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Back
@@ -1316,7 +1316,7 @@ export default function BecomeOrganizerPage() {
                   <button
                     type="button"
                     onClick={handleNextStep}
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all shadow-md hover:-translate-y-0.5 cursor-pointer text-xs sm:text-sm"
+                    className="inline-flex items-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-bold px-7 py-3.5 rounded-xl transition-all shadow-md hover:-translate-y-0.5 cursor-pointer text-xs sm:text-sm"
                   >
                     Next Step
                     <ArrowRight className="w-4 h-4" />
@@ -1325,7 +1325,7 @@ export default function BecomeOrganizerPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-xl transition-all shadow-md hover:-translate-y-0.5 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed text-xs sm:text-sm"
+                    className="inline-flex items-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-extrabold px-8 py-3.5 rounded-xl transition-all shadow-md hover:-translate-y-0.5 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed text-xs sm:text-sm"
                   >
                     {loading ? (
                       <>

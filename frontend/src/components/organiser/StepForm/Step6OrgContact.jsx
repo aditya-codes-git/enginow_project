@@ -3,7 +3,7 @@ import React from 'react'
 function Field({ label, children }) {
   return (
     <label>
-      <span className="text-sm font-semibold text-slate-700">{label}</span>
+      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
       {children}
     </label>
   )
@@ -75,9 +75,9 @@ function Step6OrgContact({ formData = {}, updateField = () => {} }) {
         </Field>
       </section>
 
-      <aside className="rounded-lg border border-slate-200 bg-slate-50 p-5">
-        <h2 className="text-base font-bold text-slate-950">Manager operations</h2>
-        <p className="mt-2 text-sm text-slate-600">
+      <aside className="rounded-lg border border-theme-border bg-theme-bg p-5">
+        <h2 className="text-base font-bold text-theme-text">Manager operations</h2>
+        <p className="mt-2 text-sm text-theme-text-secondary">
           Keep ownership and contact details visible for participants, mentors, judges, and sponsors.
           The pipeline numbers help the dashboard surface event health.
         </p>

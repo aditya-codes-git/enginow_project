@@ -28,7 +28,7 @@ export function SkeletonText({ lines = 3, className = '' }) {
 // Generic Card Skeleton
 export function SkeletonCard({ className = '' }) {
   return (
-    <div className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4 ${className}`}>
+    <div className={`rounded-2xl border border-theme-border bg-theme-surface p-5 shadow-sm space-y-4 ${className}`}>
       <SkeletonBox className="h-40 w-full rounded-xl" />
       <div className="space-y-2">
         <SkeletonBox className="h-4 w-1/3 rounded" />
@@ -46,7 +46,7 @@ export function SkeletonCard({ className = '' }) {
 // Matches EventCard.jsx structure
 export function SkeletonEventCard({ featured = false }) {
   return (
-    <div className={`overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col ${featured ? 'lg:grid lg:grid-cols-[1.05fr_1fr]' : ''}`}>
+    <div className={`overflow-hidden rounded-2xl border border-theme-border bg-theme-surface shadow-sm flex flex-col ${featured ? 'lg:grid lg:grid-cols-[1.05fr_1fr]' : ''}`}>
       <div className={`relative ${featured ? 'min-h-72' : 'h-56'}`}>
         <SkeletonBox className="h-full w-full" />
       </div>
@@ -60,11 +60,11 @@ export function SkeletonEventCard({ featured = false }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 mt-2">
-          <div className="rounded-xl bg-slate-50 p-3 flex flex-col gap-1">
+          <div className="rounded-xl bg-theme-bg p-3 flex flex-col gap-1">
             <SkeletonBox className="h-3 w-10 rounded" />
             <SkeletonBox className="h-4 w-24 rounded-md mt-1" />
           </div>
-          <div className="rounded-xl bg-slate-50 p-3 flex flex-col gap-1">
+          <div className="rounded-xl bg-theme-bg p-3 flex flex-col gap-1">
             <SkeletonBox className="h-3 w-12 rounded" />
             <SkeletonBox className="h-4 w-20 rounded-md mt-1" />
           </div>
@@ -85,7 +85,7 @@ export function SkeletonEventCard({ featured = false }) {
 // Metric Stat Card Skeleton
 export function SkeletonStatCard() {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 border-l-4 border-l-blue-300 p-6 shadow-sm flex flex-col justify-between min-h-[130px]">
+    <div className="bg-theme-surface rounded-2xl border border-theme-divider border-l-4 border-l-blue-300 p-6 shadow-sm flex flex-col justify-between min-h-[130px]">
       <div className="space-y-2">
         <SkeletonBox className="h-3 w-24 rounded" />
         <SkeletonBox className="h-9 w-16 rounded-lg mt-2" />
@@ -98,8 +98,8 @@ export function SkeletonStatCard() {
 // Table Skeleton
 export function SkeletonTable({ rows = 5, cols = 4 }) {
   return (
-    <div className="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/50 flex gap-4">
+    <div className="w-full bg-theme-surface border border-theme-border rounded-2xl overflow-hidden shadow-sm">
+      <div className="px-6 py-4 border-b border-theme-border bg-theme-bg/50 flex gap-4">
         {Array.from({ length: cols }).map((_, i) => (
           <SkeletonBox key={i} className={`h-4 rounded ${i === 0 ? 'w-1/4' : 'w-1/6'}`} />
         ))}

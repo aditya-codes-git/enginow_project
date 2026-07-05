@@ -10,7 +10,7 @@ export default function PendingQueuePage() {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold">Pending Review Queue</h1>
-      <p className="text-slate-500 mt-2">Will be fully implemented in a future phase.</p>
+      <p className="text-theme-text-secondary mt-2">Will be fully implemented in a future phase.</p>
     </div>
   );
 }

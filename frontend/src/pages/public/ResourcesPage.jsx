@@ -62,34 +62,34 @@ const quickLinks = ['Registration basics', 'Team formation', 'Demo day prep', 'M
 
 function ResourcesPage() {
   return (
-    <main className="bg-white text-slate-900">
+    <main className="bg-theme-surface text-theme-text">
       <section className="relative overflow-hidden bg-mesh pt-10 pb-12">
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-theme-surface/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
                 <BookOpen className="h-4 w-4" />
                 Resource library
               </div>
-              <h1 className="heading-clear mt-6 font-outfit text-4xl font-extrabold tracking-tight text-slate-950 sm:text-5xl lg:text-[56px]">
+              <h1 className="heading-clear mt-6 font-outfit text-4xl font-extrabold tracking-tight text-theme-text sm:text-5xl lg:text-[56px]">
                 Practical guides for better participation, judging, and organising.
               </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-theme-text-secondary">
                 Use concise checklists and playbooks to remove friction before registration, submission, review, or event launch.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur">
-              <p className="text-sm font-semibold text-slate-500">Popular starting points</p>
+            <div className="rounded-2xl border border-theme-border bg-theme-surface/90 p-6 shadow-sm backdrop-blur">
+              <p className="text-sm font-semibold text-theme-text-secondary">Popular starting points</p>
               <div className="mt-5 grid gap-3">
                 {quickLinks.map((link) => (
-                  <div key={link} className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
-                    <span className="flex items-center gap-3 text-sm font-semibold text-slate-700">
-                      <CheckCircle2 className="h-4 w-4 text-blue-600" />
+                  <div key={link} className="flex items-center justify-between rounded-xl bg-theme-bg px-4 py-3">
+                    <span className="flex items-center gap-3 text-sm font-semibold text-theme-text-secondary">
+                      <CheckCircle2 className="h-4 w-4 text-theme-primary" />
                       {link}
                     </span>
-                    <ArrowRight className="h-4 w-4 text-slate-400" />
+                    <ArrowRight className="h-4 w-4 text-theme-text-muted" />
                   </div>
                 ))}
               </div>
@@ -102,14 +102,14 @@ function ResourcesPage() {
         {resources.map((resource) => {
           const Icon = resource.icon
           return (
-            <article key={resource.title} className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-100/30">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
+            <article key={resource.title} className="group rounded-2xl border border-theme-border bg-theme-surface p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-100/30">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-theme-primary transition group-hover:bg-theme-primary group-hover:text-white">
                 <Icon className="h-5 w-5" />
               </div>
-              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">{resource.tag}</p>
-              <h2 className="mt-3 font-outfit text-2xl font-bold text-slate-950">{resource.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-slate-600">{resource.description}</p>
-              <button type="button" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition group-hover:gap-3">
+              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-theme-primary">{resource.tag}</p>
+              <h2 className="mt-3 font-outfit text-2xl font-bold text-theme-text">{resource.title}</h2>
+              <p className="mt-3 text-sm leading-6 text-theme-text-secondary">{resource.description}</p>
+              <button type="button" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-theme-primary transition group-hover:gap-3">
                 Read guide
                 <ArrowRight className="h-4 w-4" />
               </button>

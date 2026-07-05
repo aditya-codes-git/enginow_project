@@ -4,8 +4,8 @@ import uploadService from '../../../services/uploadService'
 function Field({ label, hint, children }) {
   return (
     <label>
-      <span className="text-sm font-semibold text-slate-700">{label}</span>
-      {hint && <span className="ml-2 text-xs text-slate-500">{hint}</span>}
+      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
+      {hint && <span className="ml-2 text-xs text-theme-text-secondary">{hint}</span>}
       {children}
     </label>
   )
@@ -39,7 +39,7 @@ function Step5Media({ formData = {}, updateField = () => {} }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
       <section className="grid gap-4">
-        <div className="grid gap-2 border-b border-slate-100 pb-4">
+        <div className="grid gap-2 border-b border-theme-divider pb-4">
           <Field label="Upload Cover Image" hint="Upload directly from your device">
             <input
               type="file"
@@ -48,7 +48,7 @@ function Step5Media({ formData = {}, updateField = () => {} }) {
               className="mt-2 w-full text-sm text-slate-550 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
             />
           </Field>
-          {uploading && <p className="text-xs text-blue-600">Uploading cover image...</p>}
+          {uploading && <p className="text-xs text-theme-primary">Uploading cover image...</p>}
         </div>
         
         <Field label="Or Cover image URL" hint="Use a URL if image is already hosted online">
@@ -86,13 +86,13 @@ function Step5Media({ formData = {}, updateField = () => {} }) {
         </Field>
       </section>
 
-      <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-base font-bold text-slate-950">Public preview assets</h2>
-        <div className="mt-4 aspect-video overflow-hidden rounded-md bg-slate-100">
+      <aside className="rounded-lg border border-theme-border bg-theme-surface p-5 shadow-sm">
+        <h2 className="text-base font-bold text-theme-text">Public preview assets</h2>
+        <div className="mt-4 aspect-video overflow-hidden rounded-md bg-theme-bg-secondary">
           {formData.coverImage ? (
             <img src={formData.coverImage} alt="" className="h-full w-full object-cover" />
           ) : (
-            <div className="flex h-full items-center justify-center px-4 text-center text-sm font-medium text-slate-500">
+            <div className="flex h-full items-center justify-center px-4 text-center text-sm font-medium text-theme-text-secondary">
               Cover image preview
             </div>
           )}
@@ -100,12 +100,12 @@ function Step5Media({ formData = {}, updateField = () => {} }) {
         <div className="mt-4 flex flex-wrap gap-2">
           {sponsors.length ? (
             sponsors.map((sponsor) => (
-              <span key={sponsor} className="rounded-md bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700">
+              <span key={sponsor} className="rounded-md bg-theme-bg-secondary px-3 py-1.5 text-xs font-semibold text-theme-text-secondary">
                 {sponsor}
               </span>
             ))
           ) : (
-            <p className="text-sm text-slate-500">Sponsors will appear here as compact badges.</p>
+            <p className="text-sm text-theme-text-secondary">Sponsors will appear here as compact badges.</p>
           )}
         </div>
       </aside>

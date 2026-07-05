@@ -152,13 +152,13 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 relative my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-theme-primary/60 backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="w-full max-w-2xl bg-theme-surface rounded-3xl border border-theme-border shadow-2xl p-6 sm:p-8 relative my-8">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-700 transition"
+          className="absolute top-5 right-5 p-2 text-theme-text-muted hover:text-theme-text-secondary transition"
           disabled={submitting}
         >
           <X className="w-5 h-5" />
@@ -166,11 +166,11 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
 
         {success ? (
           <div className="text-center py-12 space-y-4">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-theme-success-bg text-theme-success">
               <CheckCircle className="w-10 h-10" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 font-outfit">Registration Confirmed!</h3>
-            <p className="text-slate-500 text-sm max-w-sm mx-auto">
+            <h3 className="text-2xl font-bold text-theme-text font-outfit">Registration Confirmed!</h3>
+            <p className="text-theme-text-secondary text-sm max-w-sm mx-auto">
               You're all set to participate. Head over to your dashboard to track details or projects.
             </p>
           </div>
@@ -179,12 +179,12 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
             
             {/* Header */}
             <div>
-              <h3 className="text-2xl font-extrabold text-slate-950 font-outfit">Register for {event.type}</h3>
-              <p className="text-slate-500 text-sm mt-1">{event.title}</p>
+              <h3 className="text-2xl font-extrabold text-theme-text font-outfit">Register for {event.type}</h3>
+              <p className="text-theme-text-secondary text-sm mt-1">{event.title}</p>
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-700 text-xs font-semibold p-4 rounded-xl border border-red-200">
+              <div className="bg-theme-error-bg text-theme-error text-xs font-semibold p-4 rounded-xl border border-theme-error-border">
                 {error}
               </div>
             )}
@@ -192,15 +192,15 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
             {/* Registration Type Choice */}
             {hasTeamSupport && !mustBeTeam && (
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Registration Mode</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wider">Registration Mode</label>
                 <div className="grid grid-cols-2 gap-4">
                   <button
                     type="button"
                     onClick={() => setRegistrationType('individual')}
                     className={`flex items-center justify-center gap-2 p-4 rounded-xl border font-bold text-sm transition ${
                       registrationType === 'individual'
-                        ? 'border-blue-600 bg-blue-50/40 text-blue-600'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-655'
+                        ? 'border-blue-600 bg-blue-50/40 text-theme-primary'
+                        : 'border-theme-border hover:bg-theme-bg text-theme-text-secondary'
                     }`}
                   >
                     <User className="w-4 h-4" />
@@ -211,8 +211,8 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
                     onClick={() => setRegistrationType('team')}
                     className={`flex items-center justify-center gap-2 p-4 rounded-xl border font-bold text-sm transition ${
                       registrationType === 'team'
-                        ? 'border-blue-600 bg-blue-50/40 text-blue-600'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-655'
+                        ? 'border-blue-600 bg-blue-50/40 text-theme-primary'
+                        : 'border-theme-border hover:bg-theme-bg text-theme-text-secondary'
                     }`}
                   >
                     <Users className="w-4 h-4" />
@@ -224,29 +224,29 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
 
             {/* Team details fields */}
             {registrationType === 'team' && (
-              <div className="space-y-4 border-t border-slate-100 pt-5">
+              <div className="space-y-4 border-t border-theme-divider pt-5">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Team Name</label>
+                  <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wider">Team Name</label>
                   <input
                     type="text"
                     required
                     value={teamName}
                     onChange={(e) => setTeamName(e.target.value)}
                     placeholder="Dream Hackers"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm bg-slate-50/50 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors"
+                    className="w-full px-4 py-3 rounded-xl border border-theme-border text-sm bg-theme-bg/50 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors"
                   />
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wider">
                       Team Members ({teamMembers.length} of max {maxTeamSize})
                     </label>
                     {teamMembers.length < maxTeamSize && (
                       <button
                         type="button"
                         onClick={handleAddMember}
-                        className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 transition-colors"
+                        className="text-xs font-bold text-theme-primary hover:text-blue-800 flex items-center gap-1 transition-colors"
                       >
                         <Plus className="w-3.5 h-3.5" /> Add Member
                       </button>
@@ -254,16 +254,16 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
                   </div>
 
                   {teamMembers.map((member, index) => (
-                    <div key={index} className="bg-slate-50 p-4 rounded-xl border border-slate-100 relative space-y-4">
+                    <div key={index} className="bg-theme-bg p-4 rounded-xl border border-theme-divider relative space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+                        <span className="text-xs font-bold text-theme-primary uppercase tracking-wider">
                           {index === 0 ? 'Team Leader (You)' : `Member #${index + 1}`}
                         </span>
                         {index > 0 && (
                           <button
                             type="button"
                             onClick={() => handleRemoveMember(index)}
-                            className="text-slate-400 hover:text-red-500 transition-colors"
+                            className="text-theme-text-muted hover:text-red-500 transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -272,7 +272,7 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
 
                       <div className="grid gap-4 sm:grid-cols-3">
                         <div className="space-y-1">
-                          <label className="text-[10px] font-bold text-slate-450 uppercase tracking-wider block">Full Name</label>
+                          <label className="text-[10px] font-bold text-theme-text-muted uppercase tracking-wider block">Full Name</label>
                           <input
                             type="text"
                             required
@@ -280,11 +280,11 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
                             onChange={(e) => handleMemberChange(index, 'name', e.target.value)}
                             placeholder="Name"
                             disabled={index === 0}
-                            className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-xs bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors disabled:opacity-70 disabled:bg-slate-50 disabled:hover:border-slate-200"
+                            className="w-full px-3 py-2.5 rounded-lg border border-theme-border text-xs bg-theme-surface outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors disabled:opacity-70 disabled:bg-theme-bg disabled:hover:border-theme-border"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[10px] font-bold text-slate-450 uppercase tracking-wider block">Email Address</label>
+                          <label className="text-[10px] font-bold text-theme-text-muted uppercase tracking-wider block">Email Address</label>
                           <input
                             type="email"
                             required
@@ -292,18 +292,18 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
                             onChange={(e) => handleMemberChange(index, 'email', e.target.value)}
                             placeholder="Email"
                             disabled={index === 0}
-                            className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-xs bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors disabled:opacity-70 disabled:bg-slate-50 disabled:hover:border-slate-200"
+                            className="w-full px-3 py-2.5 rounded-lg border border-theme-border text-xs bg-theme-surface outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors disabled:opacity-70 disabled:bg-theme-bg disabled:hover:border-theme-border"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-[10px] font-bold text-slate-450 uppercase tracking-wider block">Team Role</label>
+                          <label className="text-[10px] font-bold text-theme-text-muted uppercase tracking-wider block">Team Role</label>
                           <input
                             type="text"
                             required
                             value={member.role}
                             onChange={(e) => handleMemberChange(index, 'role', e.target.value)}
                             placeholder="e.g. Developer, Designer"
-                            className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-xs bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors"
+                            className="w-full px-3 py-2.5 rounded-lg border border-theme-border text-xs bg-theme-surface outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors"
                           />
                         </div>
                       </div>
@@ -315,18 +315,18 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
 
             {/* Custom Questionnaire */}
             {event.registrationQuestions && event.registrationQuestions.length > 0 && (
-              <div className="space-y-5 border-t border-slate-100 pt-5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Questionnaire</label>
+              <div className="space-y-5 border-t border-theme-divider pt-5">
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wider block">Questionnaire</label>
                 {event.registrationQuestions.map((q, idx) => (
                   <div key={idx} className="space-y-2">
-                    <label className="text-sm font-semibold text-slate-800 block leading-tight">{q}</label>
+                    <label className="text-sm font-semibold text-theme-text block leading-tight">{q}</label>
                     <textarea
                       required
                       rows={3}
                       value={answers[q] || ''}
                       onChange={(e) => handleAnswerChange(q, e.target.value)}
                       placeholder="Enter your response here..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm bg-slate-50/50 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-theme-border text-sm bg-theme-bg/50 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-slate-300 transition-colors resize-none"
                     />
                   </div>
                 ))}
@@ -334,19 +334,19 @@ export default function RegistrationModal({ event, onClose, onSuccess }) {
             )}
 
             {/* Submit Actions */}
-            <div className="border-t border-slate-100 pt-5 flex gap-3 justify-end">
+            <div className="border-t border-theme-divider pt-5 flex gap-3 justify-end">
               <button
                 type="button"
                 onClick={onClose}
                 disabled={submitting}
-                className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-sm font-semibold transition hover:-translate-y-0.5 active:translate-y-0"
+                className="px-5 py-2.5 rounded-xl border border-theme-border text-theme-text-secondary hover:bg-theme-bg text-sm font-semibold transition hover:-translate-y-0.5 active:translate-y-0"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                className="bg-theme-primary hover:bg-theme-primary text-white font-semibold py-2.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2 text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
               >
                 <Send className="w-4 h-4" />
                 {submitting ? 'Registering...' : 'Register Now'}

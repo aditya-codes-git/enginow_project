@@ -26,7 +26,9 @@ export const ThemeProvider = ({ children }) => {
     const theme = getTheme(currentTheme);
     const root = document.documentElement;
     const body = document.body;
+    
     const hexToRgb = (hex) => {
+      if (!hex || typeof hex !== 'string') return '255 255 255';
       const normalized = hex.replace('#', '');
       const value = normalized.length === 3
         ? normalized.split('').map((char) => char + char).join('')
@@ -36,20 +38,37 @@ export const ThemeProvider = ({ children }) => {
       return `${(number >> 16) & 255} ${(number >> 8) & 255} ${number & 255}`;
     };
 
-    // Set CSS variables
+    const isHex = (val) => typeof val === 'string' && val.startsWith('#');
+
+    // Set CSS variables and dynamically generate RGB variables for any hex colors
     Object.entries(theme.css).forEach(([key, value]) => {
       root.style.setProperty(key, value);
+      if (isHex(value)) {
+        root.style.setProperty(`${key}-rgb`, hexToRgb(value));
+      }
     });
 
-    root.style.setProperty('--color-primary', theme.colors.primary);
-    root.style.setProperty('--color-secondary', theme.colors.secondary);
-    root.style.setProperty('--color-accent', theme.colors.accent);
-    root.style.setProperty('--color-muted', theme.colors.muted);
-    root.style.setProperty('--primary-rgb', hexToRgb(theme.colors.primary));
-    root.style.setProperty('--secondary-rgb', hexToRgb(theme.colors.secondary));
-    root.style.setProperty('--accent-rgb', hexToRgb(theme.colors.accent));
-    root.style.setProperty('--surface-rgb', hexToRgb(theme.colors.surface));
-    root.style.setProperty('--border-rgb', hexToRgb(theme.colors.border));
+    // Backward compatibility mappings
+    const primaryColor = theme.colors.primaryAccent || theme.colors.primary;
+    const secondaryColor = theme.colors.accentHover || theme.colors.secondary;
+    const accentColor = theme.colors.primaryAccent || theme.colors.accent;
+    const mutedColor = theme.colors.textMuted || theme.colors.muted;
+    const surfaceColor = theme.colors.surface;
+    const borderColor = theme.colors.border;
+    const bgColor = theme.colors.background;
+    const textOnPrimaryColor = theme.colors.textOnPrimary || '#ffffff';
+
+    root.style.setProperty('--color-primary', primaryColor);
+    root.style.setProperty('--color-secondary', secondaryColor);
+    root.style.setProperty('--color-accent', accentColor);
+    root.style.setProperty('--color-muted', mutedColor);
+    root.style.setProperty('--text-on-primary', textOnPrimaryColor);
+    root.style.setProperty('--primary-rgb', hexToRgb(primaryColor));
+    root.style.setProperty('--secondary-rgb', hexToRgb(secondaryColor));
+    root.style.setProperty('--accent-rgb', hexToRgb(accentColor));
+    root.style.setProperty('--surface-rgb', hexToRgb(surfaceColor));
+    root.style.setProperty('--border-rgb', hexToRgb(borderColor));
+    root.style.setProperty('--bg-rgb', hexToRgb(bgColor));
 
     // Set data attribute for theme
     root.setAttribute('data-theme', currentTheme);
@@ -66,10 +85,34 @@ export const ThemeProvider = ({ children }) => {
     setCurrentTheme(themeName);
   };
 
+  const activeTheme = getTheme(currentTheme);
+  const compatTheme = {
+    ...activeTheme,
+    colors: {
+      ...activeTheme.colors,
+      background: activeTheme.colors.background,
+      foreground: activeTheme.colors.textPrimary || activeTheme.colors.foreground || '#000000',
+      primary: activeTheme.colors.primaryAccent || activeTheme.colors.primary,
+      secondary: activeTheme.colors.accentHover || activeTheme.colors.secondary,
+      accent: activeTheme.colors.primaryAccent || activeTheme.colors.accent,
+      muted: activeTheme.colors.textMuted || activeTheme.colors.muted,
+      border: activeTheme.colors.border,
+      surface: activeTheme.colors.surface,
+      textOnPrimary: activeTheme.colors.textOnPrimary || '#ffffff',
+      footerBackground: activeTheme.colors.footerBackground,
+      footerHeading: activeTheme.colors.footerHeading,
+      footerText: activeTheme.colors.footerText,
+      footerMuted: activeTheme.colors.footerMuted,
+      footerBorder: activeTheme.colors.footerBorder,
+      footerIcon: activeTheme.colors.footerIcon,
+      footerHover: activeTheme.colors.footerHover,
+    }
+  };
+
   const value = {
     currentTheme,
     switchTheme,
-    theme: getTheme(currentTheme),
+    theme: compatTheme,
   };
 
   return (

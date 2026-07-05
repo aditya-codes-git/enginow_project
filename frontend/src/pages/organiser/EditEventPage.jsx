@@ -123,7 +123,7 @@ function EditEventPage() {
       <main className="flex min-h-screen items-center justify-center bg-neutral-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto" />
-          <p className="text-neutral-600 mt-4">Loading event editor...</p>
+          <p className="text-theme-text-secondary mt-4">Loading event editor...</p>
         </div>
       </main>
     )
@@ -134,12 +134,12 @@ function EditEventPage() {
       <main className="flex min-h-screen items-center justify-center bg-neutral-50 px-4">
         <div className="text-center">
           <div className="text-5xl mb-4">🔒</div>
-          <h1 className="text-3xl font-bold text-neutral-900">Access Denied</h1>
-          <p className="text-neutral-600 mt-2">You don't have permission to access this event.</p>
+          <h1 className="text-3xl font-bold text-theme-text">Access Denied</h1>
+          <p className="text-theme-text-secondary mt-2">You don't have permission to access this event.</p>
           <button
             type="button"
             onClick={() => navigate('/organiser')}
-            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors cursor-pointer"
+            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-theme-primary text-white font-medium hover:bg-theme-primary transition-colors cursor-pointer"
           >
             Return to dashboard
           </button>
@@ -153,12 +153,12 @@ function EditEventPage() {
       <main className="flex min-h-screen items-center justify-center bg-neutral-50 px-4">
         <div className="text-center">
           <div className="text-5xl mb-4">🔍</div>
-          <h1 className="text-3xl font-bold text-neutral-900">Event not found</h1>
-          <p className="text-neutral-600 mt-2">The event you're looking for doesn't exist.</p>
+          <h1 className="text-3xl font-bold text-theme-text">Event not found</h1>
+          <p className="text-theme-text-secondary mt-2">The event you're looking for doesn't exist.</p>
           <button
             type="button"
             onClick={() => navigate('/organiser')}
-            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors cursor-pointer"
+            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-theme-primary text-white font-medium hover:bg-theme-primary transition-colors cursor-pointer"
           >
             Return to dashboard
           </button>
@@ -169,25 +169,25 @@ function EditEventPage() {
 
   return (
     <main className="min-h-screen bg-neutral-50">
-      <section className="border-b border-neutral-200 bg-white">
+      <section className="border-b border-theme-border bg-theme-surface">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <Link to="/organiser" className="text-sm font-medium text-blue-600 hover:text-blue-700 mb-6 block">
+          <Link to="/organiser" className="text-sm font-medium text-theme-primary hover:text-blue-700 mb-6 block">
             ← Back to dashboard
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="flex flex-wrap items-center gap-3 mb-4">
-                <h1 className="text-4xl font-bold text-neutral-900">{formData.title || 'Untitled event'}</h1>
+                <h1 className="text-4xl font-bold text-theme-text">{formData.title || 'Untitled event'}</h1>
                 <StatusBadge status={formData.status} />
               </div>
-              <p className="text-lg text-neutral-600">
+              <p className="text-lg text-theme-text-secondary">
                 Update event details, manage submissions, configure judging, and oversee the complete event lifecycle.
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 p-6">
-              <p className="text-sm font-semibold text-blue-650 mb-3">Profile Completion</p>
+              <p className="text-sm font-semibold text-theme-primary mb-3">Profile Completion</p>
               <p className="text-4xl font-bold text-blue-900 mb-3">{completion}%</p>
               <div className="h-2 bg-neutral-200 rounded-full overflow-hidden">
                 <div
@@ -210,13 +210,13 @@ function EditEventPage() {
           </div>
         )}
 
-        <div className="bg-white rounded-2xl border border-neutral-200 shadow-md overflow-hidden">
+        <div className="bg-theme-surface rounded-2xl border border-theme-border shadow-md overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
             <h2 className="font-semibold text-white">Event Configuration</h2>
             <p className="text-sm text-blue-100 mt-1">Manage all aspects of your event</p>
           </div>
 
-          <div className="flex gap-1 overflow-x-auto border-b border-neutral-200 px-6 py-4 bg-neutral-50">
+          <div className="flex gap-1 overflow-x-auto border-b border-theme-border px-6 py-4 bg-neutral-50">
             {tabs.map((tab, index) => (
               <button
                 key={tab.label}
@@ -227,8 +227,8 @@ function EditEventPage() {
                 }}
                 className={`whitespace-nowrap px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                   activeTab === index
-                    ? 'bg-blue-600 text-white'
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200'
+                    ? 'bg-theme-primary text-white'
+                    : 'text-theme-text-secondary hover:text-theme-text hover:bg-neutral-200'
                 }`}
               >
                 {tab.label}
@@ -240,18 +240,18 @@ function EditEventPage() {
             <ActiveTab formData={formData} updateField={updateField} />
           </div>
 
-          <div className="border-t border-neutral-200 bg-neutral-50 px-8 py-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="border-t border-theme-border bg-neutral-50 px-8 py-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex gap-2 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={handleArchive}
-                className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-lg border border-neutral-300 text-neutral-700 font-medium hover:bg-neutral-100 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-lg border border-theme-border text-theme-text-secondary font-medium hover:bg-neutral-100 transition-colors cursor-pointer"
               >
                 <span>📦</span>
                 Archive
               </button>
               {(formData.status || '').toLowerCase() === 'approved' && (
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 font-medium text-sm">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-theme-success-bg border border-theme-success-border text-theme-success font-medium text-sm">
                   <span>🟢</span>
                   Live publicly
                 </span>
@@ -260,7 +260,7 @@ function EditEventPage() {
             <button
               type="button"
               onClick={handleSave}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium hover:shadow-lg transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-primary hover:bg-theme-primary text-white font-medium hover:shadow-lg transition-all cursor-pointer"
             >
               <span>💾</span>
               Save changes

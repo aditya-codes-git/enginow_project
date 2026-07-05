@@ -35,7 +35,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans flex flex-col">
+    <div className="min-h-screen bg-theme-surface text-theme-text font-sans flex flex-col">
       {/* Main Sections */}
       <main className="flex-grow">
         <HeroSection />
@@ -60,7 +60,7 @@ export default function HomePage() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-xl bg-slate-900 text-white shadow-lg border border-slate-800 hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
+            className="fixed bottom-6 right-6 z-40 p-3.5 rounded-xl bg-theme-primary text-white shadow-lg border border-slate-800 hover:bg-theme-primary transition-colors duration-200 cursor-pointer"
             aria-label="Scroll to top"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}

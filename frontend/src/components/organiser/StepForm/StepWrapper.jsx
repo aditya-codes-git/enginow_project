@@ -43,16 +43,16 @@ function StepWrapper({
             <div className="flex items-center justify-between mb-6">
               <div>
                 <p className="text-sm font-semibold text-primary-600 mb-2">STEP {currentStep + 1} OF {steps.length}</p>
-                <h1 className="text-4xl font-bold text-neutral-900">
+                <h1 className="text-4xl font-bold text-theme-text">
                   {title || steps[currentStep]}
                 </h1>
                 {description && (
-                  <p className="text-lg text-neutral-600 mt-3 max-w-2xl">{description}</p>
+                  <p className="text-lg text-theme-text-secondary mt-3 max-w-2xl">{description}</p>
                 )}
               </div>
               <div className="text-right">
-                <p className="text-sm font-bold text-neutral-900">{progress}%</p>
-                <p className="text-xs text-neutral-600 mt-1">Complete</p>
+                <p className="text-sm font-bold text-theme-text">{progress}%</p>
+                <p className="text-xs text-theme-text-secondary mt-1">Complete</p>
               </div>
             </div>
 
@@ -78,7 +78,7 @@ function StepWrapper({
                       ? 'bg-primary-600 text-white shadow-md'
                       : isComplete
                         ? 'bg-accent-100 text-accent-700'
-                        : 'bg-neutral-200 text-neutral-600'
+                        : 'bg-neutral-200 text-theme-text-secondary'
                   } hidden sm:flex flex-col items-center justify-center gap-1`}
                   title={step}
                 >
@@ -92,17 +92,17 @@ function StepWrapper({
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-neutral-200 shadow-md overflow-hidden">
+        <div className="bg-theme-surface rounded-2xl border border-theme-border shadow-md overflow-hidden">
           <div className="p-8 md:p-12">
             {children}
           </div>
 
-          <div className="border-t border-neutral-200 bg-neutral-50 px-8 md:px-12 py-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="border-t border-theme-border bg-neutral-50 px-8 md:px-12 py-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
             <button
               type="button"
               onClick={onBack}
               disabled={!canGoBack}
-              className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-neutral-300 bg-white text-neutral-900 font-medium hover:bg-neutral-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-theme-border bg-theme-surface text-theme-text font-medium hover:bg-neutral-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {backLabel}
             </button>

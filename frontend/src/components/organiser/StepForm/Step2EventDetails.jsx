@@ -2,7 +2,7 @@ import React from 'react'
 function Field({ label, children, className = '' }) {
   return (
     <label className={className}>
-      <span className="text-sm font-semibold text-slate-700">{label}</span>
+      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
       {children}
     </label>
   )
@@ -102,9 +102,9 @@ function Step2EventDetails({ formData = {}, updateField = () => {} }) {
         </Field>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-slate-50 p-5">
-        <h2 className="text-base font-bold text-slate-950">Event page readiness</h2>
-        <p className="mt-2 text-sm text-slate-600">
+      <section className="rounded-lg border border-theme-border bg-theme-bg p-5">
+        <h2 className="text-base font-bold text-theme-text">Event page readiness</h2>
+        <p className="mt-2 text-sm text-theme-text-secondary">
           Hackathon listings perform better when participants can instantly understand venue,
           format, tracks, team rules, prizes, and whether they are eligible to join.
         </p>

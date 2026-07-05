@@ -13,7 +13,7 @@ export default function PartnersStrip() {
           <text x="0" y="18" className="font-outfit font-black tracking-widest text-lg">IEEE</text>
         </svg>
       ),
-      className: 'text-slate-400/80 hover:text-sky-600 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-theme-info transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
     {
       id: 'gdg',
@@ -26,7 +26,7 @@ export default function PartnersStrip() {
           <span className="tracking-tight whitespace-nowrap">Google Dev Groups</span>
         </div>
       ),
-      className: 'text-slate-400/80 hover:text-blue-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-blue-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
     {
       id: 'github',
@@ -39,7 +39,7 @@ export default function PartnersStrip() {
           <span className="tracking-tight whitespace-nowrap">GitHub Campus</span>
         </div>
       ),
-      className: 'text-slate-400/80 hover:text-slate-900 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-theme-text transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
     {
       id: 'microsoft',
@@ -55,18 +55,18 @@ export default function PartnersStrip() {
           <span className="tracking-tight whitespace-nowrap">Microsoft Learn</span>
         </div>
       ),
-      className: 'text-slate-400/80 hover:text-sky-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-sky-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
     {
       id: 'devfolio',
       name: 'Devfolio',
       component: () => (
         <div className="flex items-center gap-1.5 font-outfit font-bold text-sm select-none">
-          <span className="w-5 h-5 rounded bg-blue-600 flex items-center justify-center text-white font-black text-xs font-mono">D</span>
+          <span className="w-5 h-5 rounded bg-theme-primary flex items-center justify-center text-white font-black text-xs font-mono">D</span>
           <span className="tracking-tight whitespace-nowrap">DEVFOLIO</span>
         </div>
       ),
-      className: 'text-slate-400/80 hover:text-blue-600 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-theme-primary transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
     {
       id: 'mlh',
@@ -74,21 +74,21 @@ export default function PartnersStrip() {
       component: () => (
         <div className="flex items-center gap-1.5 font-outfit font-extrabold text-sm select-none">
           <span className="border-2 border-red-500 text-red-500 rounded px-1.5 py-0.5 text-xs">MLH</span>
-          <span className="tracking-tight text-slate-800 whitespace-nowrap">Hackathons</span>
+          <span className="tracking-tight text-theme-text whitespace-nowrap">Hackathons</span>
         </div>
       ),
-      className: 'text-slate-400/80 hover:text-red-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
+      className: 'text-theme-text-muted/80 hover:text-red-500 transition-colors duration-300 transform hover:scale-[1.05] flex items-center justify-center cursor-pointer',
     },
   ];
 
   return (
-    <section className="bg-white pt-16 pb-0 overflow-hidden relative select-none">
+    <section className="bg-theme-surface pt-16 pb-0 overflow-hidden relative select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-gradient-clear font-outfit font-black tracking-tight text-2xl sm:text-3xl">
             Trusted by Student Communities
           </span>
-          <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-2">
+          <p className="text-theme-text-muted font-bold text-xs uppercase tracking-widest mt-2">
             Empowering the Next Generation of Tech Leaders
           </p>
         </div>
@@ -123,7 +123,7 @@ export default function PartnersStrip() {
 
       <div className="relative mt-8 h-36 w-full overflow-hidden [mask-image:radial-gradient(circle closest-side at 50% 50%,white,transparent)] pointer-events-none">
         <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle closest-side at 50% 100%,#2563eb,transparent_70%)] before:opacity-30" />
-        <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] bg-white" />
+        <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] bg-theme-surface" />
         <Sparkles
           density={800}
           className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(circle_closest-side_at_50%_50%,white,transparent_85%)]"

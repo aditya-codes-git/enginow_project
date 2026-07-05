@@ -65,7 +65,7 @@ function OrganiserDashboard() {
   )
 
   return (
-    <main className="min-h-screen bg-slate-50/50 p-6 md:p-8 text-slate-800 font-sans">
+    <main className="min-h-screen bg-theme-bg/50 p-6 md:p-8 text-theme-text font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Modern Hero Section Card */}
@@ -93,13 +93,13 @@ function OrganiserDashboard() {
             <div className="flex flex-wrap gap-4 shrink-0">
               <Link
                 to="/organiser/events/new"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-blue-500/10 hover:shadow-xl hover:-translate-y-0.5"
+                className="bg-theme-primary hover:bg-theme-primary text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-blue-500/10 hover:shadow-xl hover:-translate-y-0.5"
               >
                 Create New Event
               </Link>
               <a
                 href="#managed-events"
-                className="bg-slate-800 hover:bg-slate-750 border border-slate-750 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                className="bg-theme-surface-elevated hover:bg-slate-750 border border-slate-750 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
               >
                 View Managed Events
               </a>
@@ -110,18 +110,18 @@ function OrganiserDashboard() {
         {/* Metric Cards */}
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {metricCards.map((metric) => (
-            <div key={metric.label} className={`bg-white rounded-2xl border border-slate-100 border-l-2 ${metric.accent} p-6 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between min-h-[130px]`}>
+            <div key={metric.label} className={`bg-theme-surface rounded-2xl border border-theme-divider border-l-2 ${metric.accent} p-6 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between min-h-[130px]`}>
               <div>
-                <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{metric.label}</p>
+                <p className="text-theme-text-muted text-xs font-semibold uppercase tracking-wider">{metric.label}</p>
                 {loading ? (
                   <div className="h-9 w-16 bg-slate-200 animate-pulse rounded-lg mt-2" />
                 ) : (
-                  <p className="text-3xl font-extrabold text-slate-900 mt-2 font-outfit">
+                  <p className="text-3xl font-extrabold text-theme-text mt-2 font-outfit">
                     {metric.value}
                   </p>
                 )}
               </div>
-              <p className="text-slate-500 text-xs font-medium border-t border-slate-50 pt-3 mt-4">
+              <p className="text-theme-text-secondary text-xs font-medium border-t border-slate-50 pt-3 mt-4">
                 {metric.detail}
               </p>
             </div>
@@ -135,18 +135,18 @@ function OrganiserDashboard() {
           <div className="lg:col-span-2 space-y-6" id="managed-events">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="text-2xl font-bold text-slate-950 font-outfit">{isAdmin ? 'All Events' : 'Your Events'}</h2>
-                <p className="text-slate-600 text-sm mt-1">{isAdmin ? 'Manage every event across the platform' : 'Manage, edit, and track event progress'}</p>
+                <h2 className="text-2xl font-bold text-theme-text font-outfit">{isAdmin ? 'All Events' : 'Your Events'}</h2>
+                <p className="text-theme-text-secondary text-sm mt-1">{isAdmin ? 'Manage every event across the platform' : 'Manage, edit, and track event progress'}</p>
               </div>
               <Link
                 to="/organiser/events/new"
-                className="text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors"
+                className="text-theme-primary hover:text-blue-700 font-semibold text-sm transition-colors"
               >
                 + New Event
               </Link>
             </div>
             
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 shadow-sm">
               <EventStatusList
                 events={events}
                 onEdit={(event) => navigate(`/organiser/events/${event.id}/edit`)}
@@ -160,9 +160,9 @@ function OrganiserDashboard() {
           <div className="space-y-6">
             
             {/* Checklist */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-950 font-outfit flex items-center gap-2">
-                <ClipboardList className="w-5 h-5 text-blue-600" />
+            <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 shadow-sm space-y-4">
+              <h3 className="text-lg font-bold text-theme-text font-outfit flex items-center gap-2">
+                <ClipboardList className="w-5 h-5 text-theme-primary" />
                 Operations Checklist
               </h3>
               <div className="space-y-3">
@@ -176,9 +176,9 @@ function OrganiserDashboard() {
                     <input
                       type="checkbox"
                       defaultChecked={item.done}
-                      className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500/20 cursor-pointer transition"
+                      className="w-5 h-5 rounded border-slate-300 text-theme-primary focus:ring-blue-500/20 cursor-pointer transition"
                     />
-                    <span className={`text-sm transition-colors ${item.done ? 'text-slate-400 line-through' : 'text-slate-700 group-hover:text-blue-600'}`}>
+                    <span className={`text-sm transition-colors ${item.done ? 'text-theme-text-muted line-through' : 'text-theme-text-secondary group-hover:text-theme-primary'}`}>
                       {item.text}
                     </span>
                   </label>
@@ -187,49 +187,49 @@ function OrganiserDashboard() {
             </div>
 
             {/* Upcoming Deadlines */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-950 font-outfit flex items-center gap-2">
-                <Clock className="w-5 h-5 text-blue-600" />
+            <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 shadow-sm space-y-4">
+              <h3 className="text-lg font-bold text-theme-text font-outfit flex items-center gap-2">
+                <Clock className="w-5 h-5 text-theme-primary" />
                 Upcoming Deadlines
               </h3>
               <div className="space-y-4">
                 {upcomingDeadlines.length > 0 ? (
                   upcomingDeadlines.map((deadline) => (
                     <div key={`${deadline.event}-${deadline.label}`} className="border-l-2 border-blue-500 pl-3 space-y-1">
-                      <p className="font-semibold text-slate-800 text-sm">{deadline.label}</p>
-                      <p className="text-xs text-slate-500">{deadline.event}</p>
-                      <p className="text-xs font-semibold text-blue-600">{formatDate(deadline.date)}</p>
+                      <p className="font-semibold text-theme-text text-sm">{deadline.label}</p>
+                      <p className="text-xs text-theme-text-secondary">{deadline.event}</p>
+                      <p className="text-xs font-semibold text-theme-primary">{formatDate(deadline.date)}</p>
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-slate-500">No upcoming deadlines</p>
+                  <p className="text-sm text-theme-text-secondary">No upcoming deadlines</p>
                 )}
               </div>
             </div>
 
             {/* Quick Support */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-950 font-outfit flex items-center gap-2">
-                <Headphones className="w-5 h-5 text-blue-600" />
+            <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 shadow-sm space-y-4">
+              <h3 className="text-lg font-bold text-theme-text font-outfit flex items-center gap-2">
+                <Headphones className="w-5 h-5 text-theme-primary" />
                 Quick Support
               </h3>
               <div className="space-y-4 text-sm">
                 <div className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-blue-600">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-theme-bg border border-theme-divider text-theme-primary">
                     <Mail className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-800">Email Support</p>
-                    <p className="text-slate-600">support@enginow.com</p>
+                    <p className="font-semibold text-theme-text">Email Support</p>
+                    <p className="text-theme-text-secondary">support@enginow.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-blue-600">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-theme-bg border border-theme-divider text-theme-primary">
                     <BookOpen className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-800">Documentation</p>
-                    <p className="text-slate-600">Learn best practices</p>
+                    <p className="font-semibold text-theme-text">Documentation</p>
+                    <p className="text-theme-text-secondary">Learn best practices</p>
                   </div>
                 </div>
               </div>

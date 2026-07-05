@@ -26,7 +26,7 @@ export default function TextBlock({ children, className = '', size = 'base' }) {
         overflow-wrap-anywhere
         overflow-hidden
         max-w-full
-        text-slate-600
+        text-theme-text-secondary
         ${sizeMap[size] || sizeMap.base}
         ${className}
       `.trim()}

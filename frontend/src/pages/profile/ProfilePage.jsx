@@ -71,17 +71,17 @@ export default function ProfilePage() {
   }, [user]);
 
   return (
-    <main className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8 text-slate-850 font-sans">
+    <main className="min-h-screen bg-theme-bg/50 py-10 px-4 sm:px-6 lg:px-8 text-slate-850 font-sans">
       <div className="max-w-3xl mx-auto space-y-8">
         
         {/* Title */}
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 font-outfit">My Profile</h1>
-          <p className="text-sm text-slate-500 mt-1">Your personal details and activity stats.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-theme-text font-outfit">My Profile</h1>
+          <p className="text-sm text-theme-text-secondary mt-1">Your personal details and activity stats.</p>
         </div>
 
         {/* Profile Card */}
-        <section className="bg-white rounded-3xl border border-slate-150 shadow-sm overflow-hidden relative p-8">
+        <section className="bg-theme-surface rounded-3xl border border-theme-divider shadow-sm overflow-hidden relative p-8">
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl rounded-full pointer-events-none" />
           
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
@@ -97,16 +97,16 @@ export default function ProfilePage() {
                   <Shield className="w-3.5 h-3.5" />
                   {user?.role}
                 </span>
-                <h2 className="text-3xl font-extrabold text-slate-950 font-outfit mt-2">{user?.name}</h2>
+                <h2 className="text-3xl font-extrabold text-theme-text font-outfit mt-2">{user?.name}</h2>
               </div>
 
-              <div className="grid gap-3 max-w-md mx-auto sm:mx-0 text-sm font-medium text-slate-600">
+              <div className="grid gap-3 max-w-md mx-auto sm:mx-0 text-sm font-medium text-theme-text-secondary">
                 <div className="flex items-center justify-center sm:justify-start gap-2.5">
-                  <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                  <Mail className="w-4 h-4 text-theme-text-muted shrink-0" />
                   <span className="truncate">{user?.email}</span>
                 </div>
                 <div className="flex items-center justify-center sm:justify-start gap-2.5">
-                  <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
+                  <Calendar className="w-4 h-4 text-theme-text-muted shrink-0" />
                   <span>Joined {formatJoinedDate(user?.createdAt)}</span>
                 </div>
               </div>
@@ -116,25 +116,25 @@ export default function ProfilePage() {
 
         {/* Stats Card */}
         <section className="space-y-4">
-          <h3 className="text-lg font-bold text-slate-950 font-outfit">Activity & Performance</h3>
+          <h3 className="text-lg font-bold text-theme-text font-outfit">Activity & Performance</h3>
           
           {loading ? (
             /* Skeleton Loading State */
             <div className="grid gap-6 sm:grid-cols-2">
-              <div className="bg-white rounded-2xl border border-slate-150 p-6 space-y-3 animate-pulse">
-                <div className="h-4 bg-slate-100 rounded w-1/3" />
+              <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 space-y-3 animate-pulse">
+                <div className="h-4 bg-theme-bg-secondary rounded w-1/3" />
                 <div className="h-8 bg-slate-200 rounded w-1/4" />
-                <div className="h-3 bg-slate-100 rounded w-1/2" />
+                <div className="h-3 bg-theme-bg-secondary rounded w-1/2" />
               </div>
-              <div className="bg-white rounded-2xl border border-slate-150 p-6 space-y-3 animate-pulse">
-                <div className="h-4 bg-slate-100 rounded w-1/3" />
+              <div className="bg-theme-surface rounded-2xl border border-theme-divider p-6 space-y-3 animate-pulse">
+                <div className="h-4 bg-theme-bg-secondary rounded w-1/3" />
                 <div className="h-8 bg-slate-200 rounded w-1/4" />
-                <div className="h-3 bg-slate-100 rounded w-1/2" />
+                <div className="h-3 bg-theme-bg-secondary rounded w-1/2" />
               </div>
             </div>
           ) : error ? (
             /* Error Alert */
-            <div className="bg-red-50 text-red-750 border border-red-200 rounded-xl px-4 py-3 text-sm font-semibold">
+            <div className="bg-theme-error-bg text-theme-error border border-theme-error-border rounded-xl px-4 py-3 text-sm font-semibold">
               {error}
             </div>
           ) : (
@@ -144,28 +144,28 @@ export default function ProfilePage() {
               {/* Participant Stats */}
               {user?.role === 'participant' && (
                 <>
-                  <div className="bg-white rounded-2xl border border-slate-150 border-l-4 border-l-blue-600 p-6 shadow-sm flex items-center justify-between">
+                  <div className="bg-theme-surface rounded-2xl border border-theme-divider border-l-4 border-l-blue-600 p-6 shadow-sm flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Registered Events</p>
-                      <strong className="block text-4xl font-extrabold text-slate-900 mt-2 font-outfit">
+                      <p className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Registered Events</p>
+                      <strong className="block text-4xl font-extrabold text-theme-text mt-2 font-outfit">
                         {stats?.registeredEventsCount || 0}
                       </strong>
-                      <span className="block text-[11px] text-slate-500 mt-2">Active hackathons or program signups</span>
+                      <span className="block text-[11px] text-theme-text-secondary mt-2">Active hackathons or program signups</span>
                     </div>
-                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <div className="h-12 w-12 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center shrink-0">
                       <Trophy className="w-5 h-5" />
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-2xl border border-slate-150 border-l-4 border-l-emerald-500 p-6 shadow-sm flex items-center justify-between">
+                  <div className="bg-theme-surface rounded-2xl border border-theme-divider border-l-4 border-l-emerald-500 p-6 shadow-sm flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Project Submissions</p>
-                      <strong className="block text-4xl font-extrabold text-slate-900 mt-2 font-outfit">
+                      <p className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Project Submissions</p>
+                      <strong className="block text-4xl font-extrabold text-theme-text mt-2 font-outfit">
                         {stats?.submissionsCount || 0}
                       </strong>
-                      <span className="block text-[11px] text-slate-500 mt-2">GitHub repos and live demo deployments</span>
+                      <span className="block text-[11px] text-theme-text-secondary mt-2">GitHub repos and live demo deployments</span>
                     </div>
-                    <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <div className="h-12 w-12 rounded-xl bg-theme-success-bg text-theme-success flex items-center justify-center shrink-0">
                       <FileCode2 className="w-5 h-5" />
                     </div>
                   </div>
@@ -174,13 +174,13 @@ export default function ProfilePage() {
 
               {/* Organiser Stats */}
               {user?.role === 'organiser' && (
-                <div className="bg-white rounded-2xl border border-slate-150 border-l-4 border-l-pink-600 p-6 shadow-sm flex items-center justify-between sm:col-span-2">
+                <div className="bg-theme-surface rounded-2xl border border-theme-divider border-l-4 border-l-pink-600 p-6 shadow-sm flex items-center justify-between sm:col-span-2">
                   <div>
-                    <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Events Created</p>
-                    <strong className="block text-4xl font-extrabold text-slate-900 mt-2 font-outfit">
+                    <p className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Events Created</p>
+                    <strong className="block text-4xl font-extrabold text-theme-text mt-2 font-outfit">
                       {stats?.eventsCreatedCount || 0}
                     </strong>
-                    <span className="block text-[11px] text-slate-500 mt-2">Programs managed, drafts, pending reviews, and live events</span>
+                    <span className="block text-[11px] text-theme-text-secondary mt-2">Programs managed, drafts, pending reviews, and live events</span>
                   </div>
                   <div className="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
                     <Sparkles className="w-5 h-5" />
@@ -190,15 +190,15 @@ export default function ProfilePage() {
 
               {/* Admin Stats */}
               {user?.role === 'admin' && (
-                <div className="bg-white rounded-2xl border border-slate-150 border-l-4 border-l-blue-600 p-6 shadow-sm flex items-center justify-between sm:col-span-2">
+                <div className="bg-theme-surface rounded-2xl border border-theme-divider border-l-4 border-l-blue-600 p-6 shadow-sm flex items-center justify-between sm:col-span-2">
                   <div>
-                    <p className="text-xs font-bold text-slate-450 uppercase tracking-wider">Users Managed</p>
-                    <strong className="block text-4xl font-extrabold text-slate-900 mt-2 font-outfit">
+                    <p className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Users Managed</p>
+                    <strong className="block text-4xl font-extrabold text-theme-text mt-2 font-outfit">
                       {stats?.usersManagedCount || 0}
                     </strong>
-                    <span className="block text-[11px] text-slate-500 mt-2">Identity profiles, moderation settings, and participant directories</span>
+                    <span className="block text-[11px] text-theme-text-secondary mt-2">Identity profiles, moderation settings, and participant directories</span>
                   </div>
-                  <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                  <div className="h-12 w-12 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center shrink-0">
                     <Users className="w-5 h-5" />
                   </div>
                 </div>

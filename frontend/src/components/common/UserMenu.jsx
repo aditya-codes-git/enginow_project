@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronDown, User, CalendarDays, Settings, ShieldAlert, LogOut } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function UserMenu({ user, logout }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { currentTheme, theme } = useTheme();
+
+  // Solid opaque surface color per theme — no transparency
+  const panelBg = theme.colors.surface || (currentTheme === 'dark' ? '#111827' : '#ffffff');
+  const panelBorder = currentTheme === 'dark' ? '#374151' : '#e5e7eb';
+  const hoverBg = theme.colors.background || (currentTheme === 'dark' ? '#1f2937' : '#f9fafb');
 
   // Get first name from full name
   const firstName = user?.name ? user.name.split(' ')[0] : 'User';
@@ -65,28 +72,35 @@ export default function UserMenu({ user, logout }) {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-theme-border bg-theme-bg hover:bg-theme-bg-secondary hover:border-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
       >
         <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-xs font-bold text-white shadow-sm">
           {firstInitial}
         </div>
-        <span className="text-sm font-semibold text-slate-700 hidden sm:inline">
+        <span className="text-sm font-semibold text-theme-text-secondary hidden sm:inline">
           {firstName}
         </span>
-        <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-theme-text-secondary transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 rounded-2xl border border-slate-150 bg-white shadow-2xl py-2.5 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+        <div
+          style={{
+            backgroundColor: panelBg,
+            borderColor: panelBorder,
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)',
+          }}
+          className="absolute right-0 mt-2 w-72 rounded-2xl border py-2.5 z-[200] animate-in fade-in slide-in-from-top-3 duration-200"
+        >
           {/* Top User Summary */}
-          <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+          <div className="px-4 py-3 border-b border-theme-divider flex items-center gap-3">
             <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-600 flex items-center justify-center text-xl font-extrabold text-white shadow-md">
               {firstInitial}
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="text-sm font-bold text-slate-900 truncate leading-tight">{user?.name}</h4>
-              <p className="text-xs text-slate-500 truncate mt-0.5 leading-tight">{user?.email}</p>
+              <h4 className="text-sm font-bold text-theme-text truncate leading-tight">{user?.name}</h4>
+              <p className="text-xs text-theme-text-secondary truncate mt-0.5 leading-tight">{user?.email}</p>
               <span className="inline-flex items-center px-2 py-0.5 mt-1.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wider">
                 {user?.role}
               </span>
@@ -98,18 +112,18 @@ export default function UserMenu({ user, logout }) {
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-theme-text-secondary hover:bg-theme-bg hover:text-theme-primary transition duration-150"
             >
-              <User className="w-4 h-4 text-slate-400" />
+              <User className="w-4 h-4 text-theme-text-muted" />
               <span>My Profile</span>
             </Link>
 
             <Link
               to={getDashboardLink()}
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-theme-text-secondary hover:bg-theme-bg hover:text-theme-primary transition duration-150"
             >
-              <CalendarDays className="w-4 h-4 text-slate-400" />
+              <CalendarDays className="w-4 h-4 text-theme-text-muted" />
               <span>My Events / Dashboard</span>
             </Link>
 
@@ -117,9 +131,9 @@ export default function UserMenu({ user, logout }) {
               <Link
                 to="/organiser"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-theme-text-secondary hover:bg-theme-bg hover:text-theme-primary transition duration-150"
               >
-                <CalendarDays className="w-4 h-4 text-slate-400" />
+                <CalendarDays className="w-4 h-4 text-theme-text-muted" />
                 <span>Manage All Events</span>
               </Link>
             )}
@@ -127,30 +141,30 @@ export default function UserMenu({ user, logout }) {
             <Link
               to="/settings/account"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-theme-text-secondary hover:bg-theme-bg hover:text-theme-primary transition duration-150"
             >
-              <Settings className="w-4 h-4 text-slate-400" />
+              <Settings className="w-4 h-4 text-theme-text-muted" />
               <span>Account Settings</span>
             </Link>
 
             <Link
               to="/settings/account#security"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-theme-text-secondary hover:bg-theme-bg hover:text-theme-primary transition duration-150"
             >
-              <ShieldAlert className="w-4 h-4 text-slate-400" />
+              <ShieldAlert className="w-4 h-4 text-theme-text-muted" />
               <span>Security</span>
             </Link>
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-slate-100 my-1" />
+          <div className="h-px bg-theme-bg-secondary my-1" />
 
           {/* Footer Logout Button */}
           <div className="px-1.5">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-red-650 hover:bg-red-50 transition duration-150 text-left cursor-pointer"
+              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-theme-error hover:bg-theme-error-bg transition duration-150 text-left cursor-pointer"
             >
               <LogOut className="w-4 h-4 text-red-400" />
               <span>Logout</span>

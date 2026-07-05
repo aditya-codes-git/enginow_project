@@ -16,6 +16,7 @@ import ProtectedRoute from './components/common/ProtectedRoute'
 import ErrorBoundary from './components/common/ErrorBoundary'
 import HomePage from './pages/HomePage'
 import Footer from './components/common/Footer'
+import ScrollToTop from './components/common/ScrollToTop'
 
 import OrganiserManagementPage from './pages/admin/OrganiserManagementPage'
 import UserManagementPage from './pages/admin/UserManagementPage'
@@ -47,12 +48,12 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 function ForbiddenPage() {
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 text-red-600 mb-6 shadow-sm shadow-red-100">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-theme-error-bg text-theme-error mb-6 shadow-sm shadow-red-100">
         <ShieldX className="h-8 w-8" />
       </div>
-      <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 font-outfit">403 - Access Denied</h1>
-      <p className="text-slate-500 mt-2 max-w-md">You do not have the required permissions to view this page.</p>
-      <Link to="/" className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm px-6 py-2.5 rounded-xl transition-all shadow-md">
+      <h1 className="text-3xl font-extrabold tracking-tight text-theme-text font-outfit">403 - Access Denied</h1>
+      <p className="text-theme-text-secondary mt-2 max-w-md">You do not have the required permissions to view this page.</p>
+      <Link to="/" className="mt-6 bg-theme-primary hover:bg-theme-primary text-white font-medium text-sm px-6 py-2.5 rounded-xl transition-all shadow-md">
         Return Home
       </Link>
     </div>
@@ -65,16 +66,20 @@ function MainLayout() {
   const isHomePage = location.pathname === '/'
 
   // Determine dynamic background class for non-homepage layouts
-  let bgClass = 'bg-white'
+  let bgClass = 'bg-theme-surface'
   if (!isHomePage) {
     if (location.pathname.startsWith('/login') || location.pathname.startsWith('/signup')) {
-      bgClass = 'bg-white'
+      bgClass = 'bg-theme-surface'
     } else if (location.pathname.startsWith('/organiser') || location.pathname.startsWith('/admin')) {
-      bgClass = 'bg-slate-50'
+      bgClass = 'bg-theme-bg'
     } else {
       bgClass = 'bg-[#f4f1e8]'
     }
   }
+
+  const isAuthPage = location.pathname.startsWith('/login') || location.pathname.startsWith('/signup')
+
+  const showNavbar = !isAuthPage
 
   const showFooter = !(
     location.pathname.startsWith('/login') ||
@@ -85,14 +90,14 @@ function MainLayout() {
 
   return (
     <div
-      className={`min-h-screen ${bgClass} text-slate-800 font-sans flex flex-col transition-colors duration-300`}
+      className={`min-h-screen ${bgClass} text-theme-text font-sans flex flex-col transition-colors duration-300`}
       style={{
         backgroundColor: theme.colors.background,
         color: theme.colors.foreground,
       }}
     >
-      <Navbar />
-      <main className={`flex-grow ${isHomePage ? '' : 'pt-24'}`}>
+      {showNavbar && <Navbar />}
+      <main className={`flex-grow ${isHomePage ? '' : (isAuthPage ? '' : 'pt-24')}`}>
         <Routes>
           {/* Homepage */}
           <Route
@@ -322,6 +327,7 @@ function MainLayout() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ThemeProvider>
         <AuthProvider>
           <ErrorBoundary>

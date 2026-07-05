@@ -120,34 +120,34 @@ export default function AccountSettings() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8 text-slate-850 font-sans">
+    <main className="min-h-screen bg-theme-bg/50 py-10 px-4 sm:px-6 lg:px-8 text-slate-850 font-sans">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 font-outfit">Account Settings</h1>
-          <p className="text-sm text-slate-500 mt-1">Manage your developer profile and security configurations.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-theme-text font-outfit">Account Settings</h1>
+          <p className="text-sm text-theme-text-secondary mt-1">Manage your developer profile and security configurations.</p>
         </div>
 
         {/* Profile Card */}
-        <section className="bg-white rounded-3xl border border-slate-150 shadow-sm overflow-hidden">
-          <div className="border-b border-slate-100 bg-slate-50 px-6 py-4 flex items-center gap-3">
-            <User className="w-5 h-5 text-blue-600" />
+        <section className="bg-theme-surface rounded-3xl border border-theme-divider shadow-sm overflow-hidden">
+          <div className="border-b border-theme-divider bg-theme-bg px-6 py-4 flex items-center gap-3">
+            <User className="w-5 h-5 text-theme-primary" />
             <div>
-              <h2 className="font-bold text-slate-950 text-base font-outfit">Profile Information</h2>
-              <p className="text-xs text-slate-500">Update your public identity details.</p>
+              <h2 className="font-bold text-theme-text text-base font-outfit">Profile Information</h2>
+              <p className="text-xs text-theme-text-secondary">Update your public identity details.</p>
             </div>
           </div>
 
           <form onSubmit={handleUpdateProfile} className="p-6 space-y-6">
             {profileSuccess && (
-              <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+              <div className="flex items-center gap-2 rounded-xl border border-theme-success-border bg-theme-success-bg px-4 py-3 text-sm font-semibold text-theme-success">
                 <CheckCircle className="w-4 h-4 text-emerald-500" />
                 {profileSuccess}
               </div>
             )}
             {profileError && (
-              <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-750">
+              <div className="flex items-center gap-2 rounded-xl border border-theme-error-border bg-theme-error-bg px-4 py-3 text-sm font-semibold text-theme-error">
                 <AlertCircle className="w-4 h-4 text-red-500" />
                 {profileError}
               </div>
@@ -155,35 +155,35 @@ export default function AccountSettings() {
 
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Full Name</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white outline-none focus:ring-1 focus:ring-blue-600 transition duration-150 text-slate-900 font-medium"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg focus:bg-theme-surface outline-none focus:ring-1 focus:ring-theme-focus transition duration-150 text-theme-text font-medium"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Email Address</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Email Address</label>
                 <input
                   type="email"
                   readOnly
                   disabled
                   value={user?.email || ''}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-100 text-slate-500 outline-none cursor-not-allowed font-medium"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg-secondary text-theme-text-secondary outline-none cursor-not-allowed font-medium"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Account Role</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Account Role</label>
                 <input
                   type="text"
                   readOnly
                   disabled
                   value={user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : ''}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-100 text-slate-500 outline-none cursor-not-allowed font-bold"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg-secondary text-theme-text-secondary outline-none cursor-not-allowed font-bold"
                 />
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function AccountSettings() {
               <button
                 type="submit"
                 disabled={profileLoading}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-xl text-sm transition shadow-sm hover:shadow-md cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-semibold py-2 px-5 rounded-xl text-sm transition shadow-sm hover:shadow-md cursor-pointer disabled:opacity-50"
               >
                 {profileLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {profileLoading ? 'Saving changes...' : 'Save Profile'}
@@ -202,24 +202,24 @@ export default function AccountSettings() {
         </section>
 
         {/* Security Password Card */}
-        <section id="security" className="bg-white rounded-3xl border border-slate-150 shadow-sm overflow-hidden">
-          <div className="border-b border-slate-100 bg-slate-50 px-6 py-4 flex items-center gap-3">
-            <ShieldAlert className="w-5 h-5 text-blue-600" />
+        <section id="security" className="bg-theme-surface rounded-3xl border border-theme-divider shadow-sm overflow-hidden">
+          <div className="border-b border-theme-divider bg-theme-bg px-6 py-4 flex items-center gap-3">
+            <ShieldAlert className="w-5 h-5 text-theme-primary" />
             <div>
-              <h2 className="font-bold text-slate-950 text-base font-outfit">Security Credentials</h2>
-              <p className="text-xs text-slate-500">Update password and secure access tokens.</p>
+              <h2 className="font-bold text-theme-text text-base font-outfit">Security Credentials</h2>
+              <p className="text-xs text-theme-text-secondary">Update password and secure access tokens.</p>
             </div>
           </div>
 
           <form onSubmit={handleChangePassword} className="p-6 space-y-6">
             {passwordSuccess && (
-              <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+              <div className="flex items-center gap-2 rounded-xl border border-theme-success-border bg-theme-success-bg px-4 py-3 text-sm font-semibold text-theme-success">
                 <CheckCircle className="w-4 h-4 text-emerald-500" />
                 {passwordSuccess}
               </div>
             )}
             {passwordError && (
-              <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-750">
+              <div className="flex items-center gap-2 rounded-xl border border-theme-error-border bg-theme-error-bg px-4 py-3 text-sm font-semibold text-theme-error">
                 <AlertCircle className="w-4 h-4 text-red-500" />
                 {passwordError}
               </div>
@@ -227,38 +227,38 @@ export default function AccountSettings() {
 
             <div className="space-y-4 max-w-md">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Current Password</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Current Password</label>
                 <input
                   type="password"
                   required
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white outline-none focus:ring-1 focus:ring-blue-600 transition duration-150 text-slate-900"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg focus:bg-theme-surface outline-none focus:ring-1 focus:ring-theme-focus transition duration-150 text-theme-text"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">New Password</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">New Password</label>
                 <input
                   type="password"
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white outline-none focus:ring-1 focus:ring-blue-600 transition duration-150 text-slate-900"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg focus:bg-theme-surface outline-none focus:ring-1 focus:ring-theme-focus transition duration-150 text-theme-text"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Confirm New Password</label>
+                <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Confirm New Password</label>
                 <input
                   type="password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:bg-white outline-none focus:ring-1 focus:ring-blue-600 transition duration-150 text-slate-900"
+                  className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg focus:bg-theme-surface outline-none focus:ring-1 focus:ring-theme-focus transition duration-150 text-theme-text"
                 />
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function AccountSettings() {
               <button
                 type="submit"
                 disabled={passwordLoading}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-xl text-sm transition shadow-sm hover:shadow-md cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-semibold py-2 px-5 rounded-xl text-sm transition shadow-sm hover:shadow-md cursor-pointer disabled:opacity-50"
               >
                 {passwordLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {passwordLoading ? 'Changing password...' : 'Change Password'}
@@ -277,18 +277,18 @@ export default function AccountSettings() {
         </section>
 
         {/* Sessions Card */}
-        <section className="bg-white rounded-3xl border border-slate-150 shadow-sm overflow-hidden">
-          <div className="border-b border-slate-100 bg-slate-50 px-6 py-4 flex items-center gap-3">
-            <LogOut className="w-5 h-5 text-blue-600" />
+        <section className="bg-theme-surface rounded-3xl border border-theme-divider shadow-sm overflow-hidden">
+          <div className="border-b border-theme-divider bg-theme-bg px-6 py-4 flex items-center gap-3">
+            <LogOut className="w-5 h-5 text-theme-primary" />
             <div>
-              <h2 className="font-bold text-slate-950 text-base font-outfit">Active User Sessions</h2>
-              <p className="text-xs text-slate-500">Sign out of all devices and active browsers.</p>
+              <h2 className="font-bold text-theme-text text-base font-outfit">Active User Sessions</h2>
+              <p className="text-xs text-theme-text-secondary">Sign out of all devices and active browsers.</p>
             </div>
           </div>
 
           <div className="p-6 space-y-6">
             {sessionError && (
-              <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-750">
+              <div className="flex items-center gap-2 rounded-xl border border-theme-error-border bg-theme-error-bg px-4 py-3 text-sm font-semibold text-theme-error">
                 <AlertCircle className="w-4 h-4 text-red-500" />
                 {sessionError}
               </div>
@@ -296,10 +296,10 @@ export default function AccountSettings() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="max-w-md">
-                <p className="text-sm font-medium text-slate-800">
+                <p className="text-sm font-medium text-theme-text">
                   Wipe all active refresh tokens for this account.
                 </p>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-theme-text-secondary mt-1">
                   You will be logged out of this device, as well as any other browsers, computers, or devices running EngiNow.
                 </p>
               </div>

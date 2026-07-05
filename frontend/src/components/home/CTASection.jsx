@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CalendarPlus } from 'lucide-react';
 
+import { useTheme } from '../../context/ThemeContext';
+
 export default function CTASection() {
+  const { theme } = useTheme();
   return (
-    <section className="py-20 md:py-24 bg-white relative overflow-hidden">
+    <section className="py-20 md:py-24 bg-theme-surface relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Banner box */}
@@ -38,14 +41,18 @@ export default function CTASection() {
             <div className="flex flex-col sm:flex-row gap-3.5 justify-center pt-2">
               <Link
                 to="/events"
-                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-semibold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: theme.colors.primaryAccent || theme.colors.primary || '#2563eb',
+                  color: theme.colors.textOnPrimary || '#ffffff',
+                }}
+                className="inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95"
               >
                 <span>Explore Events</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/become-organizer"
-                className="inline-flex items-center justify-center gap-2 bg-white/[0.08] hover:bg-white/[0.12] text-white font-semibold px-7 py-3.5 rounded-xl border border-white/[0.1] hover:border-white/[0.2] transition-all duration-200 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 bg-theme-surface/[0.08] hover:bg-theme-surface/[0.12] text-white font-semibold px-7 py-3.5 rounded-xl border border-white/[0.1] hover:border-white/[0.2] transition-all duration-200 hover:-translate-y-0.5"
               >
                 <CalendarPlus className="w-4.5 h-4.5" />
                 <span>Host an Event</span>

@@ -77,11 +77,11 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <main className="min-h-screen bg-slate-50/50 p-6 md:p-8 text-slate-800 font-sans">
+    <main className="min-h-screen bg-theme-bg/50 p-6 md:p-8 text-theme-text font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Admin Header Section */}
-        <section className="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 md:p-12 shadow-xl border border-slate-800">
+        <section className="relative overflow-hidden rounded-3xl bg-theme-primary text-white p-8 md:p-12 shadow-xl border border-slate-800">
           <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 left-10 w-60 h-60 bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
           
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
               <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-outfit">
                 System Administration
               </h1>
-              <p className="text-slate-350 text-base md:text-lg leading-relaxed">
+              <p className="text-theme-text-muted text-base md:text-lg leading-relaxed">
                 Monitor platform health, verify organizer teams, manage system accounts, and coordinate event approvals.
               </p>
             </div>
@@ -101,51 +101,51 @@ export default function AdminDashboard() {
         </section>
 
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
+          <div className="rounded-xl border border-theme-error-border bg-theme-error-bg p-4 text-sm font-semibold text-theme-error">
             {error}
           </div>
         )}
 
         {/* Live Platform Stats */}
         <section className="grid gap-6 sm:grid-cols-3">
-          <div className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm flex items-center justify-between">
+          <div className="bg-theme-surface rounded-2xl border border-theme-border/60 p-6 shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-450 uppercase tracking-wider">Platform Users</span>
+              <span className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Platform Users</span>
               {loading ? (
                 <SkeletonBox className="h-9 w-16 rounded mt-1" />
               ) : (
-                <h3 className="text-3xl font-extrabold text-slate-900 font-outfit">{stats.usersCount}</h3>
+                <h3 className="text-3xl font-extrabold text-theme-text font-outfit">{stats.usersCount}</h3>
               )}
             </div>
-            <div className="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="h-12 w-12 rounded-xl bg-blue-50 text-theme-primary flex items-center justify-center">
               <Users className="w-6 h-6" />
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm flex items-center justify-between">
+          <div className="bg-theme-surface rounded-2xl border border-theme-border/60 p-6 shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-450 uppercase tracking-wider">Organiser Teams</span>
+              <span className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Organiser Teams</span>
               {loading ? (
                 <SkeletonBox className="h-9 w-16 rounded mt-1" />
               ) : (
-                <h3 className="text-3xl font-extrabold text-slate-900 font-outfit">{stats.orgsCount}</h3>
+                <h3 className="text-3xl font-extrabold text-theme-text font-outfit">{stats.orgsCount}</h3>
               )}
             </div>
-            <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="h-12 w-12 rounded-xl bg-theme-success-bg text-theme-success flex items-center justify-center">
               <Building2 className="w-6 h-6" />
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm flex items-center justify-between">
+          <div className="bg-theme-surface rounded-2xl border border-theme-border/60 p-6 shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold text-slate-450 uppercase tracking-wider">Pending Approvals</span>
+              <span className="text-xs font-bold text-theme-text-muted uppercase tracking-wider">Pending Approvals</span>
               {loading ? (
                 <SkeletonBox className="h-9 w-16 rounded mt-1" />
               ) : (
-                <h3 className="text-3xl font-extrabold text-slate-900 font-outfit">{stats.pendingEventsCount}</h3>
+                <h3 className="text-3xl font-extrabold text-theme-text font-outfit">{stats.pendingEventsCount}</h3>
               )}
             </div>
-            <div className="h-12 w-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <div className="h-12 w-12 rounded-xl bg-theme-warning-bg text-theme-warning flex items-center justify-center">
               <ClipboardCheck className="w-6 h-6" />
             </div>
           </div>
@@ -154,37 +154,37 @@ export default function AdminDashboard() {
         {/* Management Directory Hub */}
         <section className="space-y-6">
           <div className="flex items-center gap-2">
-            <Activity className="w-5 h-5 text-blue-600" />
-            <h2 className="text-2xl font-bold text-slate-950 font-outfit">Management Consoles</h2>
+            <Activity className="w-5 h-5 text-theme-primary" />
+            <h2 className="text-2xl font-bold text-theme-text font-outfit">Management Consoles</h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {adminActions.map((action) => {
               const Icon = action.icon;
               return (
-                <div key={action.title} className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md transition duration-200">
+                <div key={action.title} className="bg-theme-surface border border-theme-border rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:shadow-md transition duration-200">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
-                      <div className="p-3 bg-slate-50 border border-slate-100 rounded-2xl text-blue-600">
+                      <div className="p-3 bg-theme-bg border border-theme-divider rounded-2xl text-theme-primary">
                         <Icon className="w-6 h-6" />
                       </div>
                       {!loading && (
-                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-650">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-theme-bg-secondary text-theme-text-secondary">
                           {action.badge}
                         </span>
                       )}
                     </div>
                     
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold font-outfit text-slate-900">{action.title}</h3>
-                      <p className="text-slate-500 text-sm leading-relaxed">{action.description}</p>
+                      <h3 className="text-xl font-bold font-outfit text-theme-text">{action.title}</h3>
+                      <p className="text-theme-text-secondary text-sm leading-relaxed">{action.description}</p>
                     </div>
                   </div>
 
                   <div className="pt-6 border-t border-slate-50 mt-6">
                     <Link
                       to={action.href}
-                      className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl text-sm transition-all"
+                      className="w-full inline-flex items-center justify-center gap-2 bg-theme-primary hover:bg-theme-primary text-white font-semibold py-3 px-4 rounded-xl text-sm transition-all"
                     >
                       Open Console <ArrowRight className="w-4 h-4" />
                     </Link>
