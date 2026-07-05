@@ -244,10 +244,10 @@ export default function Navbar() {
                       backgroundColor: theme.colors.primaryAccent || theme.colors.primary || '#2563eb',
                       color: theme.colors.textOnPrimary || '#ffffff',
                     }}
-                    className="font-medium text-sm px-5 py-2.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-1.5 hover:opacity-95"
+                    className="font-medium text-sm px-5 py-2.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-1.5 hover:opacity-95 whitespace-nowrap"
                   >
                     Sign Up
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </Link>
                 </>
               )}
