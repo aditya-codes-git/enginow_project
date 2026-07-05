@@ -37,11 +37,11 @@ function HackathonsPage() {
     : hackathons.reduce((sum, item) => sum + Number(item.submissions || 0), 0)
 
   return (
-    <main className="bg-white text-slate-900">
+    <div className="bg-white text-slate-900">
       {/* Hero Header */}
       <section className="relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-20">
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-slate-50 pointer-events-none" />
         <div className="absolute top-0 right-[10%] w-[400px] h-[400px] bg-cyan-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -133,7 +133,7 @@ function HackathonsPage() {
           </>
         )}
       </section>
-    </main>
+    </div>
   )
 }
 

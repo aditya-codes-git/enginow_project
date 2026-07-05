@@ -38,11 +38,11 @@ function EventsPage() {
     : new Set(publicEvents.map((item) => item.city || item.location).filter(Boolean)).size
 
   return (
-    <main className="bg-white text-slate-900">
+    <div className="bg-white text-slate-900">
       {/* Hero Header */}
       <section className="relative overflow-hidden pt-12 pb-16 sm:pt-16 sm:pb-20">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-slate-50 pointer-events-none" />
         <div className="absolute top-0 left-[15%] w-[400px] h-[400px] bg-blue-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -135,7 +135,7 @@ function EventsPage() {
           </>
         )}
       </section>
-    </main>
+    </div>
   )
 }
 

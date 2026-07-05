@@ -51,13 +51,6 @@ export default function HeroSection() {
             animate="visible"
             className="space-y-6 md:space-y-8"
           >
-            {/* Eyebrow Badge */}
-            <motion.div variants={itemVariants}>
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 bg-white/80 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur-sm">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                Platform for engineering communities
-              </span>
-            </motion.div>
 
             {/* Main Headline */}
             <motion.h1
@@ -99,25 +92,6 @@ export default function HeroSection() {
               </Link>
             </motion.div>
 
-            {/* Event Preview Ticker — generic, no fake data */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap gap-2.5 pt-3"
-            >
-              {[
-                { label: 'Hackathons', icon: Zap, accent: 'text-amber-600 bg-amber-50 border-amber-100' },
-                { label: 'Workshops', icon: FileText, accent: 'text-blue-600 bg-blue-50 border-blue-100' },
-                { label: 'Competitions', icon: Sparkles, accent: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
-              ].map((tag) => (
-                <span
-                  key={tag.label}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${tag.accent}`}
-                >
-                  <tag.icon className="w-3.5 h-3.5" />
-                  {tag.label}
-                </span>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Right: Dashboard Preview Mock */}

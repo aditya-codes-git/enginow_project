@@ -396,7 +396,7 @@ export default function BecomeOrganizerPage() {
   // 1. Render Success Onboarding Portal Screen
   if (submittedApp) {
     return (
-      <main className="bg-slate-50 min-h-screen py-16 px-4 font-sans text-slate-800 flex items-center justify-center">
+      <div className="bg-slate-50 min-h-screen py-16 px-4 font-sans text-slate-800 flex items-center justify-center">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -493,16 +493,15 @@ export default function BecomeOrganizerPage() {
             </button>
           </div>
         </motion.div>
-      </main>
+      </div>
     );
   }
 
-  // 2. Render Main Redesigned Onboarding Landing Page + Form Wizard
   return (
-    <main className="bg-slate-50 text-slate-900 font-sans min-h-screen relative selection:bg-blue-150">
+    <div className="bg-slate-50 text-slate-900 font-sans min-h-screen relative selection:bg-blue-150">
       
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden pt-28 pb-24 border-b border-slate-200/80 bg-white">
+      <section className="relative overflow-hidden pt-28 pb-24 border-b border-slate-200/80 bg-slate-50">
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-50 to-transparent pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-7">
           
@@ -556,7 +555,7 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 2. BENEFITS SECTION */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center space-y-4">
             <span className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">Why Host Events?</span>
@@ -583,7 +582,7 @@ export default function BecomeOrganizerPage() {
       </section>
 
       {/* 3. ELIGIBILITY REQUIREMENTS */}
-      <section className="py-24 bg-white border-y border-slate-200/80">
+      <section className="py-24 bg-slate-50 border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center space-y-4">
             <span className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest font-semibold">Eligibility Check</span>
@@ -1348,6 +1347,6 @@ export default function BecomeOrganizerPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }
