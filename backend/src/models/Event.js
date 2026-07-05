@@ -145,6 +145,13 @@ const eventSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    slug: {
+      type: String,
+      required: [true, 'Slug is required'],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     // Contact
     contactName: {
       type: String,
@@ -208,14 +215,47 @@ const eventSchema = new mongoose.Schema(
   }
 );
 
+// Slugify helper function
+export function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // remove special chars except alphanumeric, space, hyphen
+    .replace(/[\s_]+/g, '-')  // replace spaces and underscores with hyphens
+    .replace(/-+/g, '-')      // collapse multiple hyphens
+    .replace(/^-+|-+$/g, ''); // remove leading/trailing hyphens
+}
+
 // Pre-validate hook for database safety checks
-eventSchema.pre('validate', function (next) {
+eventSchema.pre('validate', async function (next) {
   if (this.startDate && this.endDate && this.endDate < this.startDate) {
     this.invalidate('endDate', 'End date cannot be before start date');
   }
   if (this.registrationDeadline && this.endDate && this.registrationDeadline > this.endDate) {
     this.invalidate('registrationDeadline', 'Registration deadline cannot be after event end');
   }
+
+  // Generate unique slug ONLY for new events or if slug is missing
+  if (this.isNew && !this.slug) {
+    const baseSlug = slugify(this.title || 'event');
+    let uniqueSlug = baseSlug;
+    let counter = 1;
+    let slugExists = true;
+
+    while (slugExists) {
+      const checkSlug = counter === 1 ? uniqueSlug : `${baseSlug}-${counter}`;
+      const existingEvent = await mongoose.model('Event').findOne({ slug: checkSlug });
+      if (!existingEvent || (existingEvent._id.toString() === this._id.toString())) {
+        uniqueSlug = checkSlug;
+        slugExists = false;
+      } else {
+        counter++;
+      }
+    }
+    this.slug = uniqueSlug;
+  }
+
   next();
 });
 
@@ -240,3 +280,4 @@ eventSchema.index({ status: 1, type: 1, startDate: 1 });
 const Event = mongoose.model('Event', eventSchema);
 
 export default Event;
+

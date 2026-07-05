@@ -128,7 +128,7 @@ function MainLayout() {
           />
 
           <Route
-            path="/events/:eventId"
+            path="/events/:slug"
             element={<EventDetailPage />}
           />
 
@@ -138,7 +138,7 @@ function MainLayout() {
           />
 
           <Route
-            path="/hackathons/:eventId"
+            path="/hackathons/:slug"
             element={<EventDetailPage />}
           />
 

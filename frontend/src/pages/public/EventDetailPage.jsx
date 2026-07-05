@@ -73,7 +73,7 @@ function InfoBlock({ label, value, icon: Icon }) {
 }
 
 function EventDetailPage() {
-  const { eventId } = useParams()
+  const { slug } = useParams()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
   const location = useLocation()
@@ -100,7 +100,15 @@ function EventDetailPage() {
     setLoading(true)
     setPageError('')
     try {
-      const data = await eventService.getEvent(eventId)
+      const data = await eventService.getEvent(slug)
+
+      // Client-side permanent redirect for legacy ObjectId URLs
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(slug)
+      if (isObjectId && data.slug) {
+        navigate(`/${data.type === 'Hackathon' ? 'hackathons' : 'events'}/${data.slug}`, { replace: true })
+        return
+      }
+
       setEvent(data)
 
       // Only check registration status if participant is logged in
@@ -124,7 +132,7 @@ function EventDetailPage() {
     } finally {
       setLoading(false)
     }
-  }, [eventId, isAuthenticated, user])
+  }, [slug, navigate, isAuthenticated, user])
 
   useEffect(() => {
     loadEventData()
@@ -149,7 +157,7 @@ function EventDetailPage() {
       setIsRegistered(true)
       showSuccess(`Successfully registered for the ${isHackathon ? 'hackathon' : 'event'}!`)
       // Refresh count
-      const updated = await eventService.getEvent(eventId)
+      const updated = await eventService.getEvent(slug)
       setEvent(updated)
     } catch (err) {
       showError(err.response?.data?.message || 'Registration failed.')
@@ -161,7 +169,7 @@ function EventDetailPage() {
   const handleRegistrationSuccess = async () => {
     setIsRegistered(true)
     try {
-      const updated = await eventService.getEvent(eventId)
+      const updated = await eventService.getEvent(slug)
       setEvent(updated)
     } catch (err) {
       console.error('Failed to reload event details:', err)
@@ -177,7 +185,7 @@ function EventDetailPage() {
       setIsRegistered(false)
       showSuccess('Registration cancelled successfully.')
       // Refresh count
-      const updated = await eventService.getEvent(eventId)
+      const updated = await eventService.getEvent(slug)
       setEvent(updated)
     } catch (err) {
       showError(err.response?.data?.message || 'Failed to cancel registration.')

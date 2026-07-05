@@ -14,7 +14,7 @@ function formatDate(value) {
 
 function EventCard({ event, featured = false }) {
   const safeEvent = event || {}
-  const detailPath = `/events/${safeEvent.id || ''}`
+  const detailPath = `/events/${safeEvent.slug || safeEvent.id || ''}`
   const coverImage = safeEvent.coverImage || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87'
   const tracks = (safeEvent.track || 'Community').split(',').slice(0, 3)
 

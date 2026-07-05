@@ -140,7 +140,7 @@ export default function UserDashboard() {
                       <p className="text-slate-500 text-sm max-w-md line-clamp-1">{evt.tagline || evt.description}</p>
                     </div>
                     <Link
-                      to={evt.type === 'Hackathon' ? `/hackathons/${evt.id}` : `/events/${evt.id}`}
+                      to={evt.type === 'Hackathon' ? `/hackathons/${evt.slug || evt.id}` : `/events/${evt.slug || evt.id}`}
                       className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition shrink-0"
                     >
                       View Details

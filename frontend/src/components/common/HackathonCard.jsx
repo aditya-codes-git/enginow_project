@@ -20,7 +20,7 @@ function HackathonCard({ hackathon }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
       {/* Image */}
-      <Link to={`/hackathons/${safeHackathon.id || ''}`} className="relative block w-full aspect-[16/10] overflow-hidden">
+      <Link to={`/hackathons/${safeHackathon.slug || safeHackathon.id || ''}`} className="relative block w-full aspect-[16/10] overflow-hidden">
         <img src={coverImage} alt={safeHackathon.title || 'Hackathon cover'} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
 
@@ -49,7 +49,7 @@ function HackathonCard({ hackathon }) {
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0" />
             <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-cyan-600">Hackathon</p>
           </div>
-          <Link to={`/hackathons/${safeHackathon.id || ''}`}>
+          <Link to={`/hackathons/${safeHackathon.slug || safeHackathon.id || ''}`}>
             <h3 className="font-outfit text-xl sm:text-2xl font-bold leading-tight text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{safeHackathon.title || 'Untitled hackathon'}</h3>
           </Link>
           <p className="text-sm leading-relaxed text-slate-500 line-clamp-2">{safeHackathon.tagline || safeHackathon.description || 'Build, submit, and compete with teams across focused innovation tracks.'}</p>
@@ -79,7 +79,7 @@ function HackathonCard({ hackathon }) {
             <CalendarDays className="h-3.5 w-3.5 text-slate-400" />
             <span>Deadline: {formatDate(safeHackathon.registrationDeadline)}</span>
           </div>
-          <Link to={`/hackathons/${safeHackathon.id || ''}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors group/link">
+          <Link to={`/hackathons/${safeHackathon.slug || safeHackathon.id || ''}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors group/link">
             Explore
             <ArrowRight className="h-3.5 w-3.5 translate-x-0 group-hover/link:translate-x-0.5 transition-transform" />
           </Link>
