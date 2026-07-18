@@ -1,12 +1,3 @@
-const withOpacity = (variableName) => {
-  return ({ opacityValue }) => {
-    if (opacityValue !== undefined) {
-      return `rgb(var(${variableName}-rgb) / ${opacityValue})`;
-    }
-    return `var(${variableName})`;
-  };
-};
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -18,62 +9,6 @@ export default {
     extend: {
 
       colors: {
-        theme: {
-          bg: withOpacity('--bg-primary'),
-          'bg-secondary': withOpacity('--bg-secondary'),
-          surface: withOpacity('--surface-color'),
-          'surface-elevated': withOpacity('--surface-elevated'),
-          'navbar-bg': withOpacity('--navbar-bg'),
-          'navbar-border': withOpacity('--navbar-border'),
-          'card-bg': withOpacity('--card-bg'),
-          'card-hover': withOpacity('--card-hover'),
-          'input-bg': withOpacity('--input-bg'),
-          'input-border': withOpacity('--input-border'),
-          'input-focus': withOpacity('--input-focus'),
-          text: withOpacity('--text-primary'),
-          'text-secondary': withOpacity('--text-secondary'),
-          'text-muted': withOpacity('--text-muted'),
-          'text-heading': withOpacity('--text-heading'),
-          primary: withOpacity('--color-primary'),
-          'accent-hover': withOpacity('--accent-hover'),
-          'accent-active': withOpacity('--accent-active'),
-          'text-on-primary': withOpacity('--text-on-primary'),
-          link: withOpacity('--link-color'),
-          'link-hover': withOpacity('--link-hover'),
-          border: withOpacity('--border-color'),
-          divider: withOpacity('--divider-color'),
-          'hover-surface': withOpacity('--hover-surface'),
-          'selected-surface': withOpacity('--selected-surface'),
-          overlay: withOpacity('--overlay-bg'),
-          'success': withOpacity('--success-color'),
-          'success-bg': withOpacity('--success-bg'),
-          'success-border': withOpacity('--success-border'),
-          'warning': withOpacity('--warning-color'),
-          'warning-bg': withOpacity('--warning-bg'),
-          'warning-border': withOpacity('--warning-border'),
-          'error': withOpacity('--error-color'),
-          'error-bg': withOpacity('--error-bg'),
-          'error-border': withOpacity('--error-border'),
-          'info': withOpacity('--info-color'),
-          'info-bg': withOpacity('--info-bg'),
-          'info-border': withOpacity('--info-border'),
-          'disabled-bg': withOpacity('--disabled-bg'),
-          'disabled-text': withOpacity('--disabled-text'),
-          'skeleton-bg': withOpacity('--skeleton-bg'),
-          'skeleton-highlight': withOpacity('--skeleton-highlight'),
-          'tooltip-bg': withOpacity('--tooltip-bg'),
-          'tooltip-text': withOpacity('--tooltip-text'),
-          scrollbar: withOpacity('--scrollbar-color'),
-          selection: withOpacity('--selection-color'),
-          focus: withOpacity('--focus-ring'),
-          'footer-bg': withOpacity('--footer-bg'),
-          'footer-heading': withOpacity('--footer-heading'),
-          'footer-text': withOpacity('--footer-text'),
-          'footer-muted': withOpacity('--footer-muted'),
-          'footer-border': withOpacity('--footer-border'),
-          'footer-icon': withOpacity('--footer-icon'),
-          'footer-hover': withOpacity('--footer-hover'),
-        },
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -162,13 +97,12 @@ export default {
 
 
       boxShadow: {
-        xs: 'var(--shadow-xs)',
-        sm: 'var(--shadow-sm)',
-        md: 'var(--shadow-md)',
-        lg: 'var(--shadow-lg)',
-        xl: 'var(--shadow-xl)',
-        '2xl': 'var(--shadow-2xl)',
-        inner: 'var(--shadow-inner)',
+        xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
+        sm: '0 1px 3px 0 rgba(0,0,0,0.1)',
+        md: '0 4px 12px 0 rgba(0,0,0,0.08)',
+        lg: '0 10px 24px 0 rgba(0,0,0,0.12)',
+        xl: '0 20px 32px 0 rgba(0,0,0,0.15)',
+        inner: 'inset 0 2px 4px 0 rgba(0,0,0,0.05)',
       },
 
 

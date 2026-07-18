@@ -4,6 +4,7 @@ export const EVENT_STATUS = {
   APPROVED: 'approved',
   REJECTED: 'rejected',
   ARCHIVED: 'archived',
+  SUSPENDED: 'suspended',
 };
 
 export const EVENT_TYPE = {

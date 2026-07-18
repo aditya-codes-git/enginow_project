@@ -28,24 +28,24 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-theme-surface relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
       {/* Visual background details */}
-      <div className="absolute top-1/2 left-0 right-0 h-96 bg-theme-bg/50 -skew-y-3 -z-10" />
+      <div className="absolute top-1/2 left-0 right-0 h-96 bg-slate-50/50 -skew-y-3 -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24 space-y-4">
-          <h2 className="font-outfit font-bold text-xs text-theme-primary uppercase tracking-widest">
+          <h2 className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">
             Timeline
           </h2>
-          <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-theme-text">
+          <h3 className="font-outfit font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight text-slate-900">
             How{' '}
             <span className="text-gradient-clear">
               EngiNow Works
             </span>
           </h3>
-          <p className="text-theme-text-secondary text-base sm:text-lg">
+          <p className="text-slate-500 text-base sm:text-lg">
             EngiNow bridges the gap between student talent and opportunities in 3 simple steps.
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function HowItWorks() {
         {/* Steps flow */}
         <div className="relative">
           {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[68px] left-[15%] right-[15%] h-1 bg-theme-bg-secondary -z-10">
+          <div className="hidden lg:block absolute top-[68px] left-[15%] right-[15%] h-1 bg-slate-100 -z-10">
             {/* Animated Glow pipe */}
             <motion.div
               initial={{ width: 0 }}
@@ -81,7 +81,7 @@ export default function HowItWorks() {
                     {/* Circle badge */}
                     <div className={`w-24 h-24 rounded-2xl bg-gradient-to-tr ${step.color} flex items-center justify-center text-white shadow-xl relative z-10 group-hover:scale-105 transition-transform duration-300`}>
                       <StepIcon className="w-9 h-9" />
-                      <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-theme-primary border-4 border-white flex items-center justify-center text-white text-xs font-bold font-outfit">
+                      <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 border-4 border-white flex items-center justify-center text-white text-xs font-bold font-outfit">
                         {step.step}
                       </span>
                     </div>
@@ -90,10 +90,10 @@ export default function HowItWorks() {
                   </div>
 
                   {/* Title & Description */}
-                  <h4 className="font-outfit font-bold text-theme-text text-xl sm:text-2xl mb-3 mt-2">
+                  <h4 className="font-outfit font-bold text-slate-900 text-xl sm:text-2xl mb-3 mt-2">
                     {step.title}
                   </h4>
-                  <p className="text-theme-text-secondary text-sm leading-relaxed max-w-sm">
+                  <p className="text-slate-500 text-sm leading-relaxed max-w-sm">
                     {step.description}
                   </p>
 

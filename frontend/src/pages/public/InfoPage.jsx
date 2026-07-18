@@ -15,10 +15,10 @@ function InfoPage({ pageKey }) {
   const Icon = page.icon
 
   return (
-    <main className="bg-theme-surface text-theme-text">
+    <main className="bg-white text-slate-900">
       <section className="bg-slate-950 text-white">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-theme-surface/10 px-4 py-2 text-sm font-semibold text-blue-100">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-blue-100">
             <Icon className="h-4 w-4" />
             {page.eyebrow}
           </div>
@@ -29,11 +29,11 @@ function InfoPage({ pageKey }) {
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="divide-y divide-theme-divider rounded-2xl border border-theme-border bg-theme-surface shadow-sm">
+        <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-sm">
           {page.sections.map((section) => (
             <section key={section.heading} className="p-6 sm:p-8">
-              <h2 className="font-outfit text-2xl font-bold text-theme-text">{section.heading}</h2>
-              <p className="mt-3 text-base leading-8 text-theme-text-secondary">{section.body}</p>
+              <h2 className="font-outfit text-2xl font-bold text-slate-950">{section.heading}</h2>
+              <p className="mt-3 text-base leading-8 text-slate-600">{section.body}</p>
             </section>
           ))}
         </div>

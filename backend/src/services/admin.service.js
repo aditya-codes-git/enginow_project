@@ -2,9 +2,11 @@ import mongoose from 'mongoose';
 import User from '../models/User.js';
 import Event from '../models/Event.js';
 import OrganiserTeam from '../models/OrganiserTeam.js';
+import Blog from '../models/Blog.js';
 import ApiError from '../utils/ApiError.js';
 import { EVENT_STATUS } from '../constants/eventStatus.js';
 import { ORGANISER_STATUS } from '../constants/organiserStatus.js';
+import { BLOG_STATUS } from '../constants/blogStatus.js';
 import { runWithTransaction } from '../utils/transaction.js';
 
 export const getAllUsers = async () => {
@@ -33,6 +35,12 @@ export const getPendingEvents = async () => {
   return await Event.find({ status: EVENT_STATUS.PENDING })
     .populate('organiser', 'name email avatar organization')
     .sort({ createdAt: 1 });
+};
+
+export const getAllEvents = async () => {
+  return await Event.find({})
+    .populate('organiser', 'name email avatar organization')
+    .sort({ createdAt: -1 });
 };
 
 export const approveEvent = async (eventId) => {
@@ -82,6 +90,37 @@ export const rejectEvent = async (eventId, rejectionReason) => {
   return event;
 };
 
+export const suspendEvent = async (eventId) => {
+  const event = await Event.findById(eventId);
+  if (!event) {
+    throw new ApiError(404, 'Event not found');
+  }
+
+  if (event.status === EVENT_STATUS.SUSPENDED) {
+    throw new ApiError(400, 'Event is already suspended');
+  }
+
+  event.status = EVENT_STATUS.SUSPENDED;
+  await event.save();
+  return event;
+};
+
+export const activateEvent = async (eventId) => {
+  const event = await Event.findById(eventId);
+  if (!event) {
+    throw new ApiError(404, 'Event not found');
+  }
+
+  if (event.status === EVENT_STATUS.APPROVED) {
+    throw new ApiError(400, 'Event is already active');
+  }
+
+  event.status = EVENT_STATUS.APPROVED;
+  event.rejectionReason = '';
+  await event.save();
+  return event;
+};
+
 export const getAllOrganisers = async () => {
   return await OrganiserTeam.find({})
     .populate('members', 'name email avatar organization')
@@ -111,4 +150,104 @@ export const verifyOrganiserTeam = async (teamId, adminId) => {
 
     return team;
   });
+};
+
+export const getAllBlogs = async () => {
+  return await Blog.find({}).sort({ createdAt: -1 });
+};
+
+export const getPendingBlogs = async () => {
+  return await Blog.find({ status: BLOG_STATUS.PENDING }).sort({ createdAt: 1 });
+};
+
+export const getBlogBySlug = async (slug) => {
+  const blog = await Blog.findOne({ slug });
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+  return blog;
+};
+
+export const createBlog = async (blogData) => {
+  const existingBlog = await Blog.findOne({ slug: blogData.slug });
+  if (existingBlog) {
+    throw new ApiError(400, 'A blog with this slug already exists');
+  }
+  const blog = await Blog.create(blogData);
+  return blog;
+};
+
+export const updateBlog = async (blogId, blogData) => {
+  const blog = await Blog.findByIdAndUpdate(blogId, { $set: blogData }, { new: true, runValidators: true });
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+  return blog;
+};
+
+export const deleteBlog = async (blogId) => {
+  const blog = await Blog.findByIdAndDelete(blogId);
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+  return blog;
+};
+
+export const approveBlog = async (blogId) => {
+  const blog = await Blog.findById(blogId);
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+  if (![BLOG_STATUS.PENDING, BLOG_STATUS.SUSPENDED].includes(blog.status)) {
+    throw new ApiError(400, `Blog cannot be approved from current status: ${blog.status}`);
+  }
+  blog.status = BLOG_STATUS.APPROVED;
+  blog.rejectionReason = '';
+  await blog.save();
+  return blog;
+};
+
+export const suspendBlog = async (blogId) => {
+  const blog = await Blog.findById(blogId);
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+
+  if (blog.status === BLOG_STATUS.SUSPENDED) {
+    throw new ApiError(400, 'Blog is already suspended');
+  }
+
+  blog.status = BLOG_STATUS.SUSPENDED;
+  await blog.save();
+  return blog;
+};
+
+export const activateBlog = async (blogId) => {
+  const blog = await Blog.findById(blogId);
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+
+  if (blog.status === BLOG_STATUS.APPROVED) {
+    throw new ApiError(400, 'Blog is already active');
+  }
+
+  blog.status = BLOG_STATUS.APPROVED;
+  blog.rejectionReason = '';
+  await blog.save();
+  return blog;
+};
+
+export const rejectBlog = async (blogId, rejectionReason) => {
+  const blog = await Blog.findById(blogId);
+  if (!blog) {
+    throw new ApiError(404, 'Blog not found');
+  }
+  if (blog.status !== BLOG_STATUS.PENDING) {
+    throw new ApiError(400, `Blog is not pending approval (current status: ${blog.status})`);
+  }
+  blog.status = BLOG_STATUS.REJECTED;
+  blog.rejectionReason = rejectionReason;
+  await blog.save();
+  return blog;
 };

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import User from '../models/User.js';
 import ApiError from '../utils/ApiError.js';
-import { USER_STATUS, ROLES } from '../constants/roles.js';
+import { USER_STATUS } from '../constants/roles.js';
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -41,7 +41,7 @@ const addRefreshTokenSession = async (user, refreshToken) => {
   await user.save();
 };
 
-export const registerUser = async ({ name, email, password }) => {
+export const registerUser = async ({ name, email, password, role }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new ApiError(400, 'User with this email already exists');
@@ -54,7 +54,7 @@ export const registerUser = async ({ name, email, password }) => {
     name,
     email,
     passwordHash: password, // Pre-save hooks will handle password hashing
-    role: ROLES.PARTICIPANT,
+    role,
     emailVerified: false,
     emailVerificationToken: verificationToken,
   });
@@ -75,13 +75,20 @@ export const registerUser = async ({ name, email, password }) => {
 };
 
 export const loginUser = async ({ email, password }) => {
-  const user = await User.findOne({ email });
+  // Explicitly select passwordHash — it may be excluded by projection on some queries
+  const user = await User.findOne({ email }).select('+passwordHash');
   if (!user) {
     throw new ApiError(401, 'Invalid email or password');
   }
 
   if (user.status === USER_STATUS.SUSPENDED) {
     throw new ApiError(403, 'Your account has been suspended');
+  }
+
+  // Guard: if the stored hash is missing the document was created before the
+  // passwordHash field was introduced (old field was 'password').
+  if (!user.passwordHash) {
+    throw new ApiError(401, 'Account requires a password reset. Please use Forgot Password.');
   }
 
   const isPasswordMatch = await user.comparePassword(password);

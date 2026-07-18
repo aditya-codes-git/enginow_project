@@ -10,7 +10,7 @@ export default function CategoriesSection() {
       icon: Trophy,
       count: '120+ Active',
       description: 'Collaborate to solve real-world problems and win prizes.',
-      color: 'from-blue-500/10 to-blue-600/10 text-theme-primary',
+      color: 'from-blue-500/10 to-blue-600/10 text-blue-600',
       borderColor: 'hover:border-blue-200/80',
     },
     {
@@ -18,15 +18,15 @@ export default function CategoriesSection() {
       icon: Code2,
       count: '85+ Active',
       description: 'Test your algorithms and compete in real-time sprints.',
-      color: 'from-emerald-500/10 to-teal-500/10 text-theme-success',
-      borderColor: 'hover:border-theme-success-border/80',
+      color: 'from-emerald-500/10 to-teal-500/10 text-emerald-600',
+      borderColor: 'hover:border-emerald-200/80',
     },
     {
       name: 'Workshops',
       icon: Laptop,
       count: '150+ Active',
       description: 'Hands-on practical labs to master modern tech stacks.',
-      color: 'from-blue-500/10 to-sky-500/10 text-theme-primary',
+      color: 'from-blue-500/10 to-sky-500/10 text-blue-600',
       borderColor: 'hover:border-blue-200/80',
     },
     {
@@ -34,8 +34,8 @@ export default function CategoriesSection() {
       icon: Video,
       count: '95+ Active',
       description: 'Learn from engineering leaders and industry professionals.',
-      color: 'from-amber-500/10 to-orange-500/10 text-theme-warning',
-      borderColor: 'hover:border-theme-warning-border/80',
+      color: 'from-amber-500/10 to-orange-500/10 text-amber-600',
+      borderColor: 'hover:border-amber-200/80',
     },
     {
       name: 'Tech Talks',
@@ -50,7 +50,7 @@ export default function CategoriesSection() {
       icon: Briefcase,
       count: '75+ Active',
       description: 'Prepare for interviews, resume reviews, and networking.',
-      color: 'from-sky-500/10 to-blue-500/10 text-theme-info',
+      color: 'from-sky-500/10 to-blue-500/10 text-sky-600',
       borderColor: 'hover:border-sky-200/80',
     },
   ];
@@ -75,16 +75,16 @@ export default function CategoriesSection() {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-theme-bg/30">
+    <section className="py-20 md:py-28 bg-slate-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-4">
           <div className="space-y-3">
-            <h2 className="font-outfit font-bold text-xs text-theme-primary uppercase tracking-widest">
+            <h2 className="font-outfit font-bold text-xs text-blue-600 uppercase tracking-widest">
               Categories
             </h2>
-            <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl tracking-tight text-theme-text">
+            <h3 className="heading-clear font-outfit font-extrabold text-3xl sm:text-4xl tracking-tight text-slate-900">
               Browse Events By{' '}
               <span className="text-gradient-clear">
                 Category
@@ -94,7 +94,7 @@ export default function CategoriesSection() {
           <div>
             <Link
               to="/events"
-              className="inline-flex items-center gap-1.5 font-semibold text-sm text-theme-primary hover:text-blue-700 transition-colors"
+              className="inline-flex items-center gap-1.5 font-semibold text-sm text-blue-600 hover:text-blue-700 transition-colors"
             >
               View all opportunities
               <ArrowUpRight className="w-4 h-4" />
@@ -116,7 +116,7 @@ export default function CategoriesSection() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`group relative p-6 bg-theme-surface border border-theme-divider rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 ${category.borderColor} hover:-translate-y-0.5 cursor-pointer`}
+                className={`group relative p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 ${category.borderColor} hover:-translate-y-0.5 cursor-pointer`}
               >
                 <div className="flex items-start justify-between">
                   {/* Icon with gradient bg */}
@@ -125,21 +125,21 @@ export default function CategoriesSection() {
                   </div>
                   
                   {/* Event Count pill */}
-                  <span className="text-[11px] font-bold px-2.5 py-1 bg-theme-bg text-theme-text-secondary rounded-full group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors duration-200">
+                  <span className="text-[11px] font-bold px-2.5 py-1 bg-slate-50 text-slate-500 rounded-full group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors duration-200">
                     {category.count}
                   </span>
                 </div>
 
                 {/* Info */}
-                <h4 className="font-outfit font-bold text-theme-text text-lg mt-5 mb-2 group-hover:text-theme-primary transition-colors duration-200">
+                <h4 className="font-outfit font-bold text-slate-800 text-lg mt-5 mb-2 group-hover:text-blue-600 transition-colors duration-200">
                   {category.name}
                 </h4>
-                <p className="text-theme-text-secondary text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
                   {category.description}
                 </p>
                 
                 {/* Arrow hint that slides in on hover */}
-                <div className="flex items-center gap-1 mt-4 text-xs font-semibold text-theme-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300">
+                <div className="flex items-center gap-1 mt-4 text-xs font-semibold text-blue-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300">
                   <span>Browse Category</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>

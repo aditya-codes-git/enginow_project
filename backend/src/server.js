@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import env from './config/env.js';
 import app from './app.js';
 import connectDB from './config/db.js';
-import { migrateSlugs } from './utils/slugMigration.js';
 
 const PORT = env.PORT;
 let server;
@@ -15,10 +14,7 @@ process.on('uncaughtException', (err) => {
 
 // Connect to MongoDB Database and boot Express app
 connectDB()
-  .then(async () => {
-    // Run slug migration for legacy events
-    await migrateSlugs();
-    
+  .then(() => {
     server = app.listen(PORT, () => {
       console.log(`Server is running in ${env.NODE_ENV} mode on port ${PORT}`);
     });

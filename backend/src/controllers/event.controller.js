@@ -30,7 +30,7 @@ export const createEvent = asyncHandler(async (req, res) => {
   const event = await eventService.createEventDraft(req.body, req.user._id);
   res.status(201).json({
     success: true,
-    message: 'Event draft created successfully',
+    message: 'Event submitted for admin approval successfully',
     data: event,
   });
 });

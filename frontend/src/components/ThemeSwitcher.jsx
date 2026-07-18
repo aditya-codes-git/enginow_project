@@ -22,18 +22,20 @@ const THEME_ICONS = {
 export const ThemeSwitcher = () => {
   const { currentTheme, switchTheme, theme } = useTheme();
 
-  // Build the item list once
+  // Filter and build the item list for Light, Dark, Ocean, Forest, Monochrome
   const items = useMemo(
     () =>
-      getAllThemes().map((t) => ({
-        id:      t.id,
-        name:    t.name,
-        accent:  t.colors?.primaryAccent || t.colors?.primary || '#2563eb',
-        surface: t.colors?.surface       || '#ffffff',
-        border:  t.colors?.border        || '#e2e8f0',
-        text:    t.colors?.textPrimary   || t.colors?.foreground || '#0f172a',
-        hover:   t.colors?.hoverSurface  || '#f8fafc',
-      })),
+      getAllThemes()
+        .filter((t) => ['light', 'dark', 'ocean', 'forest', 'monochrome'].includes(t.id))
+        .map((t) => ({
+          id:      t.id,
+          name:    t.name,
+          accent:  t.colors?.primaryAccent || t.colors?.primary || '#2563eb',
+          surface: t.colors?.surface       || '#ffffff',
+          border:  t.colors?.border        || '#e2e8f0',
+          text:    t.colors?.textPrimary   || t.colors?.foreground || '#0f172a',
+          hover:   t.colors?.hoverSurface  || '#f8fafc',
+        })),
     [],
   );
 
@@ -46,6 +48,7 @@ export const ThemeSwitcher = () => {
 
   return (
     <FluidDropdown
+      className="w-[170px]"
       // Trigger label shows active icon + swatch dot + name
       trigger={
         <>
@@ -105,7 +108,7 @@ export const ThemeSwitcher = () => {
             />
             {/* Label */}
             <span
-              className="flex-1 text-left transition-colors duration-150"
+              className="flex-1 text-left transition-colors duration-150 truncate"
               style={{
                 color: isHovered || isSelected
                   ? theme.colors.textPrimary

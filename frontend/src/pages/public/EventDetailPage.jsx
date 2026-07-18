@@ -56,16 +56,16 @@ function formatTracks(track) {
 
 function InfoBlock({ label, value, icon: Icon }) {
   return (
-    <div className="rounded-2xl border border-theme-border bg-theme-surface p-4 shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm overflow-hidden">
       <div className="flex items-start gap-3">
         {Icon && (
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-theme-bg border border-theme-divider text-theme-primary">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-blue-600">
             <Icon className="h-4 w-4" />
           </div>
         )}
         <div className="min-w-0">
           <dt className="text-xs font-semibold uppercase tracking-wide text-slate-550">{label}</dt>
-          <dd className="mt-1 text-base font-bold text-theme-text break-words" style={{ overflowWrap: 'anywhere' }}>{value || 'Not set'}</dd>
+          <dd className="mt-1 text-base font-bold text-slate-950 break-words" style={{ overflowWrap: 'anywhere' }}>{value || 'Not set'}</dd>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@ function InfoBlock({ label, value, icon: Icon }) {
 }
 
 function EventDetailPage() {
-  const { slug } = useParams()
+  const { eventId } = useParams()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
   const location = useLocation()
@@ -100,15 +100,7 @@ function EventDetailPage() {
     setLoading(true)
     setPageError('')
     try {
-      const data = await eventService.getEvent(slug)
-
-      // Client-side permanent redirect for legacy ObjectId URLs
-      const isObjectId = /^[0-9a-fA-F]{24}$/.test(slug)
-      if (isObjectId && data.slug) {
-        navigate(`/${data.type === 'Hackathon' ? 'hackathons' : 'events'}/${data.slug}`, { replace: true })
-        return
-      }
-
+      const data = await eventService.getEvent(eventId)
       setEvent(data)
 
       // Only check registration status if participant is logged in
@@ -132,7 +124,7 @@ function EventDetailPage() {
     } finally {
       setLoading(false)
     }
-  }, [slug, navigate, isAuthenticated, user])
+  }, [eventId, isAuthenticated, user])
 
   useEffect(() => {
     loadEventData()
@@ -157,7 +149,7 @@ function EventDetailPage() {
       setIsRegistered(true)
       showSuccess(`Successfully registered for the ${isHackathon ? 'hackathon' : 'event'}!`)
       // Refresh count
-      const updated = await eventService.getEvent(slug)
+      const updated = await eventService.getEvent(eventId)
       setEvent(updated)
     } catch (err) {
       showError(err.response?.data?.message || 'Registration failed.')
@@ -169,7 +161,7 @@ function EventDetailPage() {
   const handleRegistrationSuccess = async () => {
     setIsRegistered(true)
     try {
-      const updated = await eventService.getEvent(slug)
+      const updated = await eventService.getEvent(eventId)
       setEvent(updated)
     } catch (err) {
       console.error('Failed to reload event details:', err)
@@ -185,7 +177,7 @@ function EventDetailPage() {
       setIsRegistered(false)
       showSuccess('Registration cancelled successfully.')
       // Refresh count
-      const updated = await eventService.getEvent(slug)
+      const updated = await eventService.getEvent(eventId)
       setEvent(updated)
     } catch (err) {
       showError(err.response?.data?.message || 'Failed to cancel registration.')
@@ -227,7 +219,7 @@ function EventDetailPage() {
       <main className="flex min-h-[70vh] items-center justify-center bg-mesh px-4 py-10">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="text-theme-text-secondary mt-4 font-semibold">Loading {isHackathon ? 'hackathon' : 'event'} details...</p>
+          <p className="text-neutral-600 mt-4 font-semibold">Loading {isHackathon ? 'hackathon' : 'event'} details...</p>
         </div>
       </main>
     )
@@ -236,11 +228,11 @@ function EventDetailPage() {
   if (pageError || !event) {
     return (
       <main className="flex min-h-[70vh] items-center justify-center bg-mesh px-4 py-10">
-        <section className="max-w-xl rounded-2xl border border-theme-border bg-theme-surface p-8 text-center shadow-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-theme-error">Error</p>
-          <h1 className="mt-2 font-outfit text-4xl font-bold text-theme-text">This {isHackathon ? 'hackathon' : 'event'} is unavailable</h1>
+        <section className="max-w-xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-red-650">Error</p>
+          <h1 className="mt-2 font-outfit text-4xl font-bold text-slate-950">This {isHackathon ? 'hackathon' : 'event'} is unavailable</h1>
           <p className="text-slate-550 mt-2">{pageError || `The ${isHackathon ? 'hackathon' : 'event'} you are looking for does not exist.`}</p>
-          <Link to={isHackathon ? "/hackathons" : "/events"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-theme-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-theme-primary">
+          <Link to={isHackathon ? "/hackathons" : "/events"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-600">
             <ArrowLeft className="h-4 w-4" />
             Back to {isHackathon ? "hackathons" : "events"}
           </Link>
@@ -250,9 +242,9 @@ function EventDetailPage() {
   }
 
   return (
-    <main className="bg-theme-surface min-h-screen text-theme-text relative">
+    <main className="bg-white min-h-screen text-slate-900 relative">
       {/* Immersive Cover Hero */}
-      <section className="relative w-full overflow-hidden bg-theme-primary">
+      <section className="relative w-full overflow-hidden bg-slate-900">
         {/* Full-width Cover Image */}
         <div className="relative w-full h-[280px] sm:h-[340px] md:h-[400px]">
           <img 
@@ -273,7 +265,7 @@ function EventDetailPage() {
               </Link>
 
               <div className="space-y-3">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-theme-surface/15 text-white border border-white/20 uppercase tracking-wider backdrop-blur-sm">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-white/15 text-white border border-white/20 uppercase tracking-wider backdrop-blur-sm">
                   {event.type || 'Event'}
                 </span>
                 <h1 className="font-outfit text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white tracking-tight max-w-3xl break-words">
@@ -290,27 +282,27 @@ function EventDetailPage() {
         </div>
 
         {/* Floating Info Strip */}
-        <div className="bg-theme-surface border-b border-theme-divider">
+        <div className="bg-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3 py-4 text-sm">
-              <div className="flex items-center gap-2 text-theme-text-secondary">
-                <CalendarDays className="h-4 w-4 text-theme-text-muted" />
+              <div className="flex items-center gap-2 text-slate-600">
+                <CalendarDays className="h-4 w-4 text-slate-400" />
                 <span className="font-medium">{formatDate(event.startDate)}</span>
               </div>
               {event.registrationDeadline && (
-                <div className="flex items-center gap-2 text-theme-text-secondary">
-                  <CalendarDays className="h-4 w-4 text-theme-text-muted" />
-                  <span className="text-xs font-semibold text-theme-text-muted uppercase tracking-wide mr-1">Deadline</span>
+                <div className="flex items-center gap-2 text-slate-600">
+                  <CalendarDays className="h-4 w-4 text-slate-400" />
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide mr-1">Deadline</span>
                   <span className="font-medium">{formatDate(event.registrationDeadline)}</span>
                 </div>
               )}
-              <div className="flex items-center gap-2 text-theme-text-secondary">
-                <MapPin className="h-4 w-4 text-theme-text-muted" />
+              <div className="flex items-center gap-2 text-slate-600">
+                <MapPin className="h-4 w-4 text-slate-400" />
                 <span className="font-medium">{event.location || event.city || 'Online'}</span>
               </div>
               {event.registrationCount > 0 && (
-                <div className="flex items-center gap-2 text-theme-text-secondary">
-                  <Users className="h-4 w-4 text-theme-text-muted" />
+                <div className="flex items-center gap-2 text-slate-600">
+                  <Users className="h-4 w-4 text-slate-400" />
                   <span className="font-medium">{event.registrationCount} registered</span>
                 </div>
               )}
@@ -321,92 +313,92 @@ function EventDetailPage() {
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8 overflow-hidden">
         <article className="space-y-8 lg:col-span-1">
-          <div className="rounded-2xl border border-theme-border bg-theme-surface p-6 shadow-sm sm:p-8 max-w-full overflow-hidden">
-            <h2 className="font-outfit text-2xl font-bold text-theme-text border-b border-theme-divider pb-3 font-outfit">Overview</h2>
-            <TextBlock className="mt-4 text-theme-text-secondary leading-relaxed text-sm sm:text-base">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 max-w-full overflow-hidden">
+            <h2 className="font-outfit text-2xl font-bold text-slate-900 border-b border-slate-100 pb-3 font-outfit">Overview</h2>
+            <TextBlock className="mt-4 text-slate-650 leading-relaxed text-sm sm:text-base">
               {event.description || 'More details will be shared by the organiser soon.'}
             </TextBlock>
 
             {event.rules && (
-              <div className="mt-8 pt-8 border-t border-theme-divider">
-                <h3 className="font-outfit text-xl font-bold text-theme-text font-outfit">Rules</h3>
-                <TextBlock className="mt-3 text-theme-text-secondary" size="sm">{event.rules}</TextBlock>
+              <div className="mt-8 pt-8 border-t border-slate-100">
+                <h3 className="font-outfit text-xl font-bold text-slate-900 font-outfit">Rules</h3>
+                <TextBlock className="mt-3 text-slate-650" size="sm">{event.rules}</TextBlock>
               </div>
             )}
 
             {event.judgingCriteria && (
-              <div className="mt-8 pt-8 border-t border-theme-divider">
-                <h3 className="font-outfit text-xl font-bold text-theme-text font-outfit">Judging Criteria</h3>
-                <TextBlock className="mt-3 text-theme-text-secondary" size="sm">{event.judgingCriteria}</TextBlock>
+              <div className="mt-8 pt-8 border-t border-slate-100">
+                <h3 className="font-outfit text-xl font-bold text-slate-900 font-outfit">Judging Criteria</h3>
+                <TextBlock className="mt-3 text-slate-650" size="sm">{event.judgingCriteria}</TextBlock>
               </div>
             )}
 
             {event.eligibility && (
-              <div className="mt-8 pt-8 border-t border-theme-divider">
-                <h3 className="font-outfit text-xl font-bold text-theme-text font-outfit">Eligibility</h3>
-                <TextBlock className="mt-3 text-theme-text-secondary" size="sm">{event.eligibility}</TextBlock>
+              <div className="mt-8 pt-8 border-t border-slate-100">
+                <h3 className="font-outfit text-xl font-bold text-slate-900 font-outfit">Eligibility</h3>
+                <TextBlock className="mt-3 text-slate-650" size="sm">{event.eligibility}</TextBlock>
               </div>
             )}
           </div>
         </article>
 
         <aside className="flex flex-col gap-6 lg:sticky lg:top-24 h-fit max-w-full overflow-hidden">
-          <div className="rounded-2xl border border-theme-border bg-theme-surface p-6 shadow-md max-w-full overflow-hidden">
-            <h2 className="font-outfit text-xl font-bold text-theme-text mb-4 pb-2 border-b border-theme-divider font-outfit">Participation</h2>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-md max-w-full overflow-hidden">
+            <h2 className="font-outfit text-xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 font-outfit">Participation</h2>
             <div className="space-y-4 mb-6">
               {event.prizePool && (
-                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-theme-bg border border-theme-divider/85">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-theme-primary">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-50 border border-slate-100/85">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
                     <Trophy className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="block text-[10px] font-bold uppercase tracking-wider text-theme-text-muted">Prize Pool</span>
-                    <span className="text-base font-extrabold text-theme-text block mt-0.5">{event.prizePool}</span>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Prize Pool</span>
+                    <span className="text-base font-extrabold text-slate-900 block mt-0.5">{event.prizePool}</span>
                   </div>
                 </div>
               )}
-              <div className="flex items-center gap-3.5 p-3 rounded-xl bg-theme-bg border border-theme-divider/85">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-theme-primary">
+              <div className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-50 border border-slate-100/85">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
                   <Users className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-theme-text-muted">Team Size</span>
-                  <span className="text-base font-extrabold text-theme-text block mt-0.5">{formatTeamSize(event.teamSize)}</span>
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Team Size</span>
+                  <span className="text-base font-extrabold text-slate-900 block mt-0.5">{formatTeamSize(event.teamSize)}</span>
                 </div>
               </div>
               {formatTracks(event.track) && (
-                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-theme-bg border border-theme-divider/85">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-theme-primary">
+                <div className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-50 border border-slate-100/85">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
                     <Video className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
-                    <span className="block text-[10px] font-bold uppercase tracking-wider text-theme-text-muted">Track</span>
-                    <span className="text-sm font-bold text-theme-text truncate block mt-0.5">{formatTracks(event.track)}</span>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Track</span>
+                    <span className="text-sm font-bold text-slate-900 truncate block mt-0.5">{formatTracks(event.track)}</span>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Registration Action Panel */}
-            <div className="border-t border-theme-divider pt-5">
+            <div className="border-t border-slate-100 pt-5">
               {!isAuthenticated ? (
                 <Link
                   to="/login"
                   state={{ from: location.pathname }}
-                  className="w-full inline-flex items-center justify-center bg-theme-primary hover:bg-theme-primary text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all hover:shadow-lg text-center text-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all hover:shadow-lg text-center text-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Login to Register
                 </Link>
               ) : user?.role === 'participant' ? (
                 isRegistered ? (
                   <div className="space-y-3">
-                    <div className="flex items-center justify-center gap-2 text-theme-success font-bold text-sm bg-theme-success-bg border border-emerald-250 p-3 rounded-xl">
+                    <div className="flex items-center justify-center gap-2 text-emerald-700 font-bold text-sm bg-emerald-50 border border-emerald-250 p-3 rounded-xl">
                       Registered ✓
                     </div>
                     {event.type === 'Hackathon' && (
                       <button
                         onClick={() => setShowSubmitModal(true)}
-                        className="w-full inline-flex items-center justify-center bg-theme-primary hover:bg-theme-primary text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all text-sm cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                        className="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all text-sm cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
                       >
                         Submit Project
                       </button>
@@ -414,7 +406,7 @@ function EventDetailPage() {
                     <button
                       onClick={handleCancelRegistration}
                       disabled={submittingReg}
-                      className="w-full inline-flex items-center justify-center border border-theme-border bg-theme-surface hover:bg-theme-bg text-theme-text-secondary font-semibold py-2.5 px-4 rounded-xl transition text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                      className="w-full inline-flex items-center justify-center border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold py-2.5 px-4 rounded-xl transition text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
                     >
                       {submittingReg ? 'Cancelling...' : 'Cancel Registration'}
                     </button>
@@ -423,26 +415,26 @@ function EventDetailPage() {
                   <button
                     onClick={handleRegister}
                     disabled={submittingReg}
-                    className="w-full inline-flex items-center justify-center bg-theme-primary hover:bg-theme-primary text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                    className="w-full inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all text-sm disabled:opacity-50 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
                   >
                     {submittingReg ? 'Registering...' : `Register for ${isHackathon ? 'Hackathon' : 'Event'}`}
                   </button>
                 )
               ) : (
-                <div className="text-sm font-semibold text-theme-text-secondary bg-theme-bg border border-theme-border p-3 rounded-xl text-center">
+                <div className="text-sm font-semibold text-slate-500 bg-slate-50 border border-slate-200 p-3 rounded-xl text-center">
                   You are viewing this as {user?.role === 'admin' ? 'an admin' : 'an organiser'}
                 </div>
               )}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-theme-border bg-theme-surface p-6 shadow-sm max-w-full overflow-hidden">
-            <h2 className="font-outfit text-lg font-bold text-theme-text mb-3">Questions?</h2>
-            <div className="flex items-start gap-3 rounded-xl bg-theme-bg p-4 overflow-hidden border border-theme-divider">
-              <Mail className="mt-0.5 h-4.5 w-4.5 shrink-0 text-theme-primary" />
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm max-w-full overflow-hidden">
+            <h2 className="font-outfit text-lg font-bold text-slate-900 mb-3">Questions?</h2>
+            <div className="flex items-start gap-3 rounded-xl bg-slate-50 p-4 overflow-hidden border border-slate-100">
+              <Mail className="mt-0.5 h-4.5 w-4.5 shrink-0 text-blue-600" />
               <div className="min-w-0">
-                <p className="text-xs font-bold text-theme-text-muted uppercase tracking-wide">Organiser Contact</p>
-                <p className="text-sm font-bold text-theme-text mt-1 break-words leading-tight">{event.contactName || event.organiserName || 'Organiser team'}</p>
+                <p className="text-xs font-bold text-slate-450 uppercase tracking-wide">Organiser Contact</p>
+                <p className="text-sm font-bold text-slate-900 mt-1 break-words leading-tight">{event.contactName || event.organiserName || 'Organiser team'}</p>
                 <p className="text-xs text-slate-550 font-semibold break-all mt-1">{event.contactEmail || 'events@enginow.com'}</p>
               </div>
             </div>
@@ -452,11 +444,11 @@ function EventDetailPage() {
 
       {/* Project Submission Modal */}
       {showSubmitModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-theme-primary/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg bg-theme-surface rounded-3xl border border-theme-border shadow-2xl p-6 sm:p-8 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 relative">
             <button
               onClick={() => setShowSubmitModal(false)}
-              className="absolute top-4 right-4 p-2 text-theme-text-muted hover:text-theme-text-secondary transition"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 transition"
             >
               ✕
             </button>
@@ -464,72 +456,72 @@ function EventDetailPage() {
             {submissionSuccess ? (
               <div className="text-center py-8 space-y-3">
                 <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto" />
-                <h3 className="text-2xl font-bold text-theme-text font-outfit">Project Submitted!</h3>
-                <p className="text-theme-text-secondary text-sm">Your project submission was recorded successfully.</p>
+                <h3 className="text-2xl font-bold text-slate-900 font-outfit">Project Submitted!</h3>
+                <p className="text-slate-500 text-sm">Your project submission was recorded successfully.</p>
               </div>
             ) : (
               <form onSubmit={handleProjectSubmit} className="space-y-4">
                 <div>
-                  <h3 className="text-2xl font-bold text-theme-text font-outfit">Submit Your Project</h3>
-                  <p className="text-theme-text-secondary text-sm mt-1">Provide repository URLs and descriptions for judges.</p>
+                  <h3 className="text-2xl font-bold text-slate-950 font-outfit">Submit Your Project</h3>
+                  <p className="text-slate-500 text-sm mt-1">Provide repository URLs and descriptions for judges.</p>
                 </div>
 
                 {submissionError && (
-                  <div className="bg-theme-error-bg text-theme-error text-xs font-semibold p-3 rounded-xl border border-theme-error-border">
+                  <div className="bg-red-50 text-red-700 text-xs font-semibold p-3 rounded-xl border border-red-200">
                     {submissionError}
                   </div>
                 )}
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Project Title</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Project Title</label>
                   <input
                     type="text"
                     required
                     value={submissionTitle}
                     onChange={(e) => setSubmissionTitle(e.target.value)}
                     placeholder="EngiNow Events App"
-                    className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Description</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Description</label>
                   <textarea
                     required
                     rows={4}
                     value={submissionDesc}
                     onChange={(e) => setSubmissionDesc(e.target.value)}
                     placeholder="Detail the problem solved, stack used, and setup instructions..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">GitHub Repository Link</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">GitHub Repository Link</label>
                   <input
                     type="url"
                     value={submissionGithub}
                     onChange={(e) => setSubmissionGithub(e.target.value)}
                     placeholder="https://github.com/your-username/repo"
-                    className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-theme-text-secondary uppercase tracking-wide">Live Demo Link (Optional)</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wide">Live Demo Link (Optional)</label>
                   <input
                     type="url"
                     value={submissionDemo}
                     onChange={(e) => setSubmissionDemo(e.target.value)}
                     placeholder="https://demo-app.vercel.app"
-                    className="w-full px-4 py-2.5 rounded-xl border border-theme-border text-sm bg-theme-bg outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={submittingProject}
-                  className="w-full bg-theme-primary hover:bg-theme-primary text-white font-semibold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-50 cursor-pointer"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-50 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   {submittingProject ? 'Submitting...' : 'Submit Now'}

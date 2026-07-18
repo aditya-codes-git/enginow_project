@@ -1,28 +1,45 @@
-import api, { refreshTokens } from './api';
+import api from './api';
+import supabase from './supabase';
 
 const authService = {
-  async register(data) {
-    const response = await api.post('/auth/register', data);
-    return response.data;
+  async register({ email, password, name }) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+        },
+      },
+    });
+    if (error) throw error;
+    return data;
   },
 
-  async login(data) {
-    const response = await api.post('/auth/login', data);
-    return response.data;
+  async login({ email, password }) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    return data;
   },
 
   async logout() {
-    const response = await api.post('/auth/logout');
-    return response.data;
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    return { success: true };
   },
 
-  async logoutAll() {
-    const response = await api.post('/auth/logout-all');
-    return response.data;
-  },
-
-  async refresh() {
-    return refreshTokens();
+  async signInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+    if (error) throw error;
+    return data;
   },
 
   async getMe() {
@@ -37,21 +54,6 @@ const authService = {
 
   async changePassword(data) {
     const response = await api.put('/auth/change-password', data);
-    return response.data;
-  },
-
-  async forgotPassword(email) {
-    const response = await api.post('/auth/forgot-password', { email });
-    return response.data;
-  },
-
-  async resetPassword(token, password) {
-    const response = await api.post(`/auth/reset-password/${token}`, { password });
-    return response.data;
-  },
-
-  async verifyEmail(token) {
-    const response = await api.post(`/auth/verify-email/${token}`);
     return response.data;
   },
 };

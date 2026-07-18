@@ -71,27 +71,27 @@ function UserManagementPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-theme-bg">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <LoadingSpinner />
       </div>
     )
   }
 
   return (
-    <main className="bg-theme-surface text-theme-text">
+    <main className="bg-white text-slate-900">
       <section className="relative overflow-hidden bg-mesh pt-10 pb-12">
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-end">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-theme-surface/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">
                 <ShieldCheck className="h-4 w-4" />
                 Admin control
               </div>
-              <h1 className="mt-6 font-outfit text-4xl font-extrabold leading-tight tracking-tight text-theme-text sm:text-5xl">
+              <h1 className="mt-6 font-outfit text-4xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-5xl">
                 User management
               </h1>
-              <p className="mt-4 max-w-3xl text-lg leading-8 text-theme-text-secondary">
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
                 Review participant and judge accounts, monitor registration activity, and keep risky profiles under control.
               </p>
             </div>
@@ -100,13 +100,13 @@ function UserManagementPage() {
               {userStats.map((stat) => {
                 const Icon = stat.icon
                 return (
-                  <div key={stat.label} className="rounded-2xl border border-theme-border bg-theme-surface/90 p-5 shadow-sm backdrop-blur">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-theme-primary">
+                  <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm backdrop-blur">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <strong className="mt-4 block font-outfit text-3xl font-bold text-theme-text">{stat.value}</strong>
-                    <span className="text-sm font-semibold text-theme-text-secondary">{stat.label}</span>
-                    <p className="mt-1 text-xs text-theme-text-secondary">{stat.detail}</p>
+                    <strong className="mt-4 block font-outfit text-3xl font-bold text-slate-950">{stat.value}</strong>
+                    <span className="text-sm font-semibold text-slate-600">{stat.label}</span>
+                    <p className="mt-1 text-xs text-slate-500">{stat.detail}</p>
                   </div>
                 )
               })}
@@ -117,7 +117,7 @@ function UserManagementPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8 space-y-4">
         {error && (
-          <div className="rounded-xl border border-theme-error-border bg-theme-error-bg p-4 text-sm font-semibold text-theme-error">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
             {error}
           </div>
         )}

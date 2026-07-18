@@ -16,7 +16,6 @@ import userRouter from './routes/user.routes.js';
 import organiserRouter from './routes/organiser.routes.js';
 import adminRouter from './routes/admin.routes.js';
 import uploadRouter from './routes/upload.routes.js';
-import organizerApplicationRouter from './routes/organizerApplication.routes.js';
 
 import errorHandler from './middleware/error.middleware.js';
 import ApiError from './utils/ApiError.js';
@@ -92,7 +91,6 @@ app.use('/api/users', userRouter);
 app.use('/api/organisers', organiserRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/uploads', uploadRouter);
-app.use('/api/organizer-applications', organizerApplicationRouter);
 
 // Root route placeholder
 app.get('/', (req, res) => {

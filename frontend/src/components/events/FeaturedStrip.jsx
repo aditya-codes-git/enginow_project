@@ -7,8 +7,8 @@ function FeaturedStrip({ event }) {
   return (
     <section className="grid gap-4">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-theme-primary">Featured</p>
-        <h2 className="mt-1 font-outfit text-3xl font-bold text-theme-text">Recommended for builders</h2>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Featured</p>
+        <h2 className="mt-1 font-outfit text-3xl font-bold text-slate-950">Recommended for builders</h2>
       </div>
       <EventCard event={event} featured />
     </section>

@@ -4,7 +4,7 @@ import React from 'react'
 function Field({ label, children, className = '' }) {
   return (
     <label className={className}>
-      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
+      <span className="text-sm font-semibold text-slate-700">{label}</span>
       {children}
     </label>
   )
@@ -77,13 +77,13 @@ function Step1BasicInfo({ formData = {}, updateField = () => {} }) {
         </Field>
       </div>
 
-      <aside className="rounded-lg border border-theme-border bg-theme-bg p-5">
-        <h2 className="text-base font-bold text-theme-text">Organizer focus</h2>
-        <p className="mt-2 text-sm text-theme-text-secondary">
+      <aside className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+        <h2 className="text-base font-bold text-slate-950">Organizer focus</h2>
+        <p className="mt-2 text-sm text-slate-600">
           Strong hackathon pages make the event promise clear first, then connect it to signups,
           submissions, and judging. Keep this step concise and participant-facing.
         </p>
-        <div className="mt-4 space-y-2 text-sm text-theme-text-secondary">
+        <div className="mt-4 space-y-2 text-sm text-slate-700">
           <p className="font-semibold">Recommended basics</p>
           <p>Clear title, one-line value, event type, public status, and delivery format.</p>
         </div>

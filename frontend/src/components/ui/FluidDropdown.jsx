@@ -79,7 +79,7 @@ export function FluidDropdown({
   return (
     <MotionConfig reducedMotion="user">
       <div
-        className={`relative w-full ${className}`}
+        className={`relative ${className || 'w-full'}`}
         ref={dropdownRef}
         onKeyDown={handleKeyDown}
       >

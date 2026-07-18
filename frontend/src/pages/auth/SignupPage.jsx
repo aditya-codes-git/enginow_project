@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, ArrowRight, User, Mail, Lock, Sparkles } from 'lucide-react';
 import { InteractiveRobotSpline } from '../../components/ui/interactive-3d-robot';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -9,21 +10,41 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('Participant');
   const [showPassword, setShowPassword] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const { register } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    if (!termsAccepted) {
+      setError('Please agree to the Terms of Service and Privacy Policy to create an account.');
+      return;
+    }
+
     setLoading(true);
-    // Simulate signup and redirect
-    setTimeout(() => {
-      setLoading(false);
-      if (role === 'Organiser') {
+
+    try {
+      const fromPath = location.state?.from;
+      const normalizedRole = role.toLowerCase();
+      const user = await register({ name, email, password, role: normalizedRole });
+      if (user.role === 'admin') {
+        navigate('/admin/users');
+      } else if (user.role === 'organiser') {
         navigate('/organiser');
       } else {
-        navigate('/');
+        navigate(fromPath || '/dashboard');
       }
-    }, 1200);
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Authentication failed. Please check your credentials.';
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
@@ -63,6 +84,13 @@ export default function SignupPage() {
               Join the platform to discover hackathons or host your own events.
             </p>
           </div>
+
+          {/* Error message */}
+          {error && (
+            <div className="rounded-xl border border-theme-error-border bg-theme-error-bg px-4 py-3 text-sm font-semibold text-theme-error shadow-sm break-words">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -158,6 +186,8 @@ export default function SignupPage() {
                 <input
                   type="checkbox"
                   required
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
                   className="w-4 h-4 mt-0.5 rounded border-theme-border text-theme-primary focus:ring-theme-focus focus:ring-offset-0 cursor-pointer"
                 />
                 <span>I agree to the Terms of Service and Privacy Policy.</span>

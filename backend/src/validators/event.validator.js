@@ -61,3 +61,30 @@ export const adminUpdateUserSchema = z.object({
     status: z.enum(ALL_USER_STATUS).optional(),
   }),
 });
+
+export const createBlogSchema = z.object({
+  body: z.object({
+    slug: z.string({ required_error: 'Slug is required' }).min(3, 'Slug must be at least 3 characters').max(100, 'Slug must not exceed 100 characters'),
+    title: z.string({ required_error: 'Title is required' }).min(3, 'Title must be at least 3 characters').max(200, 'Title must not exceed 200 characters'),
+    excerpt: z.string({ required_error: 'Excerpt is required' }).min(10, 'Excerpt must be at least 10 characters'),
+    category: z.string({ required_error: 'Category is required' }).min(2, 'Category must be at least 2 characters'),
+    author: z.string({ required_error: 'Author is required' }).min(2, 'Author must be at least 2 characters'),
+    date: z.string({ required_error: 'Date is required' }),
+    readTime: z.string().optional(),
+    hero: z.string().url('Invalid hero URL').or(z.literal('')).optional(),
+    sections: z.array(
+      z.object({
+        heading: z.string().min(3, 'Section heading must be at least 3 characters'),
+        body: z.string().min(10, 'Section body must be at least 10 characters'),
+      })
+    ).optional(),
+    published: z.boolean().optional(),
+  }),
+});
+
+export const updateBlogSchema = createBlogSchema.deepPartial();
+export const adminRejectBlogSchema = z.object({
+  body: z.object({
+    rejectionReason: z.string({ required_error: 'Rejection reason is required' }).min(5, 'Rejection reason must be at least 5 characters'),
+  }),
+});

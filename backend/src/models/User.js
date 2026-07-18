@@ -18,7 +18,19 @@ const userSchema = new mongoose.Schema(
     },
     passwordHash: {
       type: String,
-      required: [true, 'Password is required'],
+      required: false,
+    },
+    supabaseUserId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    provider: {
+      type: String,
+      default: 'email',
+    },
+    lastLogin: {
+      type: Date,
     },
     role: {
       type: String,
@@ -100,7 +112,7 @@ userSchema.index({ status: 1 });
 
 // Pre-save middleware to hash password
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('passwordHash')) {
+  if (!this.passwordHash || !this.isModified('passwordHash')) {
     return next();
   }
   try {

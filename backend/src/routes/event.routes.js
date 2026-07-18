@@ -30,7 +30,7 @@ router.get('/', getEvents);
 router.get(
   '/my-events',
   protect,
-  allowRoles(ROLES.ORGANISER),
+  allowRoles(ROLES.ORGANISER, ROLES.ADMIN),
   getMyEvents
 );
 
@@ -40,7 +40,7 @@ router.get('/:id', optionalAuth, getEvent);
 router.post(
   '/',
   protect,
-  allowRoles(ROLES.ORGANISER),
+  allowRoles(ROLES.ORGANISER, ROLES.ADMIN),
   validate(createEventSchema),
   createEvent
 );
@@ -48,7 +48,7 @@ router.post(
 router.put(
   '/:id',
   protect,
-  allowRoles(ROLES.ORGANISER),
+  allowRoles(ROLES.ORGANISER, ROLES.ADMIN),
   validate(updateEventSchema),
   updateEvent
 );
@@ -56,7 +56,7 @@ router.put(
 router.patch(
   '/:id/submit',
   protect,
-  allowRoles(ROLES.ORGANISER),
+  allowRoles(ROLES.ORGANISER, ROLES.ADMIN),
   submitEvent
 );
 
@@ -70,7 +70,7 @@ router.patch(
 router.delete(
   '/:id',
   protect,
-  allowRoles(ROLES.ORGANISER),
+  allowRoles(ROLES.ORGANISER, ROLES.ADMIN),
   deleteEvent
 );
 

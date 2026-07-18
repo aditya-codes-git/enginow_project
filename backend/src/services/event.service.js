@@ -104,14 +104,9 @@ export const queryOrgEvents = async (user, queryParams = {}) => {
   };
 };
 
-export const getEventDetails = async (eventIdOrSlug, currentUser) => {
-  let event = await Event.findOne({ slug: eventIdOrSlug })
+export const getEventDetails = async (eventId, currentUser) => {
+  const event = await Event.findById(eventId)
     .populate('organiser', 'name email avatar organization bio');
-
-  if (!event && mongoose.Types.ObjectId.isValid(eventIdOrSlug)) {
-    event = await Event.findById(eventIdOrSlug)
-      .populate('organiser', 'name email avatar organization bio');
-  }
 
   if (!event) {
     throw new ApiError(404, 'Event not found');
@@ -137,7 +132,7 @@ export const createEventDraft = async (eventData, organiserId) => {
   const event = await Event.create({
     ...eventData,
     organiser: organiserId,
-    status: EVENT_STATUS.APPROVED,
+    status: EVENT_STATUS.PENDING,
     visibility: eventData.visibility || EVENT_VISIBILITY.PUBLIC,
   });
 

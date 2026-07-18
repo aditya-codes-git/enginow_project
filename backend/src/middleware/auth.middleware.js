@@ -2,9 +2,9 @@ import ApiError from '../utils/ApiError.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import User from '../models/User.js';
 import { USER_STATUS } from '../constants/roles.js';
-import { verifyAccessToken } from '../utils/token.js';
+import supabase from '../config/supabase.js';
 
-const protect = asyncHandler(async (req, res, next) => {
+export const verifySupabaseUser = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -16,42 +16,62 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    const decoded = verifyAccessToken(token);
-    
-    // Fetch user details from database, optimizing using specific field selection and lean queries
-    const user = await User.findById(decoded.id)
-      .select('_id id name email role status')
-      .lean();
-      
+    // Retrieve the verified user payload via Supabase API (asymmetric RS256 token verification)
+    const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(token);
+
+    if (error || !supabaseUser) {
+      throw new ApiError(401, error?.message || 'Not authorized, invalid token');
+    }
+
+    const supabaseUserId = supabaseUser.id;
+    const email = supabaseUser.email;
+
+    // Check if the user already exists in MongoDB
+    let user = await User.findOne({ supabaseUserId });
+
     if (!user) {
-      throw new ApiError(401, 'User associated with token not found');
+      // Check for email collision (pre-existing local/Google users with the same email)
+      user = await User.findOne({ email: email.toLowerCase() });
+
+      if (user) {
+        // Link the existing MongoDB account to the Supabase identity
+        user.supabaseUserId = supabaseUserId;
+        user.provider = supabaseUser.app_metadata?.provider || 'email';
+        await user.save();
+      } else {
+        // Auto-create new user record in MongoDB (First-time onboarding)
+        const metadata = supabaseUser.user_metadata || {};
+        user = await User.create({
+          supabaseUserId,
+          email: email.toLowerCase(),
+          name: metadata.full_name || metadata.name || email.split('@')[0],
+          avatar: metadata.avatar_url || '',
+          provider: supabaseUser.app_metadata?.provider || 'email',
+          role: 'participant', // default role
+          status: USER_STATUS.ACTIVE,
+        });
+      }
     }
 
     if (user.status === USER_STATUS.SUSPENDED) {
       throw new ApiError(403, 'Your account has been suspended');
     }
 
+    // Log the user's active session timestamp
+    user.lastLogin = new Date();
+    await user.save();
+
     req.user = user;
     next();
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
+  } catch (err) {
+    if (err instanceof ApiError) {
+      throw err;
     }
-    // Check if TokenExpiredError is thrown by jsonwebtoken
-    const message = error.name === 'TokenExpiredError' ? 'Access token expired' : 'Not authorized, invalid token';
-    throw new ApiError(401, message);
+    throw new ApiError(401, err.message || 'Not authorized, invalid session');
   }
 });
 
-export default protect;
-
-/**
- * Optional authentication middleware.
- * Attaches req.user if a valid Bearer token is present,
- * otherwise passes through silently (req.user remains undefined).
- * Never throws 401 — unauthenticated access is allowed.
- */
-export const optionalAuth = asyncHandler(async (req, res, next) => {
+export const optionalSupabaseAuth = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -63,19 +83,46 @@ export const optionalAuth = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    const decoded = verifyAccessToken(token);
-    const user = await User.findById(decoded.id)
-      .select('_id id name email role status')
-      .lean();
-      
-    if (user && user.status !== USER_STATUS.SUSPENDED) {
-      req.user = user;
+    const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(token);
+    if (!error && supabaseUser) {
+      const supabaseUserId = supabaseUser.id;
+      let user = await User.findOne({ supabaseUserId });
+
+      if (!user) {
+        user = await User.findOne({ email: supabaseUser.email.toLowerCase() });
+        if (user) {
+          user.supabaseUserId = supabaseUserId;
+          user.provider = supabaseUser.app_metadata?.provider || 'email';
+          await user.save();
+        } else {
+          const metadata = supabaseUser.user_metadata || {};
+          user = await User.create({
+            supabaseUserId,
+            email: supabaseUser.email.toLowerCase(),
+            name: metadata.full_name || metadata.name || supabaseUser.email.split('@')[0],
+            avatar: metadata.avatar_url || '',
+            provider: supabaseUser.app_metadata?.provider || 'email',
+            role: 'participant',
+            status: USER_STATUS.ACTIVE,
+          });
+        }
+      }
+
+      if (user && user.status !== USER_STATUS.SUSPENDED) {
+        user.lastLogin = new Date();
+        await user.save();
+        req.user = user;
+      }
     }
   } catch (err) {
-    // Token invalid or expired — proceed as unauthenticated
-    req.user = null;
+    // Proceed silently as unauthenticated
   }
 
   next();
 });
 
+// Maintain backward compatibility with existing route imports
+const protect = verifySupabaseUser;
+export const optionalAuth = optionalSupabaseAuth;
+
+export default protect;

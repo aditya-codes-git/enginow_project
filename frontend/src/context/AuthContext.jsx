@@ -1,31 +1,28 @@
 import React, { createContext, useState, useEffect } from 'react';
 import authService from '../services/authService';
-import { setAccessToken, registerOnRefreshFailed } from '../services/api';
+import supabase from '../services/supabase';
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [accessTokenState, setAccessTokenState] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Helper to update access token both in Axios in-memory and state
-  const handleSetAccessToken = (token) => {
-    setAccessToken(token);
-    setAccessTokenState(token);
-  };
-
-  const refreshUser = async () => {
+  // Sync profile details from MongoDB using the current token session
+  const fetchProfile = async () => {
+    console.log('[AuthContext] Fetching user profile from Express backend /auth/me...');
     try {
-      const meData = await authService.getMe();
-      if (meData?.success && meData?.data) {
-        setUser(meData.data);
+      const response = await authService.getMe();
+      console.log('[AuthContext] Backend getMe() profile response:', response);
+      if (response?.success && response?.data) {
+        setUser(response.data);
         setIsAuthenticated(true);
-        return meData.data;
+        console.log('[AuthContext] State updated: isAuthenticated = true, user =', response.data);
+        return response.data;
       }
     } catch (err) {
-      handleSetAccessToken(null);
+      console.error('[AuthContext] MongoDB profile sync failed:', err);
       setUser(null);
       setIsAuthenticated(false);
     }
@@ -35,15 +32,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     setLoading(true);
     try {
-      const data = await authService.login(credentials);
-      if (data?.success) {
-        handleSetAccessToken(data.accessToken);
-        setUser(data.user);
-        setIsAuthenticated(true);
-        return data.user;
-      }
+      console.log('[AuthContext] Triggering login with credentials:', credentials.email);
+      await authService.login(credentials);
+      const profile = await fetchProfile();
+      return profile;
     } catch (err) {
-      handleSetAccessToken(null);
       setUser(null);
       setIsAuthenticated(false);
       throw err;
@@ -55,15 +48,11 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setLoading(true);
     try {
-      const data = await authService.register(userData);
-      if (data?.success) {
-        handleSetAccessToken(data.accessToken);
-        setUser(data.user);
-        setIsAuthenticated(true);
-        return data.user;
-      }
+      console.log('[AuthContext] Triggering register with details:', userData.email);
+      await authService.register(userData);
+      const profile = await fetchProfile();
+      return profile || { role: 'participant' };
     } catch (err) {
-      handleSetAccessToken(null);
       setUser(null);
       setIsAuthenticated(false);
       throw err;
@@ -75,99 +64,114 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setLoading(true);
     try {
+      console.log('[AuthContext] Triggering sign out...');
       await authService.logout();
     } catch (err) {
-      // Ignore network errors on logout
+      console.error('[AuthContext] Supabase sign out failed:', err);
     } finally {
-      handleSetAccessToken(null);
       setUser(null);
       setIsAuthenticated(false);
       setLoading(false);
+      console.log('[AuthContext] Local state cleared successfully. User logged out.');
     }
   };
 
-  const logoutAll = async () => {
+  const signInWithGoogle = async () => {
     setLoading(true);
     try {
-      await authService.logoutAll();
+      console.log('[AuthContext] Directing user to Google OAuth flow...');
+      await authService.signInWithGoogle();
     } catch (err) {
-      // Ignore network errors on logout
-    } finally {
-      handleSetAccessToken(null);
-      setUser(null);
-      setIsAuthenticated(false);
+      console.error('[AuthContext] Google OAuth initialization failed:', err);
       setLoading(false);
-    }
-  };
-
-  const updateProfile = async (updates) => {
-    try {
-      const response = await authService.updateMe(updates);
-      if (response?.success && response?.data) {
-        setUser(response.data);
-        return response.data;
-      }
-    } catch (err) {
       throw err;
     }
   };
 
-  // On mount: restore session and set interceptor callback
+  const refreshUser = async () => {
+    return await fetchProfile();
+  };
+
+  const updateProfile = async (updates) => {
+    const response = await authService.updateMe(updates);
+    if (response?.success && response?.data) {
+      setUser(response.data);
+      return response.data;
+    }
+  };
+
   useEffect(() => {
-    const initSession = async () => {
-      try {
-        const refreshResponse = await authService.refresh();
-        if (refreshResponse?.accessToken) {
-          handleSetAccessToken(refreshResponse.accessToken);
-          // Fetch current user details
-          const meData = await authService.getMe();
-          if (meData?.success && meData?.data) {
-            setUser(meData.data);
-            setIsAuthenticated(true);
-          }
+    let isMounted = true;
+    console.log('[AuthContext] Registering Supabase onAuthStateChange listener...');
+
+    // Single listener for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log(`[AuthContext] onAuthStateChange event triggered: "${event}"`, { session });
+      if (!isMounted) return;
+
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
+        if (session) {
+          console.log('[AuthContext] Active session detected in listener. Syncing profile...');
+          setLoading(true);
+          await fetchProfile();
+        } else {
+          console.log('[AuthContext] Session payload empty despite active event.');
+          setUser(null);
+          setIsAuthenticated(false);
         }
-      } catch (err) {
-        // Only actual server failures should be logged
-        if (!err.response || err.response.status !== 401) {
-          console.error('Session restoration failed due to server error:', err);
-        }
-        // No session to restore, clean up
-        handleSetAccessToken(null);
+      } else if (event === 'SIGNED_OUT') {
+        console.log('[AuthContext] SIGNED_OUT event detected. Clearing local state...');
         setUser(null);
         setIsAuthenticated(false);
+      }
+      
+      setLoading(false);
+      console.log('[AuthContext] State check completed inside listener. loading = false');
+    });
+
+    // Startup session load check
+    const checkInitialSession = async () => {
+      console.log('[AuthContext] Executing startup getSession() check...');
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log('[AuthContext] Startup getSession() resolved:', { session });
+        if (session && isMounted) {
+          console.log('[AuthContext] Active session found on startup. Syncing profile...');
+          await fetchProfile();
+        }
+      } catch (err) {
+        console.error('[AuthContext] Startup session check failed:', err);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+          console.log('[AuthContext] Startup session check finalized. loading = false');
+        }
       }
     };
 
-    // Register refresh failure callback to wipe states locally (Change 3)
-    registerOnRefreshFailed(() => {
-      setUser(null);
-      handleSetAccessToken(null);
-      setIsAuthenticated(false);
-      if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
-        window.location.href = '/login';
-      }
-    });
+    checkInitialSession();
 
-    initSession();
+    return () => {
+      console.log('[AuthContext] Unsubscribing onAuthStateChange listener...');
+      isMounted = false;
+      subscription?.unsubscribe();
+    };
   }, []);
 
-  const value = {
-    user,
-    accessToken: accessTokenState,
-    isAuthenticated,
-    loading,
-    login,
-    register,
-    logout,
-    logoutAll,
-    refreshUser,
-    updateProfile,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        loading,
+        login,
+        register,
+        logout,
+        signInWithGoogle,
+        refreshUser,
+        updateProfile,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

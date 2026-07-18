@@ -2,8 +2,8 @@ import React from 'react'
 function Field({ label, hint, children }) {
   return (
     <label>
-      <span className="text-sm font-semibold text-theme-text-secondary">{label}</span>
-      {hint && <span className="ml-2 text-xs text-theme-text-secondary">{hint}</span>}
+      <span className="text-sm font-semibold text-slate-700">{label}</span>
+      {hint && <span className="ml-2 text-xs text-slate-500">{hint}</span>}
       {children}
     </label>
   )
@@ -51,14 +51,14 @@ function Step3Content({ formData = {}, updateField = () => {} }) {
         </Field>
       </div>
 
-      <aside className="rounded-lg border border-theme-border bg-theme-bg p-5">
-        <h2 className="text-base font-bold text-theme-text">Submission quality</h2>
-        <p className="mt-2 text-sm text-theme-text-secondary">
+      <aside className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+        <h2 className="text-base font-bold text-slate-950">Submission quality</h2>
+        <p className="mt-2 text-sm text-slate-600">
           Devpost-style submission flows work best when requirements are explicit before the build
           starts. Make the judging rubric visible and tell teams exactly what to upload.
         </p>
-        <div className="mt-4 rounded-md bg-theme-surface p-4 text-sm text-theme-text-secondary ring-1 ring-slate-200">
-          <p className="font-semibold text-theme-text">Useful fields</p>
+        <div className="mt-4 rounded-md bg-white p-4 text-sm text-slate-700 ring-1 ring-slate-200">
+          <p className="font-semibold text-slate-950">Useful fields</p>
           <p className="mt-2">Demo URL, repository, project summary, setup notes, screenshots, and team members.</p>
         </div>
       </aside>

@@ -36,6 +36,7 @@ export const register = asyncHandler(async (req, res) => {
     success: true,
     message: 'User registered successfully',
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
     user: {
       id: result.user._id,
       name: result.user.name,
@@ -54,6 +55,7 @@ export const login = asyncHandler(async (req, res) => {
     success: true,
     message: 'User logged in successfully',
     accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
     user: {
       id: result.user._id,
       name: result.user.name,
@@ -89,7 +91,10 @@ export const logoutAll = asyncHandler(async (req, res) => {
 });
 
 export const refresh = asyncHandler(async (req, res) => {
-  const oldRefreshToken = req.cookies?.refreshToken;
+  // In development the frontend and backend run on different ports (cross-origin).
+  // Browsers block SameSite=Lax cookies on cross-origin POST requests, so the
+  // cookie never arrives. Accept the token from the request body as a fallback.
+  const oldRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
   
   try {
     const result = await authService.refreshAccessToken(oldRefreshToken);
@@ -100,6 +105,7 @@ export const refresh = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
     });
   } catch (error) {
     // If refresh token fails (expired/reused), clear the cookie to reset client state

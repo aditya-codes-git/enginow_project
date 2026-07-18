@@ -1,23 +1,40 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, ArrowRight, Mail, Lock } from 'lucide-react';
 import { InteractiveRobotSpline } from '../../components/ui/interactive-3d-robot';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
-    // Simulate login and redirect
-    setTimeout(() => {
+
+    try {
+      const fromPath = location.state?.from;
+      const user = await login({ email, password });
+      if (user.role === 'admin') {
+        navigate('/admin/users');
+      } else if (user.role === 'organiser') {
+        navigate('/organiser');
+      } else {
+        navigate(fromPath || '/dashboard');
+      }
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Authentication failed. Please check your credentials.';
+      setError(msg);
+    } finally {
       setLoading(false);
-      navigate('/organiser');
-    }, 1200);
+    }
   };
 
   const ROBOT_SCENE_URL = "https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode";
@@ -56,6 +73,13 @@ export default function LoginPage() {
               Enter your credentials to manage your events or explore hackathons.
             </p>
           </div>
+
+          {/* Error message */}
+          {error && (
+            <div className="rounded-xl border border-theme-error-border bg-theme-error-bg px-4 py-3 text-sm font-semibold text-theme-error shadow-sm break-words">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">

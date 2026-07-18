@@ -4,9 +4,9 @@ import EventCard from '../common/EventCard'
 function EventGrid({ events = [] }) {
   if (!events.length) {
     return (
-      <section className="rounded-2xl border border-dashed border-slate-300 bg-theme-bg p-10 text-center">
-        <h2 className="font-outfit text-2xl font-bold text-theme-text">No events match this search</h2>
-        <p className="mt-2 text-sm text-theme-text-secondary">Try a different keyword, mode, or status filter.</p>
+      <section className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+        <h2 className="font-outfit text-2xl font-bold text-slate-950">No events match this search</h2>
+        <p className="mt-2 text-sm text-slate-600">Try a different keyword, mode, or status filter.</p>
       </section>
     )
   }
