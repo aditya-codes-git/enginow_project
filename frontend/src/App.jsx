@@ -14,6 +14,8 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import ScrollToTop from './components/common/ScrollToTop';
+
 
 import HomePage from './pages/HomePage';
 import Footer from './components/common/Footer';
@@ -271,6 +273,7 @@ function MainLayout() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ThemeProvider>
         <AuthProvider>
           <ErrorBoundary>

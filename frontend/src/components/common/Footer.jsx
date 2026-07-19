@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Code2, Heart } from 'lucide-react';
 import Logo from './Logo';
+import { useTheme } from '../../context/ThemeContext';
 
 const LinkedinIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -25,6 +26,9 @@ const TwitterIcon = (props) => (
 );
 
 export default function Footer() {
+  const { theme, currentTheme } = useTheme();
+  const isLight = currentTheme !== 'dark';
+
   const footerLinks = {
     platform: [
       { name: 'About', path: '/about' },
@@ -52,15 +56,28 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800/50 footer-dark">
+    <footer
+      className="border-t transition-colors duration-300"
+      style={{
+        backgroundColor: theme.colors.surface || theme.colors.background || '#ffffff',
+        borderColor: theme.colors.border || '#e5e7eb',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12 pb-12 border-b border-slate-800/60">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12 pb-12 border-b transition-colors duration-300"
+          style={{
+            borderColor: theme.colors.border || '#e5e7eb',
+          }}
+        >
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center">
-              <Logo isDarkBg={true} textClassName="text-xl" />
+              <Logo isDarkBg={!isLight} textClassName="text-xl" />
             </Link>
-            <p className="text-slate-400 text-sm max-w-sm leading-relaxed">
+            <p className={`text-sm max-w-sm leading-relaxed transition-colors duration-300 ${
+              isLight ? 'text-slate-600' : 'text-slate-400'
+            }`}>
               The premier college event discovery platform designed for engineering and technology students. Join competitions, build skills, and launch your career.
             </p>
             <div className="flex items-center space-x-3 pt-2">
@@ -72,7 +89,11 @@ export default function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-800 hover:border-slate-600 transition-all duration-200"
+                    className={`p-2.5 rounded-lg border transition-all duration-200 ${
+                      isLight
+                        ? 'bg-slate-50 border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100 hover:border-slate-300 shadow-sm'
+                        : 'bg-slate-800/60 border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-800 hover:border-slate-600'
+                    }`}
                     aria-label={`Follow EngiNow on ${social.name}`}
                   >
                     <Icon className="w-4 h-4" />
@@ -84,11 +105,18 @@ export default function Footer() {
 
           {/* Links Columns */}
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Platform</h3>
+            <h3 className={`font-semibold text-xs tracking-wider uppercase mb-4 transition-colors duration-300 ${
+              isLight ? 'text-slate-900' : 'text-slate-300'
+            }`}>Platform</h3>
             <ul className="space-y-2.5">
               {footerLinks.platform.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link
+                    to={link.path}
+                    className={`text-sm transition-colors duration-200 ${
+                      isLight ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -97,11 +125,18 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Support</h3>
+            <h3 className={`font-semibold text-xs tracking-wider uppercase mb-4 transition-colors duration-300 ${
+              isLight ? 'text-slate-900' : 'text-slate-300'
+            }`}>Support</h3>
             <ul className="space-y-2.5">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link
+                    to={link.path}
+                    className={`text-sm transition-colors duration-200 ${
+                      isLight ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -110,11 +145,18 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-slate-300 text-xs tracking-wider uppercase mb-4">Legal</h3>
+            <h3 className={`font-semibold text-xs tracking-wider uppercase mb-4 transition-colors duration-300 ${
+              isLight ? 'text-slate-900' : 'text-slate-300'
+            }`}>Legal</h3>
             <ul className="space-y-2.5">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
+                  <Link
+                    to={link.path}
+                    className={`text-sm transition-colors duration-200 ${
+                      isLight ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -124,7 +166,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright notice */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-8 text-slate-500 text-xs gap-4">
+        <div className={`flex flex-col sm:flex-row items-center justify-between pt-8 text-xs gap-4 transition-colors duration-300 ${
+          isLight ? 'text-slate-500' : 'text-slate-500'
+        }`}>
           <p>&copy; 2026 EngiNow. All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             Designed for engineering students with <Heart className="w-3.5 h-3.5 text-blue-500 fill-blue-500" /> in India.
@@ -134,3 +178,4 @@ export default function Footer() {
     </footer>
   );
 }
+
