@@ -25,7 +25,7 @@ const authConfig = {
   },
   signup: {
     title: 'Create an account',
-    subtitle: 'Join the platform to discover hackathons or host your own events.',
+    subtitle: 'Discover hackathons and engineering events.',
     cta: 'Create Account',
     switchText: 'Already have an account?',
     switchLinkText: 'Sign in here',
@@ -61,6 +61,7 @@ export default function AuthPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  // privacyAccepted is kept for API compatibility but driven by the combined checkbox
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -189,14 +190,14 @@ export default function AuthPage() {
           {/* Auth card */}
           <div className="rounded-xl border border-theme-border bg-theme-surface p-5 sm:p-6 shadow-xl shadow-black/[0.03]">
             {/* Logo at the top of the card */}
-            <div className="mb-4">
+            <div className="mb-2">
               <Link to="/" className="inline-block group focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg">
                 <Logo imageClassName="h-7 group-hover:scale-[1.02] transition-transform duration-200" textClassName="text-lg" />
               </Link>
             </div>
 
             {/* Header */}
-            <div className="space-y-1 mb-4">
+            <div className="space-y-0.5 mb-3">
               <motion.span
                 key={config.badge}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -322,18 +323,21 @@ export default function AuthPage() {
                 </div>
               )}
 
-              {/* Terms & Privacy (signup only) */}
+              {/* Terms & Privacy combined (signup only) */}
               <AnimatePresence>
                 {mode === 'signup' && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="space-y-1.5 rounded-lg border border-theme-border bg-theme-bg/50 p-2.5"
+                    className="rounded-lg border border-theme-border bg-theme-bg/50 p-2"
                   >
                     <AnimatedCheckbox
-                      checked={termsAccepted}
-                      onChange={(e) => setTermsAccepted(e.target.checked)}
+                      checked={termsAccepted && privacyAccepted}
+                      onChange={(e) => {
+                        setTermsAccepted(e.target.checked);
+                        setPrivacyAccepted(e.target.checked);
+                      }}
                     >
                       I agree to the{' '}
                       <Link
@@ -345,14 +349,7 @@ export default function AuthPage() {
                       >
                         Terms of Service
                       </Link>
-                      .
-                    </AnimatedCheckbox>
-
-                    <AnimatedCheckbox
-                      checked={privacyAccepted}
-                      onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                    >
-                      I consent to the{' '}
+                      {' '}and{' '}
                       <Link
                         to="/privacy"
                         target="_blank"
@@ -379,7 +376,7 @@ export default function AuthPage() {
             </form>
 
             {/* Divider */}
-            <div className="relative my-4 flex items-center justify-center">
+            <div className="relative my-2.5 flex items-center justify-center">
               <span className="absolute w-full border-t border-theme-divider"></span>
               <span className="relative bg-theme-surface px-3 text-xs font-semibold text-theme-text-muted">Or continue with</span>
             </div>
@@ -419,7 +416,7 @@ export default function AuthPage() {
             </button>
 
             {/* Switch */}
-            <div className="mt-4 pt-3 border-t border-theme-divider">
+            <div className="mt-2.5 pt-2 border-t border-theme-divider">
               <p className="text-center text-xs font-semibold text-theme-text-secondary">
                 {config.switchText}{' '}
                 <button
