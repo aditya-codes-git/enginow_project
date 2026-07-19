@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Users } from 'lucide-react';
@@ -7,6 +7,38 @@ import { useTheme } from '../../context/ThemeContext';
 
 export default function HeroSection() {
   const { theme } = useTheme();
+  const [mockupState, setMockupState] = useState('normal');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleClose = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setMockupState('closed');
+    setTimeout(() => {
+      setMockupState('normal');
+      setIsAnimating(false);
+    }, 1500);
+  };
+
+  const handleMinimize = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setMockupState('minimized');
+    setTimeout(() => {
+      setMockupState('normal');
+      setIsAnimating(false);
+    }, 1500);
+  };
+
+  const handleMaximize = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setMockupState('maximized');
+    setTimeout(() => {
+      setMockupState('normal');
+      setIsAnimating(false);
+    }, 1500);
+  };
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,14 +137,56 @@ export default function HeroSection() {
               <div className="absolute -inset-4 bg-gradient-to-b from-blue-500/[0.03] to-transparent rounded-3xl blur-2xl pointer-events-none" />
 
               {/* Main Window */}
-              <div className="relative bg-theme-surface border border-theme-border/80 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.12)] overflow-hidden">
+              <motion.div
+                animate={mockupState}
+                variants={{
+                  normal: { scale: 1, opacity: 1, y: 0 },
+                  closed: { scale: 0.92, opacity: 0, y: 15 },
+                  minimized: { scale: 0.95, opacity: 0.6, y: 10 },
+                  maximized: { scale: 1.04, opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative bg-theme-surface border border-theme-border/80 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.12)] overflow-hidden origin-center"
+              >
                 
                 {/* Browser Chrome */}
                 <div className="flex items-center gap-2 px-4 py-3 bg-theme-bg border-b border-theme-divider">
-                  <div className="flex gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-slate-200 block" />
-                    <span className="w-3 h-3 rounded-full bg-slate-200 block" />
-                    <span className="w-3 h-3 rounded-full bg-slate-200 block" />
+                  <div className="flex gap-1.5 group/controls">
+                    {/* Red button */}
+                    <button
+                      onClick={handleClose}
+                      disabled={isAnimating}
+                      className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700 group-hover/controls:bg-[#FF5F57] hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm hover:shadow-[#FF5F57]/50 focus:outline-none focus:ring-1 focus:ring-red-400"
+                      aria-label="Close window"
+                    >
+                      <svg viewBox="0 0 6 6" className="w-1.5 h-1.5 text-red-950/70 opacity-0 group-hover/controls:opacity-100 transition-opacity duration-200 stroke-current stroke-[1.5]">
+                        <line x1="1" y1="1" x2="5" y2="5" />
+                        <line x1="5" y1="1" x2="1" y2="5" />
+                      </svg>
+                    </button>
+                    {/* Yellow button */}
+                    <button
+                      onClick={handleMinimize}
+                      disabled={isAnimating}
+                      className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700 group-hover/controls:bg-[#FEBC2E] hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm hover:shadow-[#FEBC2E]/50 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                      aria-label="Minimize window"
+                    >
+                      <svg viewBox="0 0 6 6" className="w-1.5 h-1.5 text-yellow-950/70 opacity-0 group-hover/controls:opacity-100 transition-opacity duration-200 stroke-current stroke-[1.5]">
+                        <line x1="1" y1="3" x2="5" y2="3" />
+                      </svg>
+                    </button>
+                    {/* Green button */}
+                    <button
+                      onClick={handleMaximize}
+                      disabled={isAnimating}
+                      className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700 group-hover/controls:bg-[#28C840] hover:scale-110 active:scale-95 transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm hover:shadow-[#28C840]/50 focus:outline-none focus:ring-1 focus:ring-green-400"
+                      aria-label="Maximize window"
+                    >
+                      <svg viewBox="0 0 6 6" className="w-1.5 h-1.5 text-green-950/70 opacity-0 group-hover/controls:opacity-100 transition-opacity duration-200 fill-current">
+                        <polygon points="1,1 3,1 1,3" />
+                        <polygon points="5,5 3,5 5,3" />
+                      </svg>
+                    </button>
                   </div>
                   <div className="flex-1 mx-3">
                     <div className="bg-theme-surface border border-theme-border rounded-lg px-3 py-1 text-[11px] text-theme-text-muted font-medium text-center">
@@ -194,7 +268,7 @@ export default function HeroSection() {
                     <span className="text-[10px] text-theme-text-muted font-medium">Friends participating…</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
