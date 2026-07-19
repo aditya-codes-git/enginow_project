@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ChevronDown, User, CalendarDays, Settings, ShieldAlert, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronDown, User, CalendarDays, Settings, LogOut, LayoutDashboard } from 'lucide-react';
 
 export default function UserMenu({ user, logout }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const navigate = useNavigate();
 
   // Get first name from full name
   const firstName = user?.name ? user.name.split(' ')[0] : 'User';
@@ -55,7 +54,6 @@ export default function UserMenu({ user, logout }) {
   const handleLogout = async () => {
     setIsOpen(false);
     await logout();
-    navigate('/login');
   };
 
   return (
@@ -96,33 +94,31 @@ export default function UserMenu({ user, logout }) {
           {/* Action Links */}
           <div className="px-1.5 py-1.5 space-y-0.5">
             <Link
+              to={getDashboardLink()}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+            >
+              <LayoutDashboard className="w-4 h-4 text-slate-400" />
+              <span>Dashboard</span>
+            </Link>
+
+            <Link
+              to={user?.role === 'organiser' ? '/organiser' : '/dashboard'}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
+            >
+              <CalendarDays className="w-4 h-4 text-slate-400" />
+              <span>My Events</span>
+            </Link>
+
+            <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
             >
               <User className="w-4 h-4 text-slate-400" />
-              <span>My Profile</span>
+              <span>Saved Events</span>
             </Link>
-
-            <Link
-              to={getDashboardLink()}
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
-            >
-              <CalendarDays className="w-4 h-4 text-slate-400" />
-              <span>My Events / Dashboard</span>
-            </Link>
-
-            {user?.role === 'admin' && (
-              <Link
-                to="/organiser"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
-              >
-                <CalendarDays className="w-4 h-4 text-slate-400" />
-                <span>Manage All Events</span>
-              </Link>
-            )}
 
             <Link
               to="/settings/account"
@@ -130,16 +126,7 @@ export default function UserMenu({ user, logout }) {
               className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
             >
               <Settings className="w-4 h-4 text-slate-400" />
-              <span>Account Settings</span>
-            </Link>
-
-            <Link
-              to="/settings/account#security"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition duration-150"
-            >
-              <ShieldAlert className="w-4 h-4 text-slate-400" />
-              <span>Security</span>
+              <span>Settings</span>
             </Link>
           </div>
 

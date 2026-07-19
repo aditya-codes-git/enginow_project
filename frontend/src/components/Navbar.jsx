@@ -230,9 +230,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center space-x-3">
               <ThemeSwitcher />
               {loading ? (
-                <div className="h-9 w-20 flex items-center justify-center">
-                  <span className="w-4 h-4 border-2 border-slate-350 border-t-slate-950 rounded-full animate-spin" />
-                </div>
+                <div className="h-9 w-24 bg-slate-150/80 dark:bg-slate-800 animate-pulse rounded-full border border-slate-200 dark:border-slate-700" />
               ) : isAuthenticated ? (
                 <UserMenu user={user} logout={logout} />
               ) : (
@@ -443,8 +441,9 @@ export default function Navbar() {
               <div className="border-t border-slate-100 pt-6 flex flex-col space-y-3">
                 <ThemeSwitcher />
                 {loading ? (
-                  <div className="h-10 w-full flex items-center justify-center">
-                    <span className="w-5 h-5 border-2 border-slate-300 border-t-slate-900 rounded-full animate-spin" />
+                  <div className="space-y-2.5 w-full">
+                    <div className="h-12 w-full bg-slate-100 animate-pulse rounded-2xl border border-slate-200" />
+                    <div className="h-10 w-full bg-slate-100 animate-pulse rounded-xl border border-slate-200" />
                   </div>
                 ) : isAuthenticated ? (
                   <>

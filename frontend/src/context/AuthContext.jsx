@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 import supabase from '../services/supabase';
 
@@ -8,24 +9,46 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const isFetchingRef = useRef(false);
+  const navigate = useNavigate();
 
   // Sync profile details from MongoDB using the current token session
   const fetchProfile = async () => {
+    if (isFetchingRef.current) {
+      console.log('[AuthContext] Profile fetch already in progress. Skipping redundant call.');
+      return user;
+    }
+    isFetchingRef.current = true;
     console.log('[AuthContext] Fetching user profile from Express backend /auth/me...');
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.log('[AuthContext] No active session found. Skipping fetchProfile.');
+        setUser(null);
+        setIsAuthenticated(false);
+        isFetchingRef.current = false;
+        return null;
+      }
+
       const response = await authService.getMe();
       console.log('[AuthContext] Backend getMe() profile response:', response);
       if (response?.success && response?.data) {
         setUser(response.data);
         setIsAuthenticated(true);
         console.log('[AuthContext] State updated: isAuthenticated = true, user =', response.data);
+        isFetchingRef.current = false;
         return response.data;
+      } else {
+        console.warn('[AuthContext] Backend returned unsuccessful user profile. Logging out...');
+        isFetchingRef.current = false;
+        await logout();
       }
     } catch (err) {
       console.error('[AuthContext] MongoDB profile sync failed:', err);
-      setUser(null);
-      setIsAuthenticated(false);
+      isFetchingRef.current = false;
+      await logout();
     }
+    isFetchingRef.current = false;
     return null;
   };
 
@@ -69,10 +92,22 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error('[AuthContext] Supabase sign out failed:', err);
     } finally {
+      // Clear localStorage/sessionStorage auth items
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('sb-') || key.includes('token') || key.includes('auth') || key.includes('user')) {
+          localStorage.removeItem(key);
+        }
+      });
+      Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith('sb-') || key.includes('token') || key.includes('auth') || key.includes('user')) {
+          sessionStorage.removeItem(key);
+        }
+      });
       setUser(null);
       setIsAuthenticated(false);
       setLoading(false);
       console.log('[AuthContext] Local state cleared successfully. User logged out.');
+      navigate('/');
     }
   };
 
