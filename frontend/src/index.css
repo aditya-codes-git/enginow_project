@@ -57,9 +57,9 @@
   }
 
   .dark {
-    --gradient-color: #2563eb;
-    --sparkles-color: #ffffff;
-    --footer-border: rgba(255, 255, 255, 0.06);
+    --gradient-color: #3b82f6;
+    --sparkles-color: rgba(255, 255, 255, 0.5);
+    --footer-border: rgba(255, 255, 255, 0.04);
   }
 }
 
@@ -356,3 +356,212 @@
   color: #b91c1c;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK THEME OVERRIDES — Premium Monochrome
+   Only affects [data-theme="dark"]. Light theme is NOT modified.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Dark: refined error states ── */
+[data-theme="dark"] .border-theme-error-border {
+  border-color: #7f1d1d;
+}
+[data-theme="dark"] .bg-theme-error-bg {
+  background-color: rgba(127, 29, 29, 0.15);
+}
+[data-theme="dark"] .text-theme-error {
+  color: #fca5a5;
+}
+
+/* ── Dark: muted text uses a softer gray ── */
+[data-theme="dark"] .text-theme-text-muted {
+  color: #9CA3AF;
+}
+
+/* ── Dark: elevated card surface ── */
+[data-theme="dark"] .bg-theme-bg-secondary {
+  background-color: #171717;
+}
+
+/* ── Dark: suppress bright blue-50 backgrounds → neutral dark ── */
+[data-theme="dark"] .bg-blue-50,
+[data-theme="dark"] .bg-indigo-50,
+[data-theme="dark"] .bg-purple-50 {
+  background-color: rgba(59, 130, 246, 0.08) !important;
+}
+
+/* ── Dark: suppress cyan accent entirely → use primary blue ── */
+[data-theme="dark"] .text-cyan-500,
+[data-theme="dark"] .text-cyan-400 {
+  color: #3b82f6 !important;
+}
+[data-theme="dark"] .bg-cyan-500,
+[data-theme="dark"] .bg-cyan-400 {
+  background-color: #3b82f6 !important;
+}
+
+/* ── Dark: flatten shadows ── */
+[data-theme="dark"] .shadow-xl {
+  --tw-shadow: 0 4px 24px 0 rgba(0,0,0,0.4) !important;
+  --tw-shadow-colored: 0 4px 24px 0 var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+[data-theme="dark"] .shadow-lg {
+  --tw-shadow: 0 4px 16px 0 rgba(0,0,0,0.35) !important;
+  --tw-shadow-colored: 0 4px 16px 0 var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+[data-theme="dark"] .shadow-md {
+  --tw-shadow: 0 2px 8px 0 rgba(0,0,0,0.3) !important;
+  --tw-shadow-colored: 0 2px 8px 0 var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+/* ── Dark: suppress any remaining blue glow shadows ── */
+[data-theme="dark"] .shadow-blue-100,
+[data-theme="dark"] .shadow-indigo-100 {
+  --tw-shadow-color: transparent !important;
+  --tw-shadow: none !important;
+}
+
+/* ── Dark: bg-mesh uses monochrome gradient ── */
+[data-theme="dark"] .bg-mesh {
+  background-color: #090909 !important;
+  background-image:
+    radial-gradient(circle closest-side at 0% 0%, rgba(255,255,255,0.02) 0px, transparent 50%),
+    radial-gradient(circle closest-side at 100% 0%, rgba(255,255,255,0.015) 0px, transparent 50%),
+    radial-gradient(circle closest-side at 100% 100%, rgba(255,255,255,0.01) 0px, transparent 50%),
+    radial-gradient(circle closest-side at 0% 100%, rgba(255,255,255,0.01) 0px, transparent 50%) !important;
+}
+
+/* ── Dark: grid pattern uses very subtle dots ── */
+[data-theme="dark"] .bg-grid-pattern {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px) !important;
+}
+
+/* ── Dark: blue-50 chip/badge backgrounds → very subtle ── */
+[data-theme="dark"] .bg-blue-50\/50 {
+  background-color: rgba(59, 130, 246, 0.06) !important;
+}
+
+/* ── Dark: borders that use border-blue-100 or border-blue-200 ── */
+[data-theme="dark"] .border-blue-100,
+[data-theme="dark"] .border-blue-200,
+[data-theme="dark"] .border-indigo-100,
+[data-theme="dark"] .border-indigo-200 {
+  border-color: #2C2C2C !important;
+}
+
+/* ── Dark: the .dark class fallback tokens ── */
+.dark {
+  --gradient-color: #3b82f6;
+  --sparkles-color: rgba(255,255,255,0.5);
+  --footer-border: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Dark: override hardcoded light grays/slates to prevent bright spots in dark mode ── */
+[data-theme="dark"] .bg-slate-100,
+[data-theme="dark"] .bg-slate-200,
+[data-theme="dark"] .bg-gray-100,
+[data-theme="dark"] .bg-gray-200 {
+  background-color: #171717 !important;
+}
+
+[data-theme="dark"] .hover\:bg-slate-200:hover,
+[data-theme="dark"] .hover\:bg-gray-200:hover {
+  background-color: #222222 !important;
+}
+
+[data-theme="dark"] .border-slate-200,
+[data-theme="dark"] .border-gray-200 {
+  border-color: #2C2C2C !important;
+}
+
+/* ── Dark: Button hovers and active states ── */
+[data-theme="dark"] .hover\:bg-slate-100:hover {
+  background-color: #1B1B1B !important;
+}
+
+/* ── Dark: Danger button muted dark red ── */
+[data-theme="dark"] .bg-red-650,
+[data-theme="dark"] .bg-red-600,
+[data-theme="dark"] .bg-red-500 {
+  background-color: #7f1d1d !important;
+  color: #fca5a5 !important;
+}
+[data-theme="dark"] .hover\:bg-red-700:hover,
+[data-theme="dark"] .hover\:bg-red-600:hover {
+  background-color: #991b1b !important;
+}
+
+/* ── Dark: Input fields dark style ── */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: #181818 !important;
+  border-color: #2C2C2C !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  border-color: #3b82f6 !important;
+  --tw-ring-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+/* ── Dark: Table rows ── */
+[data-theme="dark"] tr:nth-child(even) {
+  background-color: #111111 !important;
+}
+[data-theme="dark"] tr:nth-child(odd) {
+  background-color: #090909 !important;
+}
+[data-theme="dark"] th {
+  background-color: #171717 !important;
+  border-color: #252525 !important;
+}
+[data-theme="dark"] td {
+  border-color: #252525 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DIRECT FIXES: NAVBAR CONTRAST & EVENTS/HACKATHONS PAGES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Navbar Dark Mode Only Text Colors ── */
+[data-theme="dark"] nav a:not(.group) {
+  color: #D1D5DB !important;
+}
+[data-theme="dark"] nav a.active:not(.group) {
+  color: #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.12) !important;
+}
+[data-theme="dark"] nav a:not(.group):hover {
+  color: #ffffff !important;
+  background-color: #222222 !important;
+}
+[data-theme="dark"] nav span {
+  color: #ffffff !important;
+}
+[data-theme="dark"] nav button {
+  color: #D1D5DB !important;
+}
+[data-theme="dark"] nav button:hover {
+  color: #ffffff !important;
+  background-color: #222222 !important;
+}
+
+/* ── 2 & 3. Events & Hackathons Page Hero Section gradients and borders ── */
+[data-theme="dark"] .from-white.via-slate-50.to-slate-50 {
+  --tw-gradient-from: #111111 !important;
+  --tw-gradient-to: #090909 !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #111111, var(--tw-gradient-to) !important;
+}
+[data-theme="dark"] .border-theme-info-border {
+  border-color: #2C2C2C !important;
+}
+[data-theme="dark"] .bg-theme-info-bg {
+  background-color: #171717 !important;
+}
+[data-theme="dark"] .hover\:border-slate-300:hover {
+  border-color: #3b82f6 !important;
+}

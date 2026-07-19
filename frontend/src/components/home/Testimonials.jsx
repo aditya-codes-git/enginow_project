@@ -30,7 +30,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="relative bg-theme-surface border border-theme-border/80 rounded-2xl p-8 sm:p-10 shadow-[0_4px_24px_rgba(241,245,249,0.6)] flex flex-col justify-between"
+              className="relative bg-theme-surface border border-theme-border/80 rounded-2xl p-8 sm:p-10 shadow-md flex flex-col justify-between"
             >
               <div className="mb-6">
                 <Quote className="w-10 h-10 text-slate-200" />

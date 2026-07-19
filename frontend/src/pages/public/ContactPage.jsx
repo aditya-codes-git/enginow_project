@@ -13,7 +13,10 @@ function ContactPage() {
   return (
     <main className="bg-theme-surface text-theme-text">
       <section className="relative overflow-hidden bg-mesh pt-10 pb-16">
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+        <div 
+          className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" 
+          style={{ backgroundImage: 'linear-gradient(to top, var(--surface-color), transparent)' }}
+        />
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
           <section>
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-theme-surface/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm">

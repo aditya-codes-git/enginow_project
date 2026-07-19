@@ -19,20 +19,24 @@ export default function CTASection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.7 }}
-          className={`relative rounded-3xl py-16 px-6 sm:px-12 md:py-20 text-center overflow-hidden shadow-2xl transition-all duration-300 ${
+          className={`relative rounded-3xl py-16 px-6 sm:px-12 md:py-20 text-center overflow-hidden transition-all duration-300 ${
             isLight
-              ? 'bg-slate-50 border border-slate-200/80 shadow-slate-100'
-              : 'bg-slate-950 border border-slate-800/40'
+              ? 'bg-slate-50 border border-slate-200/80 shadow-2xl shadow-slate-100'
+              : 'bg-[#111111] border border-[#2C2C2C]'
           }`}
         >
           {/* Dot grid texture */}
           <div className={`absolute inset-0 pointer-events-none transition-all duration-300 ${
-            isLight ? 'bg-grid-pattern opacity-[0.25]' : 'bg-dot-grid-dark'
+            isLight ? 'bg-grid-pattern opacity-[0.25]' : 'bg-dot-grid-dark opacity-[0.4]'
           }`} />
 
-          {/* Subtle ambient shapes */}
-          <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500/[0.06] rounded-full blur-[80px] pointer-events-none -translate-x-1/3 -translate-y-1/3" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500/[0.05] rounded-full blur-[80px] pointer-events-none translate-x-1/4 translate-y-1/4" />
+          {/* Subtle ambient shapes — light mode only */}
+          {isLight && (
+            <>
+              <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500/[0.06] rounded-full blur-[80px] pointer-events-none -translate-x-1/3 -translate-y-1/3" />
+              <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500/[0.05] rounded-full blur-[80px] pointer-events-none translate-x-1/4 translate-y-1/4" />
+            </>
+          )}
           
           <div className="relative max-w-2xl mx-auto space-y-6 md:space-y-8 z-10">
             {/* Headline */}
@@ -63,15 +67,15 @@ export default function CTASection() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                to="/become-organizer"
+                to="/hackathons"
                 className={`inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 ${
                   isLight
                     ? 'bg-white hover:bg-slate-100/80 text-slate-800 border-slate-200 shadow-sm'
-                    : 'bg-theme-surface/[0.08] hover:bg-theme-surface/[0.12] text-white border-white/[0.1] hover:border-white/[0.2]'
+                    : 'bg-[#1b1b1b] hover:bg-[#222222] text-white border-[#2C2C2C] hover:border-[#2A2A2A]'
                 }`}
               >
-                <CalendarPlus className="w-4.5 h-4.5" />
-                <span>Host an Event</span>
+                <CalendarPlus className="w-4.5 h-4.5 text-blue-500 shrink-0" />
+                <span>Browse Hackathons</span>
               </Link>
             </div>
           </div>
