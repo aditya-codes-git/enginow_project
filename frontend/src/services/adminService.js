@@ -2,14 +2,47 @@ import api from './api';
 import { mapEventToFrontend } from './eventService';
 
 const adminService = {
-  async getUsers() {
-    const response = await api.get('/admin/users');
-    return response.data.data || [];
+  async getUsers(params = {}) {
+    const response = await api.get('/admin/users', { params });
+    return {
+      users: response.data.data || [],
+      pagination: response.data.pagination || { total: 0, page: 1, limit: 20, pages: 1 },
+    };
+  },
+
+  async getUser(id) {
+    const response = await api.get(`/admin/users/${id}`);
+    return response.data.data;
   },
 
   async updateUser(id, data) {
     const response = await api.patch(`/admin/users/${id}`, data);
     return response.data.data;
+  },
+
+  async suspendUser(id, reason) {
+    const response = await api.patch(`/admin/users/${id}/suspend`, { reason });
+    return response.data.data;
+  },
+
+  async unsuspendUser(id, reason) {
+    const response = await api.patch(`/admin/users/${id}/unsuspend`, { reason });
+    return response.data.data;
+  },
+
+  async banUser(id, reason) {
+    const response = await api.patch(`/admin/users/${id}/ban`, { reason });
+    return response.data.data;
+  },
+
+  async unbanUser(id, reason) {
+    const response = await api.patch(`/admin/users/${id}/unban`, { reason });
+    return response.data.data;
+  },
+
+  async deleteUser(id, reason) {
+    const response = await api.delete(`/admin/users/${id}`, { data: { reason } });
+    return response.data;
   },
 
   async getPendingEvents() {

@@ -9,6 +9,8 @@ import {
   verifyRefreshToken,
 } from '../utils/token.js';
 import env from '../config/env.js';
+import supabase from '../config/supabase.js';
+
 
 /**
  * Helper to process and add a refresh token to user sessions (max 5 active sessions)
@@ -298,3 +300,68 @@ export const verifyEmail = async (token) => {
 
   return { success: true };
 };
+
+export const loginGoogleUser = async (token) => {
+  if (!token) {
+    throw new ApiError(400, 'Supabase token is required');
+  }
+
+  // Verify Supabase token
+  const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(token);
+  if (error || !supabaseUser) {
+    throw new ApiError(401, 'Invalid Supabase token');
+  }
+
+  const email = supabaseUser.email.toLowerCase();
+  let user = await User.findOne({ email });
+
+  if (user) {
+    // Link existing MongoDB user if not already linked
+    let modified = false;
+    if (!user.supabaseUserId) {
+      user.supabaseUserId = supabaseUser.id;
+      modified = true;
+    }
+    if (user.provider !== 'google') {
+      user.provider = 'google';
+      modified = true;
+    }
+    if (modified) {
+      await user.save();
+    }
+  } else {
+    // Auto-create new user record in MongoDB (First-time onboarding)
+    const metadata = supabaseUser.user_metadata || {};
+    user = await User.create({
+      supabaseUserId: supabaseUser.id,
+      email,
+      name: metadata.full_name || metadata.name || email.split('@')[0],
+      avatar: metadata.avatar_url || '',
+      provider: 'google',
+      role: 'participant',
+      status: USER_STATUS.ACTIVE,
+    });
+  }
+
+  if (user.status === USER_STATUS.SUSPENDED) {
+    throw new ApiError(403, 'Your account has been suspended');
+  }
+
+  // Update last login
+  user.lastLogin = new Date();
+  await user.save();
+
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  await addRefreshTokenSession(user, refreshToken);
+
+  const userResponse = await User.findById(user._id).select('-passwordHash -refreshTokens');
+
+  return {
+    user: userResponse,
+    accessToken,
+    refreshToken,
+  };
+};
+

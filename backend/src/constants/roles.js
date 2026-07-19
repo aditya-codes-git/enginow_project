@@ -8,6 +8,8 @@ export const USER_STATUS = {
   ACTIVE: 'active',
   INVITED: 'invited',
   SUSPENDED: 'suspended',
+  BANNED: 'banned',
+  DELETED: 'deleted',
 };
 
 export const ALL_ROLES = Object.values(ROLES);

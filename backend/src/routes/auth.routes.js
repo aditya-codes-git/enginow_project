@@ -11,6 +11,7 @@ import {
   forgotPassword,
   resetPassword,
   verifyEmail,
+  googleLogin,
 } from '../controllers/auth.controller.js';
 import protect from '../middleware/auth.middleware.js';
 import validate from '../middleware/validate.middleware.js';
@@ -33,6 +34,7 @@ const router = Router();
 // Public auth routes
 router.post('/register', registerLimiter, validate(registerSchema), register);
 router.post('/login', loginLimiter, validate(loginSchema), login);
+router.post('/google-login', googleLogin);
 router.post('/refresh', refresh);
 router.post('/forgot-password', forgotPasswordLimiter, validate(forgotPasswordSchema), forgotPassword);
 router.post('/reset-password/:token', validate(resetPasswordSchema), resetPassword);

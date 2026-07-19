@@ -1,6 +1,7 @@
 import React from 'react'
 import { Eye, Search, ShieldOff, UserCheck } from 'lucide-react'
 import StatusBadge from '../common/StatusBadge'
+import { useAuth } from '../../hooks/useAuth'
 
 function formatDate(value) {
   if (!value) return 'Not set'
@@ -18,6 +19,7 @@ function formatDate(value) {
 }
 
 function UserTable({ users, onView, onSuspend, onActivate }) {
+  const { user: currentUser } = useAuth()
   const safeUsers = users || []
   if (!safeUsers.length) {
     return (
@@ -40,7 +42,7 @@ function UserTable({ users, onView, onSuspend, onActivate }) {
 
       <div className="divide-y divide-slate-100">
         {safeUsers.map((user) => {
-          const isSuspended = String(user.status).toLowerCase() === 'suspended'
+
 
           return (
             <div key={user.id || user.email} className="p-5 transition hover:bg-slate-50/80">
@@ -73,23 +75,74 @@ function UserTable({ users, onView, onSuspend, onActivate }) {
                   <StatusBadge status={user.status || 'Active'} />
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 lg:col-span-2 lg:justify-end">
+                <div className="flex flex-wrap items-center gap-2 lg:col-span-5 lg:justify-end">
                   <button
                     type="button"
                     onClick={() => onView?.(user)}
-                    className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-slate-100 border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200/80"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5" />
                     View
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => (isSuspended ? onActivate?.(user) : onSuspend?.(user))}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                  >
-                    {isSuspended ? <UserCheck className="h-4 w-4" /> : <ShieldOff className="h-4 w-4" />}
-                    {isSuspended ? 'Activate' : 'Suspend'}
-                  </button>
+
+                  {user.role === 'admin' ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-400 cursor-not-allowed">
+                      Administrator
+                    </span>
+                  ) : (
+                    <>
+                      {/* Suspend / Unsuspend */}
+                      {String(user.status).toLowerCase() === 'suspended' ? (
+                        <button
+                          type="button"
+                          onClick={() => onActivate?.(user)}
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 transition hover:bg-emerald-100/75"
+                        >
+                          <UserCheck className="h-3.5 w-3.5" />
+                          Unsuspend
+                        </button>
+                      ) : String(user.status).toLowerCase() === 'banned' ? null : (
+                        <button
+                          type="button"
+                          onClick={() => onSuspend?.(user)}
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-700 transition hover:bg-amber-100/75"
+                        >
+                          <ShieldOff className="h-3.5 w-3.5" />
+                          Suspend
+                        </button>
+                      )}
+
+                      {/* Ban / Unban */}
+                      {String(user.status).toLowerCase() === 'banned' ? (
+                        <button
+                          type="button"
+                          onClick={() => onUnban?.(user)}
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 transition hover:bg-emerald-100/75"
+                        >
+                          <UserCheck className="h-3.5 w-3.5" />
+                          Unban
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => onBan?.(user)}
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-rose-50 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-rose-100/75"
+                        >
+                          <ShieldOff className="h-3.5 w-3.5" />
+                          Ban
+                        </button>
+                      )}
+
+                      {/* Soft Delete */}
+                      <button
+                        type="button"
+                        onClick={() => onDelete?.(user)}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-red-50/40 px-3 py-2 text-xs font-bold text-red-600 transition hover:bg-red-100/50"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -100,4 +153,5 @@ function UserTable({ users, onView, onSuspend, onActivate }) {
   )
 }
 
-export default UserTable
+export default UserTable;
+

@@ -170,3 +170,26 @@ export const verifyEmail = asyncHandler(async (req, res) => {
     message: 'Email verified successfully.',
   });
 });
+
+export const googleLogin = asyncHandler(async (req, res) => {
+  const token = req.body.token || req.body.accessToken || req.body.idToken;
+  const result = await authService.loginGoogleUser(token);
+  
+  setRefreshTokenCookie(res, result.refreshToken);
+
+  res.status(200).json({
+    success: true,
+    message: 'Google login successful',
+    accessToken: result.accessToken,
+    refreshToken: result.refreshToken,
+    user: {
+      id: result.user._id,
+      name: result.user.name,
+      email: result.user.email,
+      avatar: result.user.avatar,
+      role: result.user.role,
+      provider: result.user.provider,
+    },
+  });
+});
+

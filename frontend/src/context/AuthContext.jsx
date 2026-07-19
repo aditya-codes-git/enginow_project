@@ -21,13 +21,9 @@ export const AuthProvider = ({ children }) => {
     isFetchingRef.current = true;
     console.log('[AuthContext] Fetching user profile from Express backend /auth/me...');
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('[AuthContext] Supabase session retrieved:', session);
-      if (session) {
-        console.log('[AuthContext] Supabase user from session:', session.user);
-      }
-      if (!session) {
-        console.log('[AuthContext] No active session found. Skipping fetchProfile.');
+      const localToken = localStorage.getItem('accessToken');
+      if (!localToken) {
+        console.log('[AuthContext] No local accessToken found. Skipping fetchProfile.');
         setUser(null);
         setIsAuthenticated(false);
         isFetchingRef.current = false;
@@ -49,12 +45,6 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (err) {
       console.error('[AuthContext] MongoDB profile sync failed:', err);
-      if (err.response) {
-        console.error('[AuthContext] Backend error response data:', err.response.data);
-        console.error('[AuthContext] Backend error response status:', err.response.status);
-      } else {
-        console.error('[AuthContext] Network or request error message:', err.message);
-      }
       isFetchingRef.current = false;
       await logout();
     }
@@ -63,7 +53,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (credentials) => {
-    setLoading(true);
     try {
       console.log('[AuthContext] Triggering login with credentials:', credentials.email);
       await authService.login(credentials);
@@ -73,13 +62,10 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
       throw err;
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (userData) => {
-    setLoading(true);
     try {
       console.log('[AuthContext] Triggering register with details:', userData.email);
       await authService.register(userData);
@@ -89,37 +75,23 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
       throw err;
-    } finally {
-      setLoading(false);
     }
   };
 
   const logout = async () => {
-    setLoading(true);
     try {
       console.log('[AuthContext] Triggering sign out...');
       await authService.logout();
     } catch (err) {
-      console.error('[AuthContext] Supabase sign out failed:', err);
+      console.error('[AuthContext] Sign out failed:', err);
     } finally {
-      // Clear localStorage/sessionStorage auth items
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('sb-') || key.includes('token') || key.includes('auth') || key.includes('user')) {
-          localStorage.removeItem(key);
-        }
-      });
-      Object.keys(sessionStorage).forEach(key => {
-        if (key.startsWith('sb-') || key.includes('token') || key.includes('auth') || key.includes('user')) {
-          sessionStorage.removeItem(key);
-        }
-      });
       setUser(null);
       setIsAuthenticated(false);
-      setLoading(false);
       console.log('[AuthContext] Local state cleared successfully. User logged out.');
       navigate('/');
     }
   };
+
 
   const signInWithGoogle = async () => {
     setLoading(true);
@@ -149,47 +121,61 @@ export const AuthProvider = ({ children }) => {
     let isMounted = true;
     console.log('[AuthContext] Registering Supabase onAuthStateChange listener...');
 
-    // Single listener for auth state changes
+    // Single listener for auth state changes (used primarily for Google OAuth callback flow)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log(`[AuthContext] onAuthStateChange event triggered: "${event}"`, { session });
       if (!isMounted) return;
 
-      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
+      if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
         if (session) {
-          console.log('[AuthContext] Active session detected in listener. Syncing profile...');
-          setLoading(true);
-          await fetchProfile();
-        } else {
-          console.log('[AuthContext] Session payload empty despite active event.');
-          setUser(null);
-          setIsAuthenticated(false);
+          const localToken = localStorage.getItem('accessToken');
+          if (!localToken) {
+            console.log('[AuthContext] Supabase session active but no local JWT. Triggering token exchange...');
+            setLoading(true);
+            try {
+              await authService.googleLoginExchange(session.access_token);
+              await fetchProfile();
+            } catch (err) {
+              console.error('[AuthContext] Google OAuth exchange failed:', err);
+            } finally {
+              setLoading(false);
+            }
+          } else {
+            console.log('[AuthContext] Supabase session active and local JWT already exists. Syncing profile...');
+            await fetchProfile();
+          }
         }
       } else if (event === 'SIGNED_OUT') {
         console.log('[AuthContext] SIGNED_OUT event detected. Clearing local state...');
+        localStorage.removeItem('accessToken');
         setUser(null);
         setIsAuthenticated(false);
       }
-      
-      setLoading(false);
-      console.log('[AuthContext] State check completed inside listener. loading = false');
     });
 
     // Startup session load check
     const checkInitialSession = async () => {
-      console.log('[AuthContext] Executing startup getSession() check...');
+      console.log('[AuthContext] Executing startup check...');
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log('[AuthContext] Startup getSession() resolved:', { session });
-        if (session && isMounted) {
-          console.log('[AuthContext] Active session found on startup. Syncing profile...');
+        const localToken = localStorage.getItem('accessToken');
+        if (localToken) {
+          console.log('[AuthContext] Found active local token on startup. Fetching profile...');
           await fetchProfile();
+        } else {
+          // If no local token, check if there's a Supabase session (e.g. redirected from Google OAuth)
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session && isMounted) {
+            console.log('[AuthContext] Found active Supabase session on startup. Triggering exchange...');
+            await authService.googleLoginExchange(session.access_token);
+            await fetchProfile();
+          }
         }
       } catch (err) {
         console.error('[AuthContext] Startup session check failed:', err);
       } finally {
         if (isMounted) {
           setLoading(false);
-          console.log('[AuthContext] Startup session check finalized. loading = false');
+          console.log('[AuthContext] Startup check finalized. loading = false');
         }
       }
     };
@@ -221,3 +207,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+

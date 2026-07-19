@@ -2,15 +2,32 @@ import asyncHandler from '../utils/asyncHandler.js';
 import * as adminService from '../services/admin.service.js';
 
 export const getUsers = asyncHandler(async (req, res) => {
-  const users = await adminService.getAllUsers();
+  const currentAdminId = req.user?._id;
+  const result = await adminService.getAllUsersPaginated({
+    currentAdminId,
+    page: req.query.page,
+    limit: req.query.limit,
+    search: req.query.search,
+    role: req.query.role,
+    status: req.query.status,
+    provider: req.query.provider,
+  });
+  
   res.status(200).json({
     success: true,
-    data: users,
+    data: result.users,
+    pagination: result.pagination,
   });
 });
 
 export const updateUser = asyncHandler(async (req, res) => {
-  const user = await adminService.updateUserRoleAndStatus(req.params.id, req.body);
+  if (req.user && req.user._id.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  const user = await adminService.updateUserRoleAndStatus(req.params.id, req.body, req.user._id, req.body.reason);
   res.status(200).json({
     success: true,
     message: 'User updated successfully',
@@ -172,3 +189,96 @@ export const activateBlog = asyncHandler(async (req, res) => {
     data: blog,
   });
 });
+
+export const getUser = asyncHandler(async (req, res) => {
+  const user = await adminService.getUserById(req.params.id);
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+export const suspendUser = asyncHandler(async (req, res) => {
+  const adminId = req.user._id;
+  const reason = req.body.reason || '';
+  if (adminId.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  const user = await adminService.suspendUser(req.params.id, adminId, reason);
+  res.status(200).json({
+    success: true,
+    message: 'User suspended successfully',
+    data: user,
+  });
+});
+
+export const unsuspendUser = asyncHandler(async (req, res) => {
+  const adminId = req.user._id;
+  const reason = req.body.reason || '';
+  if (adminId.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  const user = await adminService.unsuspendUser(req.params.id, adminId, reason);
+  res.status(200).json({
+    success: true,
+    message: 'User unsuspended successfully',
+    data: user,
+  });
+});
+
+export const banUser = asyncHandler(async (req, res) => {
+  const adminId = req.user._id;
+  const reason = req.body.reason || '';
+  if (adminId.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  const user = await adminService.banUser(req.params.id, adminId, reason);
+  res.status(200).json({
+    success: true,
+    message: 'User banned successfully',
+    data: user,
+  });
+});
+
+export const unbanUser = asyncHandler(async (req, res) => {
+  const adminId = req.user._id;
+  const reason = req.body.reason || '';
+  if (adminId.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  const user = await adminService.unbanUser(req.params.id, adminId, reason);
+  res.status(200).json({
+    success: true,
+    message: 'User unbanned successfully',
+    data: user,
+  });
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const adminId = req.user._id;
+  const reason = req.body.reason || '';
+  if (adminId.toString() === req.params.id) {
+    return res.status(403).json({
+      success: false,
+      message: 'Administrators cannot modify their own account.',
+    });
+  }
+  await adminService.softDeleteUser(req.params.id, adminId, reason);
+  res.status(200).json({
+    success: true,
+    message: 'User deleted successfully',
+  });
+});
+

@@ -20,6 +20,12 @@ import {
   rejectBlog,
   suspendBlog,
   activateBlog,
+  getUser,
+  suspendUser,
+  unsuspendUser,
+  banUser,
+  unbanUser,
+  deleteUser,
 } from '../controllers/admin.controller.js';
 import protect from '../middleware/auth.middleware.js';
 import { allowRoles } from '../middleware/role.middleware.js';
@@ -38,7 +44,13 @@ router.use(protect);
 router.use(allowRoles(ROLES.ADMIN));
 
 router.get('/users', getUsers);
+router.get('/users/:id', getUser);
 router.patch('/users/:id', validate(adminUpdateUserSchema), updateUser);
+router.patch('/users/:id/suspend', suspendUser);
+router.patch('/users/:id/unsuspend', unsuspendUser);
+router.patch('/users/:id/ban', banUser);
+router.patch('/users/:id/unban', unbanUser);
+router.delete('/users/:id', deleteUser);
 
 router.get('/events/pending', getPendingEvents);
 router.get('/events', getEvents);

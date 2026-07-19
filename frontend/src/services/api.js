@@ -1,5 +1,4 @@
 import axios from 'axios';
-import supabase from './supabase';
 
 let baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 if (!baseUrl.endsWith('/api')) {
@@ -10,16 +9,16 @@ const api = axios.create({
   baseURL: baseUrl,
 });
 
-// Request interceptor: dynamically fetch the latest valid session token from Supabase
+// Request interceptor: attach our application access token if it exists
 api.interceptors.request.use(
   async (config) => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.access_token) {
-        config.headers.Authorization = `Bearer ${session.access_token}`;
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (err) {
-      console.error('[API Interceptor] Failed to fetch active session:', err);
+      console.error('[API Interceptor] Failed to retrieve access token:', err);
     }
 
     if (import.meta.env.DEV) {
@@ -32,6 +31,7 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
 
 // Backward-compatibility export stubs
 export const setAccessToken = () => {};
