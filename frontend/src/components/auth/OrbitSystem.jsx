@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useTransform } from 'framer-motion';
-import enginowIcon from '../../assets/enginow_icon.png';
+import engShape from '../../assets/eng_shape.png';
 
 const orbitItems = [
   { emoji: '🏆', label: 'Trophy', angle: 0 },
@@ -49,7 +49,7 @@ export default function OrbitSystem({ mouseX, mouseY }) {
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         >
           <img
-            src={enginowIcon}
+            src={engShape}
             alt="EngiNow"
             className="w-12 h-12 object-contain"
           />
