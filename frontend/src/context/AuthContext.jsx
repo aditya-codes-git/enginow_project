@@ -22,6 +22,10 @@ export const AuthProvider = ({ children }) => {
     console.log('[AuthContext] Fetching user profile from Express backend /auth/me...');
     try {
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('[AuthContext] Supabase session retrieved:', session);
+      if (session) {
+        console.log('[AuthContext] Supabase user from session:', session.user);
+      }
       if (!session) {
         console.log('[AuthContext] No active session found. Skipping fetchProfile.');
         setUser(null);
@@ -45,6 +49,12 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (err) {
       console.error('[AuthContext] MongoDB profile sync failed:', err);
+      if (err.response) {
+        console.error('[AuthContext] Backend error response data:', err.response.data);
+        console.error('[AuthContext] Backend error response status:', err.response.status);
+      } else {
+        console.error('[AuthContext] Network or request error message:', err.message);
+      }
       isFetchingRef.current = false;
       await logout();
     }

@@ -11,33 +11,52 @@ export const verifySupabaseUser = asyncHandler(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   }
 
-  if (!token) {
-    throw new ApiError(401, 'Not authorized, no token provided');
-  }
+  console.log('[verifySupabaseUser] Received Authorization Token:', token ? `${token.substring(0, 15)}...` : 'NONE');
 
   try {
+    if (!token) {
+      throw new ApiError(401, 'Not authorized, no token provided');
+    }
+
     // Retrieve the verified user payload via Supabase API (asymmetric RS256 token verification)
+    console.log('[verifySupabaseUser] Calling supabase.auth.getUser(token)...');
     const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(token);
 
-    if (error || !supabaseUser) {
-      throw new ApiError(401, error?.message || 'Not authorized, invalid token');
+    if (error) {
+      console.error('[verifySupabaseUser] Supabase auth.getUser error:', error);
+      const apiErr = new ApiError(401, error.message || 'Not authorized, invalid token');
+      apiErr.supabaseError = error;
+      throw apiErr;
     }
+
+    if (!supabaseUser) {
+      console.error('[verifySupabaseUser] Supabase auth.getUser returned no user.');
+      throw new ApiError(401, 'Not authorized, invalid token');
+    }
+
+    console.log('[verifySupabaseUser] Supabase user verified:', {
+      id: supabaseUser.id,
+      email: supabaseUser.email,
+    });
 
     const supabaseUserId = supabaseUser.id;
     const email = supabaseUser.email;
 
     // Check if the user already exists in MongoDB
     let user = await User.findOne({ supabaseUserId });
+    console.log('[verifySupabaseUser] MongoDB lookup by supabaseUserId:', user ? user.email : 'NOT FOUND');
 
     if (!user) {
       // Check for email collision (pre-existing local/Google users with the same email)
       user = await User.findOne({ email: email.toLowerCase() });
+      console.log('[verifySupabaseUser] MongoDB lookup by email collision:', user ? user.email : 'NOT FOUND');
 
       if (user) {
         // Link the existing MongoDB account to the Supabase identity
         user.supabaseUserId = supabaseUserId;
         user.provider = supabaseUser.app_metadata?.provider || 'email';
         await user.save();
+        console.log('[verifySupabaseUser] Linked existing MongoDB account to Supabase ID');
       } else {
         // Auto-create new user record in MongoDB (First-time onboarding)
         const metadata = supabaseUser.user_metadata || {};
@@ -50,6 +69,7 @@ export const verifySupabaseUser = asyncHandler(async (req, res, next) => {
           role: 'participant', // default role
           status: USER_STATUS.ACTIVE,
         });
+        console.log('[verifySupabaseUser] Created new MongoDB user:', user.email);
       }
     }
 
@@ -64,6 +84,23 @@ export const verifySupabaseUser = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
+    console.error('[verifySupabaseUser] Authentication middleware caught exception:', err.message);
+    
+    // Write debug info to file
+    try {
+      const fs = await import('fs');
+      const debugInfo = {
+        timestamp: new Date().toISOString(),
+        token: token ? `${token.substring(0, 15)}... [length: ${token.length}]` : 'NONE',
+        errorMsg: err.message,
+        stack: err.stack,
+        supabaseError: err.supabaseError || null
+      };
+      fs.writeFileSync('d:/enginow_project/backend/auth_debug.json', JSON.stringify(debugInfo, null, 2));
+    } catch (fsErr) {
+      console.error('Failed to write debug info file:', fsErr.message);
+    }
+
     if (err instanceof ApiError) {
       throw err;
     }
