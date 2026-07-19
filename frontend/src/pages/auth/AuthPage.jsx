@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
+import Logo from '../../components/common/Logo';
 
 // Auth components
 import HeroPanel from '../../components/auth/HeroPanel';
@@ -122,9 +123,16 @@ export default function AuthPage() {
 
   return (
     <main className="h-screen w-full grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] overflow-hidden bg-theme-surface text-theme-text font-sans relative">
-      {/* ─── Theme switcher: top-left corner ─── */}
-      <div className="absolute top-4 left-4 z-50">
+      {/* ─── Theme switcher & Return to Home: top-left corner ─── */}
+      <div className="absolute top-4 left-4 z-50 flex items-center gap-2">
         <ThemeSwitcher />
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-theme-text-secondary hover:text-theme-text hover:bg-theme-bg/60 border border-theme-border/60 hover:border-theme-border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 h-9 bg-theme-surface shadow-sm"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Home</span>
+        </Link>
       </div>
 
       {/* ─── Left: Immersive Hero Panel ─── */}
@@ -161,11 +169,10 @@ export default function AuthPage() {
                 key={m}
                 type="button"
                 onClick={() => handleModeToggle(m)}
-                className={`flex-1 relative rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-200 ${
-                  mode === m
+                className={`flex-1 relative rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors duration-200 ${mode === m
                     ? 'text-theme-text'
                     : 'text-theme-text-muted hover:text-theme-text-secondary'
-                }`}
+                  }`}
               >
                 {mode === m && (
                   <motion.div
@@ -181,6 +188,13 @@ export default function AuthPage() {
 
           {/* Auth card */}
           <div className="rounded-xl border border-theme-border bg-theme-surface p-5 sm:p-6 shadow-xl shadow-black/[0.03]">
+            {/* Logo at the top of the card */}
+            <div className="mb-4">
+              <Link to="/" className="inline-block group focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-lg">
+                <Logo imageClassName="h-7 group-hover:scale-[1.02] transition-transform duration-200" textClassName="text-lg" />
+              </Link>
+            </div>
+
             {/* Header */}
             <div className="space-y-1 mb-4">
               <motion.span

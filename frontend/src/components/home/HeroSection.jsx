@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, FileText, Sparkles, Users, Zap } from 'lucide-react';
+import { ArrowRight, Calendar, Users } from 'lucide-react';
 
 import { useTheme } from '../../context/ThemeContext';
 
 export default function HeroSection() {
   const { theme } = useTheme();
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -38,15 +39,14 @@ export default function HeroSection() {
 
   return (
     <section className="relative pt-28 pb-6 md:pt-32 md:pb-12 lg:pt-36 lg:pb-16 overflow-hidden bg-mesh bg-grid-pattern min-h-[85vh] flex items-center">
-      {/* Animated Background Orbs — subtle, not glowing balls */}
+      {/* Animated Background Orbs */}
       <div className="absolute top-20 left-[10%] w-[500px] h-[500px] bg-blue-500/[0.04] rounded-full blur-[100px] animate-drift pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-[5%] w-[400px] h-[400px] bg-cyan-500/[0.03] rounded-full blur-[100px] animate-drift-slow pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-
         {/* Asymmetric Split: Text + Dashboard Mock */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
-
+          
           {/* Left: Headline & CTAs */}
           <motion.div
             variants={containerVariants}
@@ -54,7 +54,6 @@ export default function HeroSection() {
             animate="visible"
             className="space-y-6 md:space-y-8"
           >
-
             {/* Main Headline */}
             <motion.h1
               variants={itemVariants}
@@ -91,14 +90,7 @@ export default function HeroSection() {
                 <span>Explore Events</span>
                 <ArrowRight className="w-4.5 h-4.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <Link
-                to="/become-organizer"
-                className="inline-flex items-center justify-center bg-theme-surface hover:bg-theme-bg text-theme-text-secondary font-semibold px-7 py-3.5 rounded-xl border border-theme-border hover:border-slate-300 transition-all duration-200 hover:-translate-y-0.5"
-              >
-                Host an Event
-              </Link>
             </motion.div>
-
           </motion.div>
 
           {/* Right: Dashboard Preview Mock */}
@@ -114,7 +106,7 @@ export default function HeroSection() {
 
               {/* Main Window */}
               <div className="relative bg-theme-surface border border-theme-border/80 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.12)] overflow-hidden">
-
+                
                 {/* Browser Chrome */}
                 <div className="flex items-center gap-2 px-4 py-3 bg-theme-bg border-b border-theme-divider">
                   <div className="flex gap-1.5">
@@ -124,7 +116,7 @@ export default function HeroSection() {
                   </div>
                   <div className="flex-1 mx-3">
                     <div className="bg-theme-surface border border-theme-border rounded-lg px-3 py-1 text-[11px] text-theme-text-muted font-medium text-center">
-                      enginow.com/organiser
+                      enginow.com/dashboard
                     </div>
                   </div>
                 </div>
@@ -134,15 +126,15 @@ export default function HeroSection() {
                   {/* Stats Row */}
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { label: 'Registrations', value: '—', sub: 'Total' },
-                      { label: 'Page Views', value: '—', sub: 'This month' },
-                      { label: 'Events', value: '—', sub: 'Published' },
+                      { label: 'My Registrations', value: '—', sub: 'Events Joined' },
+                      { label: 'Upcoming Events', value: '—', sub: 'This month' },
+                      { label: 'Certificates', value: '—', sub: 'Earned' },
                     ].map((stat) => (
                       <div key={stat.label} className="bg-theme-bg/80 border border-theme-divider rounded-xl p-3 space-y-1">
-                        <span className="text-[10px] font-semibold text-theme-text-muted uppercase tracking-wide">{stat.label}</span>
+                        <span className="text-[9px] font-bold text-theme-text-muted uppercase tracking-wide truncate block">{stat.label}</span>
                         <div className="flex items-baseline gap-1.5">
                           <span className="text-lg font-bold text-theme-text font-outfit">{stat.value}</span>
-                          <span className="text-[10px] text-theme-text-muted">{stat.sub}</span>
+                          <span className="text-[9px] font-semibold text-theme-text-muted whitespace-nowrap">{stat.sub}</span>
                         </div>
                       </div>
                     ))}
@@ -151,7 +143,7 @@ export default function HeroSection() {
                   {/* Chart Placeholder */}
                   <div className="bg-theme-bg/50 border border-theme-divider rounded-xl p-4 h-32 relative overflow-hidden">
                     <div className="flex justify-between items-center mb-3">
-                      <span className="text-[11px] font-bold text-theme-text-secondary uppercase tracking-wide">Registrations</span>
+                      <span className="text-[11px] font-bold text-theme-text-secondary uppercase tracking-wide">Participation Activity</span>
                       <span className="text-[10px] font-medium text-theme-primary bg-blue-50 px-2 py-0.5 rounded-full">Live</span>
                     </div>
                     {/* SVG area chart */}
@@ -183,8 +175,8 @@ export default function HeroSection() {
                         <Calendar className="w-4 h-4 text-theme-primary" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-theme-text-secondary">Event Setup Wizard</p>
-                        <p className="text-[10px] text-theme-text-muted">Step 3 of 6 — Configure tracks</p>
+                        <p className="text-xs font-bold text-theme-text-secondary">Application Tracker</p>
+                        <p className="text-[10px] text-theme-text-muted">3 of 6 applications completed</p>
                       </div>
                     </div>
                     <span className="text-[10px] font-semibold text-theme-primary bg-blue-50 px-2.5 py-1 rounded-full">In Progress</span>
@@ -195,17 +187,16 @@ export default function HeroSection() {
                     <div className="flex -space-x-2">
                       {['bg-blue-500', 'bg-cyan-500', 'bg-slate-400', 'bg-theme-primary'].map((c, i) => (
                         <div key={i} className={`w-7 h-7 rounded-full ${c} border-2 border-white flex items-center justify-center`}>
-                          <Users className="w-3 h-3 text-white" />
+                          <Users className="w-3.5 h-3.5 text-white" />
                         </div>
                       ))}
                     </div>
-                    <span className="text-[10px] text-theme-text-muted font-medium">Participants joining…</span>
+                    <span className="text-[10px] text-theme-text-muted font-medium">Friends participating…</span>
                   </div>
                 </div>
               </div>
             </div>
           </motion.div>
-
         </div>
 
         {/* Full-Width Stats Strip */}
@@ -227,7 +218,6 @@ export default function HeroSection() {
             </div>
           ))}
         </motion.div>
-
       </div>
 
       {/* Bottom fade mask */}
