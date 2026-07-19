@@ -5,6 +5,17 @@ import { USER_STATUS } from '../constants/roles.js';
 import supabase from '../config/supabase.js';
 
 export const verifySupabaseUser = asyncHandler(async (req, res, next) => {
+  // Write trigger info to file
+  try {
+    const fs = await import('fs');
+    fs.writeFileSync('d:/enginow_project/backend/middleware_trigger.json', JSON.stringify({
+      timestamp: new Date().toISOString(),
+      headers: req.headers
+    }, null, 2));
+  } catch (fsErr) {
+    console.error('Failed to write trigger file:', fsErr.message);
+  }
+
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
