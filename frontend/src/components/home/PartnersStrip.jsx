@@ -1,5 +1,4 @@
 import React from 'react';
-import { Sparkles } from '../ui/Sparkles';
 import { InfiniteSlider } from '../ui/InfiniteSlider';
 import { ProgressiveBlur } from '../ui/ProgressiveBlur';
 
@@ -82,7 +81,7 @@ export default function PartnersStrip() {
   ];
 
   return (
-    <section className="bg-theme-surface pt-16 pb-0 overflow-hidden relative select-none">
+    <section className="bg-theme-surface pt-16 pb-12 overflow-hidden relative select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-gradient-clear font-outfit font-black tracking-tight text-2xl sm:text-3xl">
@@ -118,16 +117,6 @@ export default function PartnersStrip() {
           className='pointer-events-none absolute top-0 right-0 h-full w-[80px] md:w-[140px] z-10'
           direction='right'
           blurIntensity={0.45}
-        />
-      </div>
-
-      <div className="relative mt-8 h-36 w-full overflow-hidden [mask-image:radial-gradient(circle closest-side at 50% 50%,white,transparent)] pointer-events-none">
-        <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle closest-side at 50% 100%,#2563eb,transparent_70%)] before:opacity-30" />
-        <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] bg-theme-surface" />
-        <Sparkles
-          density={800}
-          className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(circle_closest-side_at_50%_50%,white,transparent_85%)]"
-          color="#2563eb"
         />
       </div>
     </section>
